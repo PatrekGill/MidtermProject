@@ -46,6 +46,8 @@ class SongRatingTest {
 		assertEquals("nice one", songrating.getDescription());
 		assertEquals(3, songrating.getRatingdate().getDayOfMonth());
 		assertEquals(3, songrating.getRating());
+		assertEquals("Door Number Three", songrating.getSong().getName());
+		assertEquals("admin@gmail.com", songrating.getUser().getEmail());
 	}
 
 }
