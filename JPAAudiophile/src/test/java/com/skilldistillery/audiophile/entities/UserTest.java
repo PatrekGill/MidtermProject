@@ -36,13 +36,65 @@ class UserTest {
 	@AfterEach
 	void tearDown() throws Exception {
 		em.close();
-		user =null;
+		user = null;
 	}
 
 	@Test
-	void test() {
+	void test_User_username_mapping() {
 		assertNotNull(user);
 		assertEquals("admin", user.getUsername());
+	}
+	
+	@Test
+	void test_User_password_mapping() {
+		assertNotNull(user);
+		assertEquals("admin", user.getPassword());
+	}
+	
+	@Test
+	void test_User_firstName_mapping() {
+		assertNotNull(user);
+		assertEquals("Kings", user.getFirstName());
+	}
+	
+	@Test
+	void test_User_lastName_mapping() {
+		assertNotNull(user);
+		assertEquals("Jam", user.getLastName());
+	}
+
+	@Test
+	void test_User_ImageUrl_mapping() {
+		assertNotNull(user);
+		assertEquals("Look at this awesome pose!", user.getImageURL());
+	}
+	
+	@Test
+	void test_User_Email_mapping() {
+		assertNotNull(user);
+		assertEquals("admin@gmail.com", user.getEmail());
+	}
+	
+	@Test
+	void test_User_Enabled_mapping() {
+		assertNotNull(user);
+		assertTrue(user.isEnabled());
+	}
+	
+//	@Test
+//	void test_User_Role_mapping() {
+//		assertNotNull(user);
+//		assertEquals("", user.getRole());
+//	}
+	
+	@Test
+	void test_User_CreationDateTime_mapping() {
+		assertNotNull(user);
+		assertNotNull(user.getCreationDateTime());
+		
+		assertEquals(2021, user.getCreationDateTime().getYear());
+		assertEquals(9, user.getCreationDateTime().getMonthValue());
+		assertEquals(21, user.getCreationDateTime().getDayOfMonth());
 	}
 
 }
