@@ -40,7 +40,7 @@ public class Album {
 	private List<Song> songs;
 
 	@ManyToMany
-	@JoinTable(name="favortie_album",
+	@JoinTable(name="favorite_album",
 		joinColumns=@JoinColumn(name="album_id"),
 		inverseJoinColumns=@JoinColumn(name="user_id")
 	)
