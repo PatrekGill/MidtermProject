@@ -1,6 +1,8 @@
 package com.skilldistillery.audiophile.entities;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class GenreTest {
@@ -43,5 +46,12 @@ class GenreTest {
 	void test_GenreName_basic_mappings() {
 		assertNotNull(genre);
 		assertEquals("country", genre.getName());
+	}
+	
+	@Test
+	@DisplayName("test genre to album mapping")
+	void test2() {
+		assertNotNull(genre);
+		assertTrue(genre.getAlbums().size() > 0);
 	}
 }

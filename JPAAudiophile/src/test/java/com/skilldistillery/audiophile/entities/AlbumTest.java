@@ -13,6 +13,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class AlbumTest {
@@ -70,7 +71,7 @@ class AlbumTest {
 	@Test
 	void test_UserId_basic_mappings() {
 		assertNotNull(album);
-		assertEquals(1, album.getUserId());
+		assertEquals(1, album.getUser().getId());
 	}
 	
 	@Test
@@ -81,5 +82,13 @@ class AlbumTest {
 		assertFalse(album.getFavoritedBy().isEmpty());
 		assertEquals(1,album.getFavoritedBy().get(0).getId());
 		assertEquals("admin",album.getFavoritedBy().get(0).getUsername());
+	}
+	
+	@Test
+	@DisplayName("test album to genre mapping")
+	void test2() {
+		assertNotNull(album);
+		assertNotNull(album.getGenre());
+		assertEquals("country", album.getGenre().getName());
 	}
 }
