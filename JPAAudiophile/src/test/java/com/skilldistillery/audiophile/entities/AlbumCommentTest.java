@@ -44,12 +44,12 @@ class AlbumCommentTest {
 	@Test
 	void test_AlbumCUserId_basic_mappings() {
 		assertNotNull(albumcomment);
-		assertEquals(1, albumcomment.getUserId());
+		assertEquals(1, albumcomment.getUser().getId());
 	}
 	@Test
 	void test_AlbumAlbumId_basic_mappings() {
 		assertNotNull(albumcomment);
-		assertEquals(1, albumcomment.getAlbumId());
+		assertEquals(1, albumcomment.getAlbum().getId());
 	}
 	
 	@Test

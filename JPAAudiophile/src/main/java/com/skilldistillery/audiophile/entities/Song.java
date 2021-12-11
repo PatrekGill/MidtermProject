@@ -38,7 +38,7 @@ public class Song {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-
+	
 	@ManyToMany(mappedBy = "songs")
 	private List<Artist> artists;
 
@@ -107,7 +107,7 @@ public class Song {
 	}
 	
 	/* ----------------------------------------------------------------------------
-	get/set User
+	get/set Create Date
 	---------------------------------------------------------------------------- */
 
 	public LocalDateTime getCreateDate() {
@@ -117,6 +117,10 @@ public class Song {
 	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	get/set User
+	---------------------------------------------------------------------------- */
 
 	public User getUser() {
 		return user;
@@ -154,11 +158,11 @@ public class Song {
 	Get/Set Song Ratings
 	---------------------------------------------------------------------------- */
 	
-	public List<SongRating> getSongRating() {
+	public List<SongRating> getSongRatings() {
 		return songRatings;
 	}
-
-	public void setSongRating(List<SongRating> songRatings) {
+	
+	public void setSongRatings(List<SongRating> songRatings) {
 		this.songRatings = songRatings;
 	}
 
@@ -167,18 +171,19 @@ public class Song {
 		if(!songRatings.contains(songRating)) {
 			songRatings.add(songRating);
 			if(songRating.getSong() != null) {
-				songRating.getSong().getSongRating().remove(songRating);
+				songRating.getSong().getSongRatings().remove(songRating);
 				
 			}
 			songRating.setSong(this);
 		}
 	}
-	public void removeAlbumRating(SongRating songRating) {
+	public void removeSongRating(SongRating songRating) {
 		songRating.setSong(null);
 		if(songRatings != null) {
 			songRatings.remove(songRating);
 		}
 	}
+ 
 
 	/* ----------------------------------------------------------------------------
 	   misc

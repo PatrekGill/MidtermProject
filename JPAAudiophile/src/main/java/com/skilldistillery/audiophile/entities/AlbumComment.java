@@ -8,6 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -18,11 +21,13 @@ public class AlbumComment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "user_id")
-	private int userId;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 	
-	@Column(name = "album_id")
-	private int albumId;
+	@ManyToOne
+	@JoinColumn(name = "album_id")
+	private Album album;
 	
 	private String comment;
 
@@ -41,32 +46,31 @@ public class AlbumComment {
 	public int getId() {
 		return id;
 	}
+	
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
+	public Album getAlbum() {
+		return album;
+	}
+
+
+	public void setAlbum(Album album) {
+		this.album = album;
+	}
 
 
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
-	public int getUserId() {
-		return userId;
-	}
-
-
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-
-
-	public int getAlbumId() {
-		return albumId;
-	}
-
-
-	public void setAlbumId(int albumId) {
-		this.albumId = albumId;
-	}
-
 
 	public String getComment() {
 		return comment;
@@ -119,7 +123,7 @@ public class AlbumComment {
 
 	@Override
 	public String toString() {
-		return "AlbumComment [userId=" + userId + ", albumId=" + albumId + ", commentDate=" + commentDate
+		return "AlbumComment [userId=" + user + ", albumId=" + album + ", commentDate=" + commentDate
 				+ ", inReplyTo=" + inReplyTo + "]";
 	}
 	

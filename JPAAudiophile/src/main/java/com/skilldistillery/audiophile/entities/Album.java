@@ -20,20 +20,24 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Album {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	private String title;
 	private String description;
-
+	
+	
+	@Column(name = "create_date")
+	private LocalDateTime creationDateTime;
+	
 	@Column(name = "release_date")
 	private LocalDateTime releaseDate;
 
 	@Column(name = "image_url")
 	private String imageURL;
 
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -41,6 +45,10 @@ public class Album {
 	@OneToMany(mappedBy = "album")
 	private List<Song> songs;
 
+	@OneToMany(mappedBy ="album")
+	private List<AlbumRating> albumRatings;
+
+	
 	@ManyToMany
 	@JoinTable(name="favorite_album",
 		joinColumns=@JoinColumn(name="album_id"),
@@ -48,15 +56,14 @@ public class Album {
 	)
 	private List<User> favoritedBy;
 	
-	@OneToMany(mappedBy ="album")
-	private List<AlbumRating> albumRatings;
-	
 	@ManyToOne
 	@JoinTable(name = "album_genre", 
-	         joinColumns = { @JoinColumn(name = "album_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "genre_id") })
+	    joinColumns=@JoinColumn(name = "album_id"), 
+	    inverseJoinColumns=@JoinColumn(name = "genre_id")
+	)
 	private Genre genre;
 
+	
 	/* ----------------------------------------------------------------------------
 		Constructors
 	---------------------------------------------------------------------------- */	
@@ -64,20 +71,20 @@ public class Album {
 		super();
 	}
 	
+	
 	/* ----------------------------------------------------------------------------
-	get/set Songs
+		get/set Songs
 	---------------------------------------------------------------------------- */
 	public List<Song> getSongs() {
 		return songs;
 	}
-
-	
 	public void setSongs(List<Song> songs) {
 		this.songs = songs;
 	}
 
+	
 	/* ----------------------------------------------------------------------------
-	get/set Genre
+		get/set Genre
 	---------------------------------------------------------------------------- */
 	public Genre getGenre() {
 		return genre;
@@ -87,6 +94,7 @@ public class Album {
 		this.genre = genre;
 	}
 
+	
 	/* ----------------------------------------------------------------------------
 		get/set Id
 	---------------------------------------------------------------------------- */
@@ -130,31 +138,39 @@ public class Album {
 		this.releaseDate = releaseDate;
 	}
 	
+	
 	/* ----------------------------------------------------------------------------
 		get/set ImageURL
 	---------------------------------------------------------------------------- */
-	
-	
 	public String getImageURL() {
 		return imageURL;
 	}
-	
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
 	}
+
 	
 	/* ----------------------------------------------------------------------------
-	get/set User
+		get/set User
 	---------------------------------------------------------------------------- */
-	
 	public User getUser() {
 		return user;
 	}
-
-	public void setUserId(User user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
+	
+	/* ----------------------------------------------------------------------------
+		get/set CreationDateTime
+	---------------------------------------------------------------------------- */
+	public LocalDateTime getCreationDateTime() {
+		return creationDateTime;
+	}
+	public void setCreationDateTime(LocalDateTime creationDateTime) {
+		this.creationDateTime = creationDateTime;
+	}
+	
 	
 	/* ----------------------------------------------------------------------------
 		FavoritedBy list methods
@@ -166,6 +182,8 @@ public class Album {
 		
 		return favoritedBy;
 	}
+
+
 	public void setFavoritedBy(List<User> favoritedBy) {
 		this.favoritedBy = favoritedBy;
 	}
@@ -206,6 +224,10 @@ public class Album {
 		AlbumRatings List methods
 	---------------------------------------------------------------------------- */
 	public List<AlbumRating> getAlbumRatings() {
+		if (albumRatings == null) {
+			albumRatings = new ArrayList<>();
+		}
+		
 		return albumRatings;
 	}
 	public void setAlbumRatings(List<AlbumRating> albumRatings) {
@@ -214,9 +236,13 @@ public class Album {
 	
 	//Larry addAlbum through the AlbumRating
 	public void addAlbumRating(AlbumRating albumRating) {
-		if(albumRatings == null) albumRatings = new ArrayList<>();
+		if(albumRatings == null) {
+			albumRatings = new ArrayList<>();
+		}
+
 		if(!albumRatings.contains(albumRating)) {
 			albumRatings.add(albumRating);
+			
 			if(albumRating.getAlbum() != null) {
 				albumRating.getAlbum().getAlbumRatings().remove(albumRating);
 				
@@ -232,6 +258,9 @@ public class Album {
 	}
 
 	
+	/* ----------------------------------------------------------------------------
+		Misc
+	---------------------------------------------------------------------------- */
 	@Override
 	public String toString() {
 		return "Album [id=" + id + ", title=" + title + ", releaseDate=" + releaseDate + "]";
