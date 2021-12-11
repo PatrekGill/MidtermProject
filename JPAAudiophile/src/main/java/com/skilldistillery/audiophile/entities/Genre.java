@@ -49,6 +49,18 @@ public class Genre {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	Get/Set Albums
+	---------------------------------------------------------------------------- */
+
+	public List<Album> getAlbums() {
+		return albums;
+	}
+
+	public void setAlbums(List<Album> albums) {
+		this.albums = albums;
+	}
 
 	/* ----------------------------------------------------------------------------
 	    misc.
