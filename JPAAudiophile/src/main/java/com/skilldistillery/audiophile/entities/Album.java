@@ -50,50 +50,71 @@ public class Album {
 	private List<AlbumRating> albumRatings;
 
 	
+	/* ----------------------------------------------------------------------------
+		Constructors
+	---------------------------------------------------------------------------- */	
 	public Album() {
 		super();
 	}
-
+	
+	/* ----------------------------------------------------------------------------
+		get/set Id
+	---------------------------------------------------------------------------- */
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	
+	/* ----------------------------------------------------------------------------
+		get/set Title
+	---------------------------------------------------------------------------- */
 	public String getTitle() {
 		return title;
 	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
+	
+	
+	/* ----------------------------------------------------------------------------
+		get/set Description
+	---------------------------------------------------------------------------- */
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	
+	
+	/* ----------------------------------------------------------------------------
+		get/set ReleaseDate
+	---------------------------------------------------------------------------- */
 	public LocalDateTime getReleaseDate() {
 		return releaseDate;
 	}
-
 	public void setReleaseDate(LocalDateTime releaseDate) {
 		this.releaseDate = releaseDate;
 	}
-
+	
+	
+	/* ----------------------------------------------------------------------------
+		get/set Description
+	---------------------------------------------------------------------------- */
 	public String getImageURL() {
 		return imageURL;
 	}
-
+	
+	
+	/* ----------------------------------------------------------------------------
+		get/set ImageURL
+	---------------------------------------------------------------------------- */
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
 	}
-
 	public int getUserId() {
 		return userId;
 	}
@@ -103,6 +124,9 @@ public class Album {
 	}
 
 	
+	/* ----------------------------------------------------------------------------
+		FavoritedBy list methods
+	---------------------------------------------------------------------------- */
 	public List<User> getFavoritedBy() {
 		if (favoritedBy == null) {
 			favoritedBy = new ArrayList<>();
@@ -114,14 +138,6 @@ public class Album {
 		this.favoritedBy = favoritedBy;
 	}
 	
-	public List<AlbumRating> getAlbumRatings() {
-		return albumRatings;
-	}
-
-	public void setAlbumRatings(List<AlbumRating> albumRatings) {
-		this.albumRatings = albumRatings;
-	}
-
 	public boolean addToFavoritedBy(User user) {
 		if (favoritedBy == null) {
 			favoritedBy = new ArrayList<>();
@@ -152,6 +168,18 @@ public class Album {
 		
 		return removed;
 	}
+	
+	
+	/* ----------------------------------------------------------------------------
+		AlbumRatings List methods
+	---------------------------------------------------------------------------- */
+	public List<AlbumRating> getAlbumRatings() {
+		return albumRatings;
+	}
+	public void setAlbumRatings(List<AlbumRating> albumRatings) {
+		this.albumRatings = albumRatings;
+	}
+	
 	//Larry addAlbum through the AlbumRating
 	public void addAlbumRating(AlbumRating albumRating) {
 		if(albumRatings == null) albumRatings = new ArrayList<>();
