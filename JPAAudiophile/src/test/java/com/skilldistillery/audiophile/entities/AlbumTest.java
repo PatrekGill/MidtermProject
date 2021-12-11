@@ -56,15 +56,17 @@ class AlbumTest {
 		assertEquals(1974, album.getReleaseDate().getYear());
 		assertEquals(12, album.getReleaseDate().getMonthValue());
 		assertEquals(01, album.getReleaseDate().getDayOfMonth());
-}	
+	}
+	
 	@Test
 	void test_AlbumImageURL_basic_mappings() {
 		assertNotNull(album);
 		assertTrue(album.getImageURL().contains("A1A_Front_Cover.jpg"));
-}
+	}
+	
 	@Test
 	void test_UserId_basic_mappings() {
 		assertNotNull(album);
 		assertEquals(1, album.getUserId());
-}
+	}
 }

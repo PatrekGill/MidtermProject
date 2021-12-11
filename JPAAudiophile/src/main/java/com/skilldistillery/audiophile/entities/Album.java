@@ -46,42 +46,59 @@ public class Album {
 	private List<User> favoritedBy;
 
 	
+	/* ----------------------------------------------------------------------------
+		Constructors
+	---------------------------------------------------------------------------- */	
 	public Album() {
 		super();
 	}
-
+	
+	/* ----------------------------------------------------------------------------
+		get/set Id
+	---------------------------------------------------------------------------- */
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	
+	/* ----------------------------------------------------------------------------
+		get/set Title
+	---------------------------------------------------------------------------- */
 	public String getTitle() {
 		return title;
 	}
-
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
+	
+	
+	/* ----------------------------------------------------------------------------
+		get/set Description
+	---------------------------------------------------------------------------- */
 	public String getDescription() {
 		return description;
 	}
-
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
+	
+	
+	/* ----------------------------------------------------------------------------
+		get/set ReleaseDate
+	---------------------------------------------------------------------------- */
 	public LocalDateTime getReleaseDate() {
 		return releaseDate;
 	}
-
 	public void setReleaseDate(LocalDateTime releaseDate) {
 		this.releaseDate = releaseDate;
 	}
-
+	
+	/* ----------------------------------------------------------------------------
+		get/set Description
+	---------------------------------------------------------------------------- */
 	public String getImageURL() {
 		return imageURL;
 	}
