@@ -149,8 +149,8 @@ public class Album {
 				addedToList = favoritedBy.add(user);
 			}
 			
-			if (! user.getFavoritreAlbums().contains(this)) {
-				user.getFavoritreAlbums().add(this);
+			if (! user.getFavoriteAlbums().contains(this)) {
+				user.getFavoriteAlbums().add(this);
 			}
 		}
 		
@@ -162,7 +162,7 @@ public class Album {
 			removed = favoritedBy.remove(user);
 		}
 		
-		if (user.getFavoritreAlbums().contains(this)) {			
+		if (user.getFavoriteAlbums().contains(this)) {			
 			user.removeFavoriteAlbum(this);
 		}
 		
