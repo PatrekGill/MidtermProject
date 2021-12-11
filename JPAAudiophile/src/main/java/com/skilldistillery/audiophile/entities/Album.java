@@ -153,23 +153,23 @@ public class Album {
 		return removed;
 	}
 	//Larry addAlbum through the AlbumRating
-//	public void addFilm(Film film) {
-//		if(films == null) films = new ArrayList<>();
-//		if(!films.contains(film)) {
-//			films.add(film);
-//			if(film.getLanguage() != null) {
-//				film.getLanguage().getFilms().remove(film);
-//				
-//			}
-//			film.setLanguage(this);
-//		}
-//	}
-//	public void removeFilm(Film film) {
-//		film.setLanguage(null);
-//		if(films != null) {
-//			films.remove(film);
-//		}
-//	}
+	public void addAlbumRating(AlbumRating albumRating) {
+		if(albumRatings == null) albumRatings = new ArrayList<>();
+		if(!albumRatings.contains(albumRating)) {
+			albumRatings.add(albumRating);
+			if(albumRating.getAlbum() != null) {
+				albumRating.getAlbum().getAlbumRatings().remove(albumRating);
+				
+			}
+			albumRating.setAlbum(this);
+		}
+	}
+	public void removeAlbumRating(AlbumRating albumRating) {
+		albumRating.setAlbum(null);
+		if(albumRatings != null) {
+			albumRatings.remove(albumRating);
+		}
+	}
 
 	
 	@Override

@@ -1,5 +1,6 @@
 package com.skilldistillery.audiophile.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Song {
@@ -41,6 +43,9 @@ public class Song {
 	         joinColumns = { @JoinColumn(name = "song_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "album_id") })
 	private Album album;
+	
+	@OneToMany(mappedBy ="song")
+	private List<SongRating> songRatings;
 	
 	/* ----------------------------------------------------------------------------
 	Constructors
@@ -136,6 +141,35 @@ public class Song {
 	/* ----------------------------------------------------------------------------
 	   misc
 ---------------------------------------------------------------------------- */
+
+
+	
+	public List<SongRating> getSongRating() {
+		return songRatings;
+	}
+
+	public void setSongRating(List<SongRating> songRatings) {
+		this.songRatings = songRatings;
+	}
+
+	public void addSongRating(SongRating songRating) {
+		if(songRatings == null) songRatings = new ArrayList<>();
+		if(!songRatings.contains(songRating)) {
+			songRatings.add(songRating);
+			if(songRating.getSong() != null) {
+				songRating.getSong().getSongRating().remove(songRating);
+				
+			}
+			songRating.setSong(this);
+		}
+	}
+	public void removeAlbumRating(SongRating songRating) {
+		songRating.setSong(null);
+		if(songRatings != null) {
+			songRatings.remove(songRating);
+		}
+	}
+
 
 	@Override
 	public int hashCode() {
