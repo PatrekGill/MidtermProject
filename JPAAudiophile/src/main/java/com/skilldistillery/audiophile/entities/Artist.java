@@ -3,11 +3,16 @@ package com.skilldistillery.audiophile.entities;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Artist {
@@ -19,8 +24,9 @@ public class Artist {
 	@Column(name="name")
 	private String name;
 	
-	@Column(name="user_id")
-	private int userId;
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
 	
 	@Column(name="image_url")
 	private String imageUrl;
@@ -28,9 +34,12 @@ public class Artist {
 	@Column(name="description")
 	private String description;
 	
-//  *Commented out because song entity has not been added*		
-//	@ManyToMany
-//	private List<Song> songs;
+	@ManyToMany(cascade= CascadeType.PERSIST)
+	@JoinTable(name="song_artist",
+	  joinColumns=@JoinColumn(name="artist_id"),
+	  inverseJoinColumns=@JoinColumn(name="song_id")
+	)
+	private List<Song> songs;
 	
 	public Artist() {}
 	
@@ -50,12 +59,12 @@ public class Artist {
 		this.name = name;
 	}
 
-	public int getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserId(User user) {
+		this.user = user;
 	}
 
 	public String getImageUrl() {
@@ -74,14 +83,13 @@ public class Artist {
 		this.description = description;
 	}
 
-//  *Commented out because song entity has not been added*	
-//	public List<Song> getSongs() {
-//		return songs;
-//	}
-//
-//	public void setSongs(List<Song> songs) {
-//		this.songs = songs;
-//	}
+	public List<Song> getSongs() {
+		return songs;
+	}
+
+	public void setSongs(List<Song> songs) {
+		this.songs = songs;
+	}
 
 	@Override
 	public int hashCode() {
@@ -102,7 +110,7 @@ public class Artist {
 
 	@Override
 	public String toString() {
-		return "Artist [id=" + id + ", name=" + name + ", userId=" + userId + ", description=" + description + "]";
+		return "Artist [id=" + id + ", name=" + name + ", userId=" + user + ", description=" + description + "]";
 	}
 	
 	
