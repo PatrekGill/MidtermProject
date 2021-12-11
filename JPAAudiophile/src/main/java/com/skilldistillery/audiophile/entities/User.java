@@ -1,6 +1,7 @@
 package com.skilldistillery.audiophile.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class User {
@@ -20,6 +22,7 @@ public class User {
 	
 	@Column(name="first_name")
 	private String firstName;
+	
 	@Column(name="last_name")
 	private String lastName;
 	
@@ -28,6 +31,10 @@ public class User {
 	
 	@Column(name="image_url")
 	private String imageURL;
+	
+	@ManyToMany(mappedBy="favoritedBy")
+	List<Album> favoritreAlbums;
+	
 	
 	private boolean enabled;
 	private String email;
@@ -47,6 +54,7 @@ public class User {
 	public User() {
 		super();
 	}
+	
 	
 	/* ----------------------------------------------------------------------------
 		get/set Id
@@ -145,6 +153,52 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	
+	/* ----------------------------------------------------------------------------
+		Favorite album list methods
+	---------------------------------------------------------------------------- */
+	public List<Album> getFavoritreAlbums() {
+		if (favoritreAlbums == null) {
+			favoritreAlbums = new ArrayList<>();
+		}
+		
+		return favoritreAlbums;
+	}
+	public void setFavoritreAlbums(List<Album> favoritreAlbums) {
+		this.favoritreAlbums = favoritreAlbums;
+	}
+	
+	public boolean addFavoriteAlbum(Album album) {
+		if (favoritreAlbums == null) {
+			favoritreAlbums = new ArrayList<>();
+		}
+		
+		boolean addedToList = false;
+		if (album != null) {
+			if (! favoritreAlbums.contains(album)) {
+				favoritreAlbums.add(album);
+			}
+			
+			if (! album.getFavoritedBy().contains(this)) {
+				addedToList = album.getFavoritedBy().add(this);
+			}
+		}
+		
+		return addedToList;
+	}
+	public boolean removeFavoriteAlbum(Album album) {
+		boolean removed = false;
+		if (favoritreAlbums != null && favoritreAlbums.contains(album)) {
+			removed = favoritreAlbums.remove(album);
+		}
+		
+		if (album.getFavoritedBy().contains(this)) {
+			album.removeFavoritedBy(this);
+		}
+		
+		return removed;
+	}
 
 	
 	/* ----------------------------------------------------------------------------
@@ -187,6 +241,8 @@ public class User {
 		return Objects.hash(id);
 	}
 	
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

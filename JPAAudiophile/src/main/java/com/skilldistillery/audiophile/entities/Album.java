@@ -1,6 +1,7 @@
 package com.skilldistillery.audiophile.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,6 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
 
 @Entity
 public class Album {
@@ -33,6 +38,14 @@ public class Album {
 	@OneToMany(mappedBy = "album")
 	private List<Song> songs;
 
+	@ManyToMany
+	@JoinTable(name="favortie_album",
+		joinColumns=@JoinColumn(name="album_id"),
+		inverseJoinColumns=@JoinColumn(name="user_id")
+	)
+	private List<User> favoritedBy;
+
+	
 	public Album() {
 		super();
 	}
@@ -85,6 +98,51 @@ public class Album {
 		this.userId = userId;
 	}
 
+	
+	public List<User> getFavoritedBy() {
+		if (favoritedBy == null) {
+			favoritedBy = new ArrayList<>();
+		}
+		
+		return favoritedBy;
+	}
+	public void setFavoritedBy(List<User> favoritedBy) {
+		this.favoritedBy = favoritedBy;
+	}
+	
+	public boolean addToFavoritedBy(User user) {
+		if (favoritedBy == null) {
+			favoritedBy = new ArrayList<>();
+		}
+		
+		boolean addedToList = false;
+		if (user != null) {
+			if (! favoritedBy.contains(user)) {
+				addedToList = favoritedBy.add(user);
+			}
+			
+			if (! user.getFavoritreAlbums().contains(this)) {
+				user.getFavoritreAlbums().add(this);
+			}
+		}
+		
+		return addedToList;
+	}
+	public boolean removeFavoritedBy(User user) {
+		boolean removed = false;
+		if (favoritedBy != null && favoritedBy.contains(user)) {
+			removed = favoritedBy.remove(user);
+		}
+		
+		if (user.getFavoritreAlbums().contains(this)) {			
+			user.removeFavoriteAlbum(this);
+		}
+		
+		return removed;
+	}
+	
+
+	
 	@Override
 	public String toString() {
 		return "Album [id=" + id + ", title=" + title + ", releaseDate=" + releaseDate + "]";
