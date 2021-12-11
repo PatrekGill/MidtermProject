@@ -2,6 +2,7 @@ package com.skilldistillery.audiophile.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -70,4 +71,16 @@ class AlbumCommentTest {
 //		assertNotNull(albumcomment);
 //		assertEquals("null", albumcomment.getInReplyTo());
 //}
+	@Test
+	void test_Many_To_One_AlbumComment_To_UserId() {
+		assertNotNull(albumcomment);
+		assertNotNull(albumcomment.getUser());
+		assertTrue(albumcomment.getUser().getId() == 1);
+	}
+	@Test
+	void test_Many_To_One_AlbumComment_To_AlbumId() {
+		assertNotNull(albumcomment);
+		assertNotNull(albumcomment.getAlbum());
+		assertTrue(albumcomment.getAlbum().getId() == 1);
+	}
 }
