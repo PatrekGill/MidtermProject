@@ -1,5 +1,6 @@
 package com.skilldistillery.audiophile.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -60,6 +61,25 @@ public class Genre {
 
 	public void setAlbums(List<Album> albums) {
 		this.albums = albums;
+	}
+	
+	public void addAlbum(Album album) {
+		if(albums == null) albums = new ArrayList<>();
+		if(!albums.contains(album)) {
+			albums.add(album);
+			if(album.getGenre() != null) {
+				album.getGenre().getAlbums().remove(album);
+				
+			}
+			album.setGenre(this);
+		}
+	}
+	
+	public void removeAlbums(Album album) {
+		album.setGenre(null);
+		if(albums != null) {
+			albums.remove(album);
+		}
 	}
 
 	/* ----------------------------------------------------------------------------
