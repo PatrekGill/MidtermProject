@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
 @Entity
 public class User {
 
@@ -31,6 +32,8 @@ public class User {
 	private String email;
 	private String password;
 	private String username;
+	
+	
 //	private String role;
 	
 	/* ----------------------------------------------------------------------------
