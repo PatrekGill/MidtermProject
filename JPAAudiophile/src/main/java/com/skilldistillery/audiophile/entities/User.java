@@ -34,7 +34,7 @@ public class User {
 	private String imageURL;
 	
 	@ManyToMany(mappedBy="favoritedBy")
-	List<Album> favoritreAlbums;
+	List<Album> favoriteAlbums;
 	
 	
 	private boolean enabled;
@@ -162,26 +162,26 @@ public class User {
 	/* ----------------------------------------------------------------------------
 		Favorite album list methods
 	---------------------------------------------------------------------------- */
-	public List<Album> getFavoritreAlbums() {
-		if (favoritreAlbums == null) {
-			favoritreAlbums = new ArrayList<>();
+	public List<Album> getFavoriteAlbums() {
+		if (favoriteAlbums == null) {
+			favoriteAlbums = new ArrayList<>();
 		}
 		
-		return favoritreAlbums;
+		return favoriteAlbums;
 	}
-	public void setFavoritreAlbums(List<Album> favoritreAlbums) {
-		this.favoritreAlbums = favoritreAlbums;
+	public void setFavoriteAlbums(List<Album> favoritreAlbums) {
+		this.favoriteAlbums = favoritreAlbums;
 	}
 	
 	public boolean addFavoriteAlbum(Album album) {
-		if (favoritreAlbums == null) {
-			favoritreAlbums = new ArrayList<>();
+		if (favoriteAlbums == null) {
+			favoriteAlbums = new ArrayList<>();
 		}
 		
 		boolean addedToList = false;
 		if (album != null) {
-			if (! favoritreAlbums.contains(album)) {
-				favoritreAlbums.add(album);
+			if (! favoriteAlbums.contains(album)) {
+				favoriteAlbums.add(album);
 			}
 			
 			if (! album.getFavoritedBy().contains(this)) {
@@ -193,8 +193,8 @@ public class User {
 	}
 	public boolean removeFavoriteAlbum(Album album) {
 		boolean removed = false;
-		if (favoritreAlbums != null && favoritreAlbums.contains(album)) {
-			removed = favoritreAlbums.remove(album);
+		if (favoriteAlbums != null && favoriteAlbums.contains(album)) {
+			removed = favoriteAlbums.remove(album);
 		}
 		
 		if (album.getFavoritedBy().contains(this)) {
