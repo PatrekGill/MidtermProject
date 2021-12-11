@@ -85,10 +85,30 @@ class AlbumTest {
 	}
 	
 	@Test
+	void test_AlbumRating_to_Album_mapping() {
+		assertNotNull(album);
+		assertNotNull(album.getAlbumRatings());
+		
+		assertFalse(album.getAlbumRatings().isEmpty());
+		assertEquals(3,album.getAlbumRatings().get(0).getRating());
+		assertEquals("nice album",album.getAlbumRatings().get(0).getDescription());
+	}
+	
+	@Test
 	@DisplayName("test album to genre mapping")
 	void test2() {
 		assertNotNull(album);
 		assertNotNull(album.getGenre());
 		assertEquals("country", album.getGenre().getName());
+	}
+	
+	@Test
+	void test_CreationDateTime_mapping() {
+		assertNotNull(album);
+		assertNotNull(album.getCreationDateTime());
+
+		assertEquals(2019, album.getCreationDateTime().getYear());
+		assertEquals(8, album.getCreationDateTime().getMonthValue());
+		assertEquals(30, album.getCreationDateTime().getDayOfMonth());
 	}
 }

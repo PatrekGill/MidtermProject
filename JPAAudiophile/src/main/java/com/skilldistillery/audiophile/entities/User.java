@@ -215,28 +215,29 @@ public class User {
 //		this.role = role;
 //	}
 
+	
 	/* ----------------------------------------------------------------------------
-	get/set songs
----------------------------------------------------------------------------- */
+		get/set songs
+	---------------------------------------------------------------------------- */
 	public List<Song> getSongs() {
 		return songs;
 	}
-
 	public void setSongs(List<Song> songs) {
 		this.songs = songs;
 	}
 
+	
 	/* ----------------------------------------------------------------------------
-	get/set Artist
----------------------------------------------------------------------------- */
+		get/set Artist
+	---------------------------------------------------------------------------- */
 	public List<Artist> getArtists() {
 		return artists;
 	}
-
 	public void setArtists(List<Artist> artists) {
 		this.artists = artists;
 	}
 
+	
 	/* ----------------------------------------------------------------------------
 		misc
 	---------------------------------------------------------------------------- */
@@ -245,8 +246,6 @@ public class User {
 		return Objects.hash(id);
 	}
 	
-
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
