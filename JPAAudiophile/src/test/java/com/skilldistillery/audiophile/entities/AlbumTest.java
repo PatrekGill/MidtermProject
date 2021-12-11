@@ -111,4 +111,10 @@ class AlbumTest {
 		assertEquals(8, album.getCreationDateTime().getMonthValue());
 		assertEquals(30, album.getCreationDateTime().getDayOfMonth());
 	}
+	@Test
+	void test_Get_AlbumComment() {
+		assertNotNull(album);
+		assertNotNull(album.getAlbumComments());
+		assertTrue(album.getAlbumComments().size() > 0);
+	}
 }
