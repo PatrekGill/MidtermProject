@@ -7,9 +7,9 @@
         <class>com.skilldistillery.audiophile.entities.User</class>
    
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/FIXME?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=US/Mountain" />
-      <property name="javax.persistence.jdbc.user" value="FIXME"/>
-      <property name="javax.persistence.jdbc.password" value="FIXME"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/audiofiledb?useSSL=false&amp;useLegacyDatetimeCode=false&amp;serverTimezone=US/Mountain" />
+      <property name="javax.persistence.jdbc.user" value="audiofile"/>
+      <property name="javax.persistence.jdbc.password" value="audiofile"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
 
       <property name="hibernate.show_sql" value="false" />
