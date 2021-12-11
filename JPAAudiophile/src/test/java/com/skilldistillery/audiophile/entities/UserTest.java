@@ -106,5 +106,15 @@ class UserTest {
 		assertEquals(1,user.getFavoriteAlbums().get(0).getId());
 		assertEquals("A1A",user.getFavoriteAlbums().get(0).getTitle());
 	}
+	
+	@Test
+	void test_favoritedSongs_mapping() {
+		assertNotNull(user);
+		assertNotNull(user.getFavoriteSongs());
+		
+		assertFalse(user.getFavoriteSongs().isEmpty());
+		assertEquals(2,user.getFavoriteSongs().get(0).getId());
+		assertEquals("Door Number Three",user.getFavoriteSongs().get(0).getName());
+	}
 
 }

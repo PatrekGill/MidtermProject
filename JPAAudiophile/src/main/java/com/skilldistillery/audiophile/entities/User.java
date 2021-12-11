@@ -35,6 +35,9 @@ public class User {
 	
 	@ManyToMany(mappedBy="favoritedBy")
 	List<Album> favoriteAlbums;
+
+	@ManyToMany(mappedBy="favoritedBy")
+	List<Song> favoriteSongs;
 	
 	
 	private boolean enabled;
@@ -204,6 +207,52 @@ public class User {
 		return removed;
 	}
 
+	
+	/* ----------------------------------------------------------------------------
+		Favorite songs list methods
+	---------------------------------------------------------------------------- */
+	public List<Song> getFavoriteSongs() {
+		if (favoriteSongs == null) {
+			favoriteSongs = new ArrayList<>();
+		}
+		
+		return favoriteSongs;
+	}
+	public void setFavoriteSongs(List<Song> favoriteSongs) {
+		this.favoriteSongs = favoriteSongs;
+	}
+	
+	public boolean addFavoriteSong(Song song) {
+		if (favoriteSongs == null) {
+			favoriteSongs = new ArrayList<>();
+		}
+		
+		boolean addedToList = false;
+		if (song != null) {
+			if (! favoriteSongs.contains(song)) {
+				favoriteSongs.add(song);
+			}
+			
+			if (! song.getFavoritedBy().contains(this)) {
+				addedToList = song.getFavoritedBy().add(this);
+			}
+		}
+		
+		return addedToList;
+	}
+	public boolean removeFavoriteSong(Song song) {
+		boolean removed = false;
+		if (favoriteSongs != null && favoriteSongs.contains(song)) {
+			removed = favoriteSongs.remove(song);
+		}
+		
+		if (song.getFavoritedBy().contains(this)) {
+			song.removeFavoritedBy(this);
+		}
+		
+		return removed;
+	}
+	
 	
 	/* ----------------------------------------------------------------------------
 		get/set Role
