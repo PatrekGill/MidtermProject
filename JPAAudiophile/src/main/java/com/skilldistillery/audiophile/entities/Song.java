@@ -39,9 +39,6 @@ public class Song {
 	@JoinColumn(name = "user_id")
 	private User user;
 	
-	@Column(name = "create_date")
-	private LocalDateTime createDate;
-
 	@ManyToMany(mappedBy = "songs")
 	private List<Artist> artists;
 
@@ -110,7 +107,7 @@ public class Song {
 	}
 	
 	/* ----------------------------------------------------------------------------
-	get/set User
+	get/set Create Date
 	---------------------------------------------------------------------------- */
 
 	public LocalDateTime getCreateDate() {
@@ -120,6 +117,10 @@ public class Song {
 	public void setCreateDate(LocalDateTime createDate) {
 		this.createDate = createDate;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	get/set User
+	---------------------------------------------------------------------------- */
 
 	public User getUser() {
 		return user;
@@ -183,17 +184,6 @@ public class Song {
 		}
 	}
  
-	/* ----------------------------------------------------------------------------
-	   misc
-	---------------------------------------------------------------------------- */
-
-	public LocalDateTime getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(LocalDateTime createDate) {
-		this.createDate = createDate;
-	}
 
 	/* ----------------------------------------------------------------------------
 	   misc
