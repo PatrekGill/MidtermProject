@@ -1,6 +1,7 @@
 package com.skilldistillery.audiophile.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -121,6 +122,37 @@ public class Artist {
 
 	public void setSongs(List<Song> songs) {
 		this.songs = songs;
+	}
+	
+	public boolean addSong(Song song) {
+		if (songs == null) {
+			songs = new ArrayList<>();
+		}
+		
+		boolean addedToList = false;
+		if (song != null) {
+			if (! songs.contains(song)) {
+				addedToList = songs.add(song);
+			}
+			
+			if (! song.getArtists().contains(this)) {
+				song.getArtists().add(this);
+			}
+		}
+		
+		return addedToList;
+	}
+	public boolean removeSong(Song song) {
+		boolean removed = false;
+		if (songs != null && songs.contains(song)) {
+			removed = songs.remove(song);
+		}
+		
+		if (song.getArtists().contains(this)) {			
+			song.removeArtist(this);
+		}
+		
+		return removed;
 	}
 	
 	/* ----------------------------------------------------------------------------
