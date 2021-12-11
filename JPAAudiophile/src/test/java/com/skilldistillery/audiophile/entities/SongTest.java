@@ -1,6 +1,7 @@
 package com.skilldistillery.audiophile.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -33,7 +34,7 @@ class SongTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		em = emf.createEntityManager();
-		song = em.find(Song.class, 5);
+		song = em.find(Song.class, 2);
 	}
 
 	@AfterEach
@@ -91,4 +92,13 @@ class SongTest {
 		assertEquals(6, song.getCreateDate().getMonthValue());
 	}
 
+	@Test
+	void test_favoritedBy_user_to_song_mapping() {
+		assertNotNull(song);
+		assertNotNull(song.getFavoritedBy());
+		
+		assertFalse(song.getFavoritedBy().isEmpty());
+		assertEquals(1,song.getFavoritedBy().get(0).getId());
+		assertEquals("admin",song.getFavoritedBy().get(0).getUsername());
+	}
 }
