@@ -1,6 +1,7 @@
 package com.skilldistillery.audiophile.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -32,6 +34,12 @@ public class User {
 	private String password;
 	private String username;
 //	private String role;
+	
+	@OneToMany(mappedBy="user")
+	private List<Song> songs;
+	
+	@OneToMany(mappedBy="user")
+	private List<Artist> artists;
 	
 	/* ----------------------------------------------------------------------------
 		Constructors
@@ -148,6 +156,28 @@ public class User {
 //	public void setRole(String role) {
 //		this.role = role;
 //	}
+
+	/* ----------------------------------------------------------------------------
+	get/set songs
+---------------------------------------------------------------------------- */
+	public List<Song> getSongs() {
+		return songs;
+	}
+
+	public void setSongs(List<Song> songs) {
+		this.songs = songs;
+	}
+
+	/* ----------------------------------------------------------------------------
+	get/set Artist
+---------------------------------------------------------------------------- */
+	public List<Artist> getArtists() {
+		return artists;
+	}
+
+	public void setArtists(List<Artist> artists) {
+		this.artists = artists;
+	}
 
 	/* ----------------------------------------------------------------------------
 		misc
