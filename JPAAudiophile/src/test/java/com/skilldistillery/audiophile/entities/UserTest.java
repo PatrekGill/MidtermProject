@@ -96,5 +96,15 @@ class UserTest {
 		assertEquals(9, user.getCreationDateTime().getMonthValue());
 		assertEquals(21, user.getCreationDateTime().getDayOfMonth());
 	}
+	
+	@Test
+	void test_favoritedAlbums_mapping() {
+		assertNotNull(user);
+		assertNotNull(user.getFavoriteAlbums());
+		
+		assertFalse(user.getFavoriteAlbums().isEmpty());
+		assertEquals(1,user.getFavoriteAlbums().get(0).getId());
+		assertEquals("A1A",user.getFavoriteAlbums().get(0).getTitle());
+	}
 
 }
