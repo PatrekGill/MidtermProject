@@ -58,7 +58,7 @@ class SongTest {
 	void test2 () {
 		assertNotNull(song);
 		assertNotNull(song.getArtists());
-		assertEquals(1, song.getArtists().size());
+		assertTrue(song.getArtists().size() > 0);
 	}
 	
 	@Test
