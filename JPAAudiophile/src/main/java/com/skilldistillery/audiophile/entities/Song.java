@@ -137,10 +137,41 @@ public class Song {
 		get/set Artists
 	---------------------------------------------------------------------------- */
 	public List<Artist> getArtists() {
+		if (artists == null) {
+			artists = new ArrayList<>();
+		}
+		
 		return artists;
 	}
 	public void setArtists(List<Artist> artists) {
 		this.artists = artists;
+	}
+	
+	public boolean addArtist(Artist artist) {
+		if (artists == null) {
+			artists = new ArrayList<>();
+		}
+		
+		boolean addedToList = false;
+		if (artist != null) {
+			if (!artists.contains(artist)) {
+				addedToList = artists.add(artist);
+			}
+
+			if (!artist.getSongs().contains(this)) {
+				artist.getSongs().add(this);
+			}
+		}
+		
+		return addedToList;
+	}
+	public boolean removeArtist(Artist artist) {
+		boolean removed = false;
+		if (artists != null && artists.contains(artist)) {
+			removed = artists.remove(artist);
+		}
+		
+		return removed;
 	}
 	
 	
