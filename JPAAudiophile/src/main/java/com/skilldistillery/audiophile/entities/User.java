@@ -54,6 +54,9 @@ public class User {
 	@OneToMany(mappedBy="user")
 	private List<Artist> createdArtists;
 	
+	@OneToMany(mappedBy="user")
+	private List<Album> createdAlbums;
+	
 	
 	/* ----------------------------------------------------------------------------
 		Constructors
@@ -287,6 +290,16 @@ public class User {
 	}
 
 	
+	public List<Album> getCreatedAlbums() {
+		return createdAlbums;
+	}
+
+
+	public void setCreatedAlbums(List<Album> createdAlbums) {
+		this.createdAlbums = createdAlbums;
+	}
+
+
 	/* ----------------------------------------------------------------------------
 		misc
 	---------------------------------------------------------------------------- */

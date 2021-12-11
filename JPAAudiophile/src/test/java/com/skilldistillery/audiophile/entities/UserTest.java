@@ -136,5 +136,13 @@ class UserTest {
 		assertNotNull(user.getCreatedArtists());
 		assertTrue(user.getCreatedArtists().size() > 0);
 	}
+	
+	@Test
+	@DisplayName("test user to album added by user")
+	void test13() {
+		assertNotNull(user);
+		assertNotNull(user.getCreatedAlbums());
+		assertTrue(user.getCreatedAlbums().size() > 0);
+	}
 
 }
