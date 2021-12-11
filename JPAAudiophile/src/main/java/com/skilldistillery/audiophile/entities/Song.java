@@ -9,38 +9,49 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
 public class Song {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(name="name")
+
+	@Column(name = "name")
 	private String name;
-	
-	@Column(name="lyrics")
+
+	@Column(name = "lyrics")
 	private String lyrics;
-	
-	@Column(name="duration_seconds")
+
+	@Column(name = "duration_seconds")
 	private int durationInSeconds;
-	
-	@Column(name="user_id")
-	private int userId;
-	
-	@ManyToMany(mappedBy="songs")
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
+
+	@ManyToMany(mappedBy = "songs")
 	private List<Artist> artists;
 
+	@ManyToOne
+	@JoinTable(name = "album_song", 
+	         joinColumns = { @JoinColumn(name = "song_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "album_id") })
+	private Album album;
 	
-//	*commented need to get album entity information*
-//	@ManyToOne
-//	@JoinColumn(name="album_id")
-//	private Album album;
+	/* ----------------------------------------------------------------------------
+	Constructors
+---------------------------------------------------------------------------- */
+
+	public Song() {
+	}
 	
-	public Song() {}
+	/* ----------------------------------------------------------------------------
+	get/set Id
+---------------------------------------------------------------------------- */
 
 	public int getId() {
 		return id;
@@ -49,6 +60,10 @@ public class Song {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	get/set Name
+---------------------------------------------------------------------------- */
 
 	public String getName() {
 		return name;
@@ -57,6 +72,10 @@ public class Song {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	get/set Lyrics
+---------------------------------------------------------------------------- */
 
 	public String getLyrics() {
 		return lyrics;
@@ -65,6 +84,10 @@ public class Song {
 	public void setLyrics(String lyrics) {
 		this.lyrics = lyrics;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	get/set Duration in Seconds
+---------------------------------------------------------------------------- */
 
 	public int getDurationInSeconds() {
 		return durationInSeconds;
@@ -73,14 +96,22 @@ public class Song {
 	public void setDurationInSeconds(int durationInSeconds) {
 		this.durationInSeconds = durationInSeconds;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	get/set User
+---------------------------------------------------------------------------- */
 
-	public int getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	get/set Artists
+---------------------------------------------------------------------------- */
 
 	public List<Artist> getArtists() {
 		return artists;
@@ -89,15 +120,22 @@ public class Song {
 	public void setArtists(List<Artist> artists) {
 		this.artists = artists;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	get/set Album
+---------------------------------------------------------------------------- */
 
-//	*commented need to get album entity information*
-//	public Album getAlbum() {
-//		return album;
-//	}
-//
-//	public void setAlbum(Album album) {
-//		this.album = album;
-//	}
+	public Album getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(Album album) {
+		this.album = album;
+	}
+	
+	/* ----------------------------------------------------------------------------
+	   misc
+---------------------------------------------------------------------------- */
 
 	@Override
 	public int hashCode() {
@@ -119,11 +157,7 @@ public class Song {
 	@Override
 	public String toString() {
 		return "Song [id=" + id + ", name=" + name + ", lyrics=" + lyrics + ", durationInSeconds=" + durationInSeconds
-				+ ", userId=" + userId + "]";
+				+ ", userId=" + user + "]";
 	}
-	
-	
-	
-	
 
 }

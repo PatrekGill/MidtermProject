@@ -8,8 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "album_comment")
 public class AlbumComment {
 
 	@Id
@@ -19,7 +21,7 @@ public class AlbumComment {
 	@Column(name = "user_id")
 	private int userId;
 	
-	@Column(name = "album id")
+	@Column(name = "album_id")
 	private int albumId;
 	
 	private String comment;
@@ -28,7 +30,7 @@ public class AlbumComment {
 	private LocalDateTime commentDate;
 
 	@Column(name = "in_reply_to")
-	private int inReplyTo;
+	private Integer inReplyTo;
 
 
 	public AlbumComment() {
@@ -86,12 +88,12 @@ public class AlbumComment {
 	}
 
 
-	public int getInReplyTo() {
+	public Integer getInReplyTo() {
 		return inReplyTo;
 	}
 
 
-	public void setInReplyTo(int inReplyTo) {
+	public void setInReplyTo(Integer inReplyTo) {
 		this.inReplyTo = inReplyTo;
 	}
 

@@ -50,7 +50,7 @@ class SongTest {
 		assertEquals("Stories We Could Tell", song.getName());
 		assertTrue(song.getLyrics().contains("Talkin' to myself againTalkin' to myself again"));
 		assertEquals(198, song.getDurationInSeconds());
-		assertEquals(1, song.getUserId());
+		assertEquals(1, song.getUser().getId());
 	}
 	
 	@Test
@@ -59,6 +59,26 @@ class SongTest {
 		assertNotNull(song);
 		assertNotNull(song.getArtists());
 		assertEquals(1, song.getArtists().size());
+	}
+	
+	@Test
+	@DisplayName("test song to album mapping")
+	void test3() {
+		assertNotNull(song);
+		assertNotNull(song.getAlbum());
+		assertEquals("A1A", song.getAlbum().getTitle());
+		assertEquals(1974, song.getAlbum().getReleaseDate().getYear());
+		assertEquals(12, song.getAlbum().getReleaseDate().getMonthValue());
+		assertEquals(01, song.getAlbum().getReleaseDate().getDayOfMonth());
+	}
+	
+	@Test
+	@DisplayName("test song to user mapping")
+	void test4() {
+		assertNotNull(song);
+		assertNotNull(song.getUser());
+		assertEquals("admin", song.getUser().getUsername());
+		assertEquals("admin@gmail.com", song.getUser().getEmail());
 	}
 
 }

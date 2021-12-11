@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -35,6 +36,9 @@ public class Album {
 	@Column(name = "user_id")
 	private int userId;
 	
+	@OneToMany(mappedBy = "album")
+	private List<Song> songs;
+
 	@ManyToMany
 	@JoinTable(name="favortie_album",
 		joinColumns=@JoinColumn(name="album_id"),

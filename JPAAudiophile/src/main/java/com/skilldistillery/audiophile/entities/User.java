@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
 
 
@@ -43,6 +44,12 @@ public class User {
 	
 	
 //	private String role;
+	
+	@OneToMany(mappedBy="user")
+	private List<Song> songs;
+	
+	@OneToMany(mappedBy="user")
+	private List<Artist> artists;
 	
 	/* ----------------------------------------------------------------------------
 		Constructors
@@ -206,6 +213,28 @@ public class User {
 //	public void setRole(String role) {
 //		this.role = role;
 //	}
+
+	/* ----------------------------------------------------------------------------
+	get/set songs
+---------------------------------------------------------------------------- */
+	public List<Song> getSongs() {
+		return songs;
+	}
+
+	public void setSongs(List<Song> songs) {
+		this.songs = songs;
+	}
+
+	/* ----------------------------------------------------------------------------
+	get/set Artist
+---------------------------------------------------------------------------- */
+	public List<Artist> getArtists() {
+		return artists;
+	}
+
+	public void setArtists(List<Artist> artists) {
+		this.artists = artists;
+	}
 
 	/* ----------------------------------------------------------------------------
 		misc
