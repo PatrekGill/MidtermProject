@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Album {
@@ -104,6 +103,20 @@ public class Album {
 	 */
 	public Genre getGenre() {
 		return genre;
+	}
+	
+	/*
+	 * ----------------------------------------------------------------------------
+	 * get/set AlbumComments
+	 * ----------------------------------------------------------------------------
+	 */
+
+	public List<AlbumComment> getAlbumComments() {
+		return albumComments;
+	}
+
+	public void setAlbumComments(List<AlbumComment> albumComments) {
+		this.albumComments = albumComments;
 	}
 
 	public void setGenre(Genre genre) {
