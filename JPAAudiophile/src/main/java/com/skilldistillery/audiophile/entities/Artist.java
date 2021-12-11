@@ -41,7 +41,15 @@ public class Artist {
 	)
 	private List<Song> songs;
 	
+	/* ----------------------------------------------------------------------------
+	    Constructors
+---------------------------------------------------------------------------- */
+	
 	public Artist() {}
+	
+	/* ----------------------------------------------------------------------------
+	get/set Id
+---------------------------------------------------------------------------- */
 	
 	public int getId() {
 		return id;
@@ -50,6 +58,10 @@ public class Artist {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	get/set Name
+---------------------------------------------------------------------------- */
 
 	public String getName() {
 		return name;
@@ -58,6 +70,10 @@ public class Artist {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	get/set User
+---------------------------------------------------------------------------- */
 
 	public User getUser() {
 		return user;
@@ -66,6 +82,10 @@ public class Artist {
 	public void setUserId(User user) {
 		this.user = user;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	get/set ImageUrl
+---------------------------------------------------------------------------- */
 
 	public String getImageUrl() {
 		return imageUrl;
@@ -74,6 +94,10 @@ public class Artist {
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	get/set Description
+---------------------------------------------------------------------------- */
 
 	public String getDescription() {
 		return description;
@@ -82,6 +106,10 @@ public class Artist {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	get/set Songs
+---------------------------------------------------------------------------- */
 
 	public List<Song> getSongs() {
 		return songs;
@@ -90,6 +118,10 @@ public class Artist {
 	public void setSongs(List<Song> songs) {
 		this.songs = songs;
 	}
+	
+	/* ----------------------------------------------------------------------------
+	    misc
+---------------------------------------------------------------------------- */
 
 	@Override
 	public int hashCode() {
