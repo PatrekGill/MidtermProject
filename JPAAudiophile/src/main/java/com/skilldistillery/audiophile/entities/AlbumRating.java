@@ -92,7 +92,7 @@ public class AlbumRating {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(album, description, id, rating, ratingdate, user);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -104,16 +104,14 @@ public class AlbumRating {
 		if (getClass() != obj.getClass())
 			return false;
 		AlbumRating other = (AlbumRating) obj;
-		return Objects.equals(album, other.album) && Objects.equals(description, other.description) && id == other.id
-				&& rating == other.rating && Objects.equals(ratingdate, other.ratingdate)
-				&& Objects.equals(user, other.user);
+		return id == other.id;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("AlbumRating [id=").append(id).append(", ratingdate=").append(ratingdate).append(", rating=")
-				.append(rating).append(", user=").append(user).append(", album=").append(album).append("]");
+				.append(rating).append("]");
 		return builder.toString();
 	}
 	

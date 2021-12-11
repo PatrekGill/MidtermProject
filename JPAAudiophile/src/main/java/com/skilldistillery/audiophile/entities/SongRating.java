@@ -20,13 +20,11 @@ public class SongRating {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column
 	private String description;
 	
 	@Column(name="rating_date")
-	private LocalDateTime ratingdate;
+	private LocalDateTime ratingDate;
 	
-	@Column
 	private int rating;
 	
 	@ManyToOne
@@ -59,11 +57,11 @@ public class SongRating {
 	}
 
 	public LocalDateTime getRatingdate() {
-		return ratingdate;
+		return ratingDate;
 	}
 
 	public void setRatingdate(LocalDateTime ratingdate) {
-		this.ratingdate = ratingdate;
+		this.ratingDate = ratingdate;
 	}
 
 	public int getRating() {
@@ -92,7 +90,7 @@ public class SongRating {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, rating, ratingdate, song, user);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -104,16 +102,14 @@ public class SongRating {
 		if (getClass() != obj.getClass())
 			return false;
 		SongRating other = (SongRating) obj;
-		return Objects.equals(description, other.description) && id == other.id && rating == other.rating
-				&& Objects.equals(ratingdate, other.ratingdate) && Objects.equals(song, other.song)
-				&& Objects.equals(user, other.user);
+		return id == other.id;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("SongRating [id=").append(id).append(", ratingdate=").append(ratingdate).append(", rating=")
-				.append(rating).append(", user=").append(user).append(", song=").append(song).append("]");
+		builder.append("SongRating [id=").append(id).append(", ratingdate=").append(ratingDate).append(", rating=")
+				.append(rating).append("]");
 		return builder.toString();
 	}
 
