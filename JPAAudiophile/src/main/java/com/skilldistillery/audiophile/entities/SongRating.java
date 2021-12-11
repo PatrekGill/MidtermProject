@@ -60,8 +60,8 @@ public class SongRating {
 		return ratingDate;
 	}
 
-	public void setRatingdate(LocalDateTime ratingdate) {
-		this.ratingDate = ratingdate;
+	public void setRatingdate(LocalDateTime ratingDate) {
+		this.ratingDate = ratingDate;
 	}
 
 	public int getRating() {
@@ -108,7 +108,7 @@ public class SongRating {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("SongRating [id=").append(id).append(", ratingdate=").append(ratingDate).append(", rating=")
+		builder.append("SongRating [id=").append(id).append(", ratingDate=").append(ratingDate).append(", rating=")
 				.append(rating).append("]");
 		return builder.toString();
 	}

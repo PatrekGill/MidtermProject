@@ -23,7 +23,7 @@ public class AlbumRating {
 	private String description;
 	
 	@Column(name="rating_date")
-	private LocalDateTime ratingdate;
+	private LocalDateTime ratingDate;
 	
 	@Column
 	private int rating;
@@ -59,11 +59,11 @@ public class AlbumRating {
 	}
 
 	public LocalDateTime getRatingdate() {
-		return ratingdate;
+		return ratingDate;
 	}
 
-	public void setRatingdate(LocalDateTime ratingdate) {
-		this.ratingdate = ratingdate;
+	public void setRatingdate(LocalDateTime ratingDate) {
+		this.ratingDate = ratingDate;
 	}
 
 	public int getRating() {
@@ -110,7 +110,7 @@ public class AlbumRating {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("AlbumRating [id=").append(id).append(", ratingdate=").append(ratingdate).append(", rating=")
+		builder.append("AlbumRating [id=").append(id).append(", ratingDate=").append(ratingDate).append(", rating=")
 				.append(rating).append("]");
 		return builder.toString();
 	}
