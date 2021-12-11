@@ -1,11 +1,13 @@
 package com.skilldistillery.audiophile.entities;
 
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Genre {
@@ -15,11 +17,20 @@ public class Genre {
 		private int id;
 		
 	private String name;
-
+	
+	@OneToMany(mappedBy= "genre")
+	private List<Album> albums;
+	
+	/* ----------------------------------------------------------------------------
+	Constructors
+	---------------------------------------------------------------------------- */
 	public Genre() {
 		super();
 	}
 
+	/* ----------------------------------------------------------------------------
+	Get/Set Id
+	---------------------------------------------------------------------------- */
 	public int getId() {
 		return id;
 	}
@@ -28,6 +39,9 @@ public class Genre {
 		this.id = id;
 	}
 
+	/* ----------------------------------------------------------------------------
+	Get/Set Name
+	---------------------------------------------------------------------------- */
 	public String getName() {
 		return name;
 	}
@@ -36,6 +50,9 @@ public class Genre {
 		this.name = name;
 	}
 
+	/* ----------------------------------------------------------------------------
+	    misc.
+	---------------------------------------------------------------------------- */
 	@Override
 	public String toString() {
 		return "Genre [id=" + id + ", name=" + name + "]";

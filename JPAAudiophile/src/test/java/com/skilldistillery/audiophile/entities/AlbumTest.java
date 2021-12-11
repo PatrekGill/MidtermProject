@@ -67,6 +67,6 @@ class AlbumTest {
 	@Test
 	void test_UserId_basic_mappings() {
 		assertNotNull(album);
-		assertEquals(1, album.getUserId());
+		assertEquals(1, album.getUser());
 	}
 }

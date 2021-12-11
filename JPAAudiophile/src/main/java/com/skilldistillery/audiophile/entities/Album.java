@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 
@@ -33,8 +34,9 @@ public class Album {
 	@Column(name = "image_url")
 	private String imageURL;
 
+	@ManyToOne
 	@Column(name = "user_id")
-	private int userId;
+	private User user;
 	
 	@OneToMany(mappedBy = "album")
 	private List<Song> songs;
@@ -48,8 +50,13 @@ public class Album {
 	
 	@OneToMany(mappedBy ="album")
 	private List<AlbumRating> albumRatings;
-
 	
+	@ManyToOne
+	@JoinTable(name = "album_genre", 
+	         joinColumns = { @JoinColumn(name = "album_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "genre_id") })
+	private Genre genre;
+
 	/* ----------------------------------------------------------------------------
 		Constructors
 	---------------------------------------------------------------------------- */	
@@ -57,6 +64,29 @@ public class Album {
 		super();
 	}
 	
+	/* ----------------------------------------------------------------------------
+	get/set Songs
+	---------------------------------------------------------------------------- */
+	public List<Song> getSongs() {
+		return songs;
+	}
+
+	
+	public void setSongs(List<Song> songs) {
+		this.songs = songs;
+	}
+
+	/* ----------------------------------------------------------------------------
+	get/set Genre
+	---------------------------------------------------------------------------- */
+	public Genre getGenre() {
+		return genre;
+	}
+
+	public void setGenre(Genre genre) {
+		this.genre = genre;
+	}
+
 	/* ----------------------------------------------------------------------------
 		get/set Id
 	---------------------------------------------------------------------------- */
@@ -100,27 +130,29 @@ public class Album {
 		this.releaseDate = releaseDate;
 	}
 	
-	
 	/* ----------------------------------------------------------------------------
-		get/set Description
+		get/set ImageURL
 	---------------------------------------------------------------------------- */
+	
+	
 	public String getImageURL() {
 		return imageURL;
 	}
 	
-	
-	/* ----------------------------------------------------------------------------
-		get/set ImageURL
-	---------------------------------------------------------------------------- */
 	public void setImageURL(String imageURL) {
 		this.imageURL = imageURL;
 	}
-	public int getUserId() {
-		return userId;
+	
+	/* ----------------------------------------------------------------------------
+	get/set User
+	---------------------------------------------------------------------------- */
+	
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserId(User user) {
+		this.user = user;
 	}
 
 	
