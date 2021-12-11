@@ -381,7 +381,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `audiofiledb`;
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `create_date`, `image_url`, `enabled`, `role`) VALUES (1, 'admin', 'admin', 'Kings', 'Jam', 'admin@gmail.com', '2021-09-21', NULL, 1, NULL);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `create_date`, `image_url`, `enabled`, `role`) VALUES (1, 'admin', 'admin', 'Kings', 'Jam', 'admin@gmail.com', '2021-09-21', 'Look at this awesome pose!', 1, NULL);
 
 COMMIT;
 
