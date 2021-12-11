@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -26,6 +28,19 @@ public class SongRating {
 	
 	@Column
 	private int rating;
+	
+	@ManyToOne
+	@JoinColumn(name="user_id")
+	private User user;
+	
+	@ManyToOne
+	@JoinColumn(name="song_id")
+	private Song song;
+	
+
+	public SongRating() {
+		super();
+	}
 
 	public int getId() {
 		return id;
@@ -59,9 +74,25 @@ public class SongRating {
 		this.rating = rating;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Song getSong() {
+		return song;
+	}
+
+	public void setSong(Song song) {
+		this.song = song;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, rating, ratingdate);
+		return Objects.hash(description, id, rating, ratingdate, song, user);
 	}
 
 	@Override
@@ -74,14 +105,15 @@ public class SongRating {
 			return false;
 		SongRating other = (SongRating) obj;
 		return Objects.equals(description, other.description) && id == other.id && rating == other.rating
-				&& Objects.equals(ratingdate, other.ratingdate);
+				&& Objects.equals(ratingdate, other.ratingdate) && Objects.equals(song, other.song)
+				&& Objects.equals(user, other.user);
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("SongRating [id=").append(id).append(", description=").append(description)
-				.append(", ratingdate=").append(ratingdate).append(", rating=").append(rating).append("]");
+		builder.append("SongRating [id=").append(id).append(", ratingdate=").append(ratingdate).append(", rating=")
+				.append(rating).append(", user=").append(user).append(", song=").append(song).append("]");
 		return builder.toString();
 	}
 

@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -44,6 +45,9 @@ public class Album {
 		inverseJoinColumns=@JoinColumn(name="user_id")
 	)
 	private List<User> favoritedBy;
+	
+	@OneToMany(mappedBy ="album")
+	private List<AlbumRating> albumRatings;
 
 	
 	/* ----------------------------------------------------------------------------
@@ -127,6 +131,14 @@ public class Album {
 		this.favoritedBy = favoritedBy;
 	}
 	
+	public List<AlbumRating> getAlbumRatings() {
+		return albumRatings;
+	}
+
+	public void setAlbumRatings(List<AlbumRating> albumRatings) {
+		this.albumRatings = albumRatings;
+	}
+
 	public boolean addToFavoritedBy(User user) {
 		if (favoritedBy == null) {
 			favoritedBy = new ArrayList<>();
@@ -157,7 +169,24 @@ public class Album {
 		
 		return removed;
 	}
-	
+	//Larry addAlbum through the AlbumRating
+//	public void addFilm(Film film) {
+//		if(films == null) films = new ArrayList<>();
+//		if(!films.contains(film)) {
+//			films.add(film);
+//			if(film.getLanguage() != null) {
+//				film.getLanguage().getFilms().remove(film);
+//				
+//			}
+//			film.setLanguage(this);
+//		}
+//	}
+//	public void removeFilm(Film film) {
+//		film.setLanguage(null);
+//		if(films != null) {
+//			films.remove(film);
+//		}
+//	}
 
 	
 	@Override

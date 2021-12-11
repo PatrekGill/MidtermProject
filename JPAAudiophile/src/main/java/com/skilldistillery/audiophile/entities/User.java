@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToMany;
 
+
 @Entity
 public class User {
 
@@ -40,6 +41,8 @@ public class User {
 	private String email;
 	private String password;
 	private String username;
+	
+	
 //	private String role;
 	
 	@OneToMany(mappedBy="user")
