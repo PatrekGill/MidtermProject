@@ -5,6 +5,7 @@
 	<provider>org.hibernate.jpa.HibernatePersistenceProvider
     </provider>
         <class>com.skilldistillery.audiophile.entities.AlbumRating</class>
+        <class>com.skilldistillery.audiophile.entities.AlbumComment</class>
         <class>com.skilldistillery.audiophile.entities.Album</class>
         <class>com.skilldistillery.audiophile.entities.AlbumComment</class>
         <class>com.skilldistillery.audiophile.entities.Artist</class>
