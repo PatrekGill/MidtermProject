@@ -67,5 +67,14 @@ class ArtistTest {
 		assertNotNull(artist.getUser());
 		assertEquals(1, artist.getUser().getId());
 	}
+	@Test
+	@DisplayName("test artist for create date")
+	void test4(){
+		assertNotNull(artist);
+		assertNotNull(artist.getUser());
+		assertEquals(11, artist.getCreateDate().getDayOfMonth());
+		assertEquals(8, artist.getCreateDate().getMonthValue());
+		assertEquals(2019, artist.getCreateDate().getYear());
+	}
 
 }

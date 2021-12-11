@@ -1,5 +1,6 @@
 package com.skilldistillery.audiophile.entities;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -33,6 +34,9 @@ public class Artist {
 	
 	@Column(name="description")
 	private String description;
+	
+	@Column(name="create_date")
+	private LocalDateTime createDate;
 	
 	@ManyToMany(cascade= CascadeType.PERSIST)
 	@JoinTable(name="song_artist",
@@ -123,6 +127,18 @@ public class Artist {
 	    misc
 ---------------------------------------------------------------------------- */
 
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -142,7 +158,10 @@ public class Artist {
 
 	@Override
 	public String toString() {
-		return "Artist [id=" + id + ", name=" + name + ", userId=" + user + ", description=" + description + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Artist [id=").append(id).append(", name=").append(name).append(", user=").append(user)
+				.append(", createDate=").append(createDate).append("]");
+		return builder.toString();
 	}
 	
 	

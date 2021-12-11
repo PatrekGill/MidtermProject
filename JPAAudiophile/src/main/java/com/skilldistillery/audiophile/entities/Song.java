@@ -1,5 +1,6 @@
 package com.skilldistillery.audiophile.entities;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,11 +31,14 @@ public class Song {
 
 	@Column(name = "duration_seconds")
 	private int durationInSeconds;
+	
+	@Column(name="create_date")
+	private LocalDateTime createDate;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-
+	
 	@ManyToMany(mappedBy = "songs")
 	private List<Artist> artists;
 
@@ -103,6 +107,18 @@ public class Song {
 	}
 	
 	/* ----------------------------------------------------------------------------
+	get/set Create Date
+	---------------------------------------------------------------------------- */
+
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(LocalDateTime createDate) {
+		this.createDate = createDate;
+	}
+	
+	/* ----------------------------------------------------------------------------
 	get/set User
 	---------------------------------------------------------------------------- */
 
@@ -142,11 +158,11 @@ public class Song {
 	Get/Set Song Ratings
 	---------------------------------------------------------------------------- */
 	
-	public List<SongRating> getSongRating() {
+	public List<SongRating> getSongRatings() {
 		return songRatings;
 	}
-
-	public void setSongRating(List<SongRating> songRatings) {
+	
+	public void setSongRatings(List<SongRating> songRatings) {
 		this.songRatings = songRatings;
 	}
 
@@ -155,18 +171,19 @@ public class Song {
 		if(!songRatings.contains(songRating)) {
 			songRatings.add(songRating);
 			if(songRating.getSong() != null) {
-				songRating.getSong().getSongRating().remove(songRating);
+				songRating.getSong().getSongRatings().remove(songRating);
 				
 			}
 			songRating.setSong(this);
 		}
 	}
-	public void removeAlbumRating(SongRating songRating) {
+	public void removeSongRating(SongRating songRating) {
 		songRating.setSong(null);
 		if(songRatings != null) {
 			songRatings.remove(songRating);
 		}
 	}
+ 
 
 	/* ----------------------------------------------------------------------------
 	   misc
@@ -191,8 +208,11 @@ public class Song {
 
 	@Override
 	public String toString() {
-		return "Song [id=" + id + ", name=" + name + ", lyrics=" + lyrics + ", durationInSeconds=" + durationInSeconds
-				+ ", userId=" + user + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Song [id=").append(id).append(", name=").append(name).append(", durationInSeconds=")
+				.append(durationInSeconds).append(", createDate=").append(createDate).append(", user=").append(user)
+				.append(", album=").append(album).append("]");
+		return builder.toString();
 	}
 
 }
