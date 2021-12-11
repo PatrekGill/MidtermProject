@@ -49,10 +49,10 @@ public class User {
 //	private String role;
 	
 	@OneToMany(mappedBy="user")
-	private List<Song> songs;
+	private List<Song> createdSongs;
 	
 	@OneToMany(mappedBy="user")
-	private List<Artist> artists;
+	private List<Artist> createdArtists;
 	
 	
 	/* ----------------------------------------------------------------------------
@@ -268,22 +268,22 @@ public class User {
 	/* ----------------------------------------------------------------------------
 		get/set songs
 	---------------------------------------------------------------------------- */
-	public List<Song> getSongs() {
-		return songs;
+	public List<Song> getCreatedSongs() {
+		return createdSongs;
 	}
-	public void setSongs(List<Song> songs) {
-		this.songs = songs;
+	public void setCreatedSongs(List<Song> songs) {
+		this.createdSongs = songs;
 	}
 
 	
 	/* ----------------------------------------------------------------------------
 		get/set Artist
 	---------------------------------------------------------------------------- */
-	public List<Artist> getArtists() {
-		return artists;
+	public List<Artist> getCreatedArtists() {
+		return createdArtists;
 	}
-	public void setArtists(List<Artist> artists) {
-		this.artists = artists;
+	public void setCreatedArtists(List<Artist> artists) {
+		this.createdArtists = artists;
 	}
 
 	

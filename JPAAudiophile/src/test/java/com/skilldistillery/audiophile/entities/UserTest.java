@@ -1,6 +1,9 @@
 package com.skilldistillery.audiophile.entities;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,6 +13,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class UserTest {
@@ -115,6 +119,22 @@ class UserTest {
 		assertFalse(user.getFavoriteSongs().isEmpty());
 		assertEquals(2,user.getFavoriteSongs().get(0).getId());
 		assertEquals("Door Number Three",user.getFavoriteSongs().get(0).getName());
+	}
+	
+	@Test
+	@DisplayName("test user to songs added by user")
+	void test11() {
+		assertNotNull(user);
+		assertNotNull(user.getCreatedSongs());
+		assertTrue(user.getCreatedSongs().size() > 0);
+	}
+	
+	@Test
+	@DisplayName("test user to artists added by user")
+	void test12() {
+		assertNotNull(user);
+		assertNotNull(user.getCreatedArtists());
+		assertTrue(user.getCreatedArtists().size() > 0);
 	}
 
 }
