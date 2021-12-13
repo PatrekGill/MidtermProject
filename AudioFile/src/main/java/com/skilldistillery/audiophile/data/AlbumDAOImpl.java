@@ -78,20 +78,47 @@ public class AlbumDAOImpl implements AlbumDAO{
 	}
 
 	@Override
-	public List<Album> findAlbumsByGenre(Genre genre) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Album> findAlbumsByGenre(String genre) {
+		String jpql = "SELECT a FROM Album a WHERE a.genre.name LIKE :genre";
+		
+		try {
+			return em.createQuery(jpql, Album.class).setParameter("genre", "%" + genre + "%").getResultList();
+		}catch(Exception e) {
+			System.err.println("No album found from: " + genre);
+			return null;
+		}
 	}
 
 	@Override
-	public List<Album> findAlbumsByCreatedUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Album> findAlbumsByCreatedUsername(String username) {
+		String jpql = "SELECT a FROM Album a WHERE a.user.username LIKE :username";
+		
+		try {
+			return em.createQuery(jpql, Album.class).setParameter("username", "%" + username + "%").getResultList();
+		}catch(Exception e) {
+			System.err.println("No album found from: " + username);
+			return null;
+		}
+	}
+	
+	@Override
+	public List<Album> findAlbumsByRating(int rating){
+		String jpql = "SELECT a FROM Album a WHERE AVG(a.albumRating) BETWEEN :startRating AND :endRating";
+		try {
+			return em.createQuery(jpql, Album.class).setParameter("startRating", rating).setParameter("endRating", (rating + 1)).getResultList();
+		}catch(Exception e) {
+			System.err.println("No album found from: " + rating);
+			return null;
+		}
 	}
 
 	@Override
 	public boolean addAlbum(Album album) {
-		// TODO Auto-generated method stub
+
+		em.getTransaction().begin();
+		em.persist(album);
+		em.flush();
+		em.getTransaction().commit();
 		return false;
 	}
 
@@ -103,8 +130,12 @@ public class AlbumDAOImpl implements AlbumDAO{
 
 	@Override
 	public boolean deleteAlbum(Album album) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean deleteSuccess = false;
+		em.getTransaction().begin();
+		em.remove(album);
+		deleteSuccess = !em.contains(album);
+		em.getTransaction().commit();
+		return deleteSuccess;
 	}
 
 }
