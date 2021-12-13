@@ -1,10 +1,16 @@
 package com.skilldistillery.audiophile.data;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+
+import com.skilldistillery.audiophile.entities.User;
 
 @SpringBootTest
 class UserDAOImplTest {
@@ -58,4 +64,19 @@ class UserDAOImplTest {
 		assertNotNull(userDAO);
 		assertNull(userDAO.findUserById(0));
 	}
+	
+//	@Test
+//	void test_createUser_deleteUser() {
+//		User user = new User();
+//		user.setUsername("testUsername");
+//		user.setPassword("testPassword");
+//		user.setFirstName("Hello");
+//		user.setLastName("World");
+//		user.setImageURL("www.test.com/image.jpg");
+//		user.setEmail("testUser@gmail.com");
+//		user.setEnabled(true);
+//		
+//		assertNotNull(userDAO.createUser(user));
+//		assertTrue(userDAO.deleteUser(user.getId()));
+//	}
 }
