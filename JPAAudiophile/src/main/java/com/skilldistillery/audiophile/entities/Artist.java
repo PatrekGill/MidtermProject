@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Artist {
@@ -45,6 +46,9 @@ public class Artist {
 	  inverseJoinColumns=@JoinColumn(name="song_id")
 	)
 	private List<Song> songs;
+	
+	@OneToMany(mappedBy = "artist")
+	private List<Album> albums;
 	
 	/* ----------------------------------------------------------------------------
 	    Constructors
@@ -84,7 +88,7 @@ public class Artist {
 		return user;
 	}
 
-	public void setUserId(User user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	
@@ -154,9 +158,8 @@ public class Artist {
 		
 		return removed;
 	}
-	
 	/* ----------------------------------------------------------------------------
-	    misc
+	get/set createDate
 ---------------------------------------------------------------------------- */
 
 	public LocalDateTime getCreateDate() {
@@ -167,9 +170,52 @@ public class Artist {
 		this.createDate = createDate;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	/* ----------------------------------------------------------------------------
+	get/set albums
+---------------------------------------------------------------------------- */
+
+	public List<Album> getAlbums() {
+		return albums;
 	}
+
+	public void setAlbums(List<Album> albums) {
+		this.albums = albums;
+	}
+	
+	public boolean addAlbum(Album album) {
+		if (albums == null) {
+			albums = new ArrayList<>();
+		}
+		
+		boolean addedToList = false;
+		if (albums != null) {
+			if (! albums.contains(album)) {
+				addedToList = albums.add(album);
+			}
+			
+			if (! album.getArtist().equals(this)) {
+				album.setArtist(this);
+			}
+		}
+		
+		return addedToList;
+	}
+	public boolean removeAlbums(Album album) {
+		boolean removed = false;
+		if (albums != null && albums.contains(album)) {
+			removed = albums.remove(album);
+		}
+		
+		if (album.getArtist().equals(this)) {			
+			album.setArtist(this);
+		}
+		
+		return removed;
+	}
+	
+	/* ----------------------------------------------------------------------------
+	    misc
+---------------------------------------------------------------------------- */
 
 	@Override
 	public int hashCode() {

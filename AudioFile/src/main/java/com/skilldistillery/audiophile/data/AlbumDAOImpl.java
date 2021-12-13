@@ -10,10 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.skilldistillery.audiophile.entities.Album;
-import com.skilldistillery.audiophile.entities.Artist;
-import com.skilldistillery.audiophile.entities.Genre;
 import com.skilldistillery.audiophile.entities.Song;
-import com.skilldistillery.audiophile.entities.User;
 @Repository
 @Transactional
 public class AlbumDAOImpl implements AlbumDAO{
@@ -58,11 +55,16 @@ public class AlbumDAOImpl implements AlbumDAO{
 	}
 
 	
-	//Not finished need to add artist id to album table in db
 	@Override
 	public List<Album> findAlbumsByArtistName(String artistName) {
-
-		return null;
+		String jpql = "SELECT a FROM Album a WHERE a.artist.name LIKE :artistName";
+		
+		try {
+			return em.createQuery(jpql, Album.class).setParameter("artistName", "%" + artistName + "%").getResultList();
+		}catch(Exception e) {
+			System.err.println("No album found from: " + artistName);
+			return null;
+		}
 	}
 
 	@Override
@@ -102,29 +104,35 @@ public class AlbumDAOImpl implements AlbumDAO{
 	}
 	
 	@Override
-	public List<Album> findAlbumsByRating(int rating){
-		String jpql = "SELECT a FROM Album a WHERE AVG(a.albumRating) BETWEEN :startRating AND :endRating";
+	public List<Album> findAlbumsByAverageRating(int rating){
+		String jpql = "SELECT a FROM Album a JOIN a.albumRatings ar WHERE AVG(ar.rating) BETWEEN :startRating AND :endRating";
 		try {
-			return em.createQuery(jpql, Album.class).setParameter("startRating", rating).setParameter("endRating", (rating + 1)).getResultList();
+			return em.createQuery(jpql, Album.class).setParameter("startRating", rating).setParameter("endRating", rating + 1).getResultList();
 		}catch(Exception e) {
-			System.err.println("No album found from: " + rating);
+			System.err.println("No albums found from: " + rating);
 			return null;
 		}
 	}
 
 	@Override
 	public boolean addAlbum(Album album) {
-
+		boolean creationSuccess = false;
 		em.getTransaction().begin();
 		em.persist(album);
 		em.flush();
+		creationSuccess = em.contains(album);
 		em.getTransaction().commit();
-		return false;
+		return creationSuccess;
 	}
 
 	@Override
-	public boolean updateAlbum(Album album) {
-		// TODO Auto-generated method stub
+	public boolean updateAlbum(int id, Album album) {
+		boolean updateSuccess = false;
+		Album albumToBeUpdated = em.find(Album.class, id);
+		albumToBeUpdated.setTitle(album.getTitle());
+		albumToBeUpdated.setDescription(album.getDescription());
+		albumToBeUpdated.setReleaseDate(album.getReleaseDate());
+		albumToBeUpdated.setImageURL(album.getImageURL());
 		return false;
 	}
 
@@ -136,6 +144,17 @@ public class AlbumDAOImpl implements AlbumDAO{
 		deleteSuccess = !em.contains(album);
 		em.getTransaction().commit();
 		return deleteSuccess;
+	}
+
+	@Override
+	public List<Song> getSongsFromAlbum(Album album) {
+		String jpql = "SELECT s FROM Song s WHERE s.album =:a";
+		try {
+			return em.createQuery(jpql, Song.class).setParameter("a", album).getResultList();
+		}catch(Exception e) {
+			System.err.println("No songs found from: " + album);
+			return null;
+		}
 	}
 
 }

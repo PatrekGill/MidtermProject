@@ -24,7 +24,8 @@ public interface AlbumDAO {
 	List<Album> findAlbumByCreationDate(LocalDateTime creationDate);
 	List<Album> findAlbumsByGenre(String genre);
 	List<Album> findAlbumsByCreatedUsername(String username);
-	List<Album> findAlbumsByRating(int rating);
+	List<Album> findAlbumsByAverageRating(int rating);
+	List<Song> getSongsFromAlbum(Album album);
 	
 	
 	/*
@@ -34,7 +35,7 @@ public interface AlbumDAO {
 	 */
 	
 	boolean addAlbum(Album album);
-	boolean updateAlbum(Album album);
+	boolean updateAlbum(int id, Album album);
 	boolean deleteAlbum(Album album);
 	
 	

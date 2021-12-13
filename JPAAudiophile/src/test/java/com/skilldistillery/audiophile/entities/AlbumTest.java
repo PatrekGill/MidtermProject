@@ -117,4 +117,11 @@ class AlbumTest {
 		assertNotNull(album.getAlbumComments());
 		assertTrue(album.getAlbumComments().size() > 0);
 	}
+	
+	@Test
+	@DisplayName("test album to songs mapping")
+	void test21() {
+		assertNotNull(album);
+		assertTrue(album.getSongs().size() > 0);
+	}
 }
