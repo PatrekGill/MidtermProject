@@ -78,7 +78,7 @@ class AlbumDAOImplTest {
 	@Test
 	@DisplayName("test find albums by average rating")
 	void test7() {
-		List<Album> a = albumDAO.findAlbumsByAverageRating(3);
+		List<Album> a = albumDAO.sortAlbumsByRating();
 		assertNotNull(a);
 		assertTrue(a.size() > 0);
 	}

@@ -104,12 +104,12 @@ public class AlbumDAOImpl implements AlbumDAO{
 	}
 	
 	@Override
-	public List<Album> findAlbumsByAverageRating(int rating){
-		String jpql = "SELECT a FROM Album a JOIN a.albumRatings ar WHERE AVG(ar.rating) BETWEEN :startRating AND :endRating";
+	public List<Album> sortAlbumsByRating(){
+		String jpql = "SELECT a FROM Album a LEFT JOIN a.albumRatings ar GROUP BY a ORDER BY AVG(ar.rating)";
 		try {
-			return em.createQuery(jpql, Album.class).setParameter("startRating", rating).setParameter("endRating", rating + 1).getResultList();
+			return em.createQuery(jpql, Album.class).getResultList();
 		}catch(Exception e) {
-			System.err.println("No albums found from: " + rating);
+			System.err.println("No albums found");
 			return null;
 		}
 	}
@@ -155,6 +155,12 @@ public class AlbumDAOImpl implements AlbumDAO{
 			System.err.println("No songs found from: " + album);
 			return null;
 		}
+	}
+
+	@Override
+	public List<Album> sortAlbumsByCreateDate() {
+			String jpql ="SELECT a FROM Album a ORDER BY a.creationDateTime";
+		return null;
 	}
 
 }
