@@ -10,13 +10,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 
 @Entity
 public class User {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -39,6 +40,8 @@ public class User {
 	@ManyToMany(mappedBy="favoritedBy")
 	List<Song> favoriteSongs;
 	
+	@OneToMany(mappedBy="user")
+	List<AlbumComment> comments;
 	
 	private boolean enabled;
 	private String email;
@@ -56,6 +59,12 @@ public class User {
 	
 	@OneToMany(mappedBy="user")
 	private List<Album> createdAlbums;
+	
+	@OneToMany(mappedBy="user")
+	private List<AlbumRating> albumRatings;
+	
+	@OneToMany(mappedBy="user")
+	private List<SongRating> songRatings;
 	
 	
 	/* ----------------------------------------------------------------------------
@@ -165,6 +174,131 @@ public class User {
 	}
 	
 	
+	/* ----------------------------------------------------------------------------
+		Album ratings list methods
+	---------------------------------------------------------------------------- */
+	public List<SongRating> getSongRatings() {
+		if (songRatings == null) {
+			songRatings = new ArrayList<>();
+		}
+		
+		return songRatings;
+	}
+	public void setSongRatings(List<SongRating> songRatings) {
+		this.songRatings = songRatings;
+	}
+
+	public boolean addSongRating(SongRating rating) {
+		if (songRatings == null) {
+			songRatings = new ArrayList<>();
+		}
+
+		boolean addedToList = false;
+		if (rating != null) {
+			if (!songRatings.contains(rating)) {
+				addedToList = songRatings.add(rating);
+			}
+			
+			rating.setUser(this);
+		}
+
+		return addedToList;
+	}
+	public boolean removeAlbumRating(SongRating rating) {
+		boolean removed = false;
+		if (songRatings != null && songRatings.contains(rating)) {
+			removed = songRatings.remove(rating);
+		}
+		
+		rating.setUser(null);
+		
+		return removed;
+	}
+	
+	
+	/* ----------------------------------------------------------------------------
+		Song ratings list methods
+	---------------------------------------------------------------------------- */
+	public List<AlbumRating> getAlbumRatings() {
+		if (albumRatings == null) {
+			albumRatings = new ArrayList<>();
+		}
+		return albumRatings;
+	}
+	public void setAlbumRatings(List<AlbumRating> albumRatings) {
+		this.albumRatings = albumRatings;
+	}
+	
+	public boolean addAlbumRating(AlbumRating rating) {
+		if (albumRatings == null) {
+			albumRatings = new ArrayList<>();
+		}
+		
+		boolean addedToList = false;
+		if (rating != null) {
+			if (!albumRatings.contains(rating)) {
+				addedToList = albumRatings.add(rating);
+			}
+			
+			rating.setUser(this);
+		}
+		
+		return addedToList;
+	}
+	public boolean removeAlbumRating(AlbumRating rating) {
+		boolean removed = false;
+		if (albumRatings != null && albumRatings.contains(rating)) {
+			removed = albumRatings.remove(rating);
+		}
+		
+		rating.setUser(null);
+		
+		return removed;
+	}
+	
+	
+	/* ----------------------------------------------------------------------------
+		Album comments list methods
+	---------------------------------------------------------------------------- */
+	public List<AlbumComment> getComments() {
+		if (comments == null) {
+			comments = new ArrayList<>();
+		}
+		
+		return comments;
+	}
+	public void setComments(List<AlbumComment> comments) {
+		this.comments = comments;
+	}
+	
+	public boolean addComment(AlbumComment comment) {
+		if (comments == null) {
+			comments = new ArrayList<>();
+		}
+
+		boolean addedToList = false;
+		if (comment != null) {
+			if (!comments.contains(comment)) {
+				addedToList = comments.add(comment);
+			}
+			
+			comment.setUser(this);
+		}
+
+		return addedToList;
+	}
+	public boolean removeComment(AlbumComment comment) {
+		boolean removed = false;
+		if (comments != null && comments.contains(comment)) {
+			removed = comments.remove(comment);
+		}
+		
+		comment.setUser(null);
+		
+		return removed;
+	}
+
+
 	/* ----------------------------------------------------------------------------
 		Favorite album list methods
 	---------------------------------------------------------------------------- */

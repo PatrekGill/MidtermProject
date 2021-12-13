@@ -44,16 +44,25 @@ public class Album {
 	@OneToMany(mappedBy = "album")
 	private List<AlbumRating> albumRatings;
 
+	@OneToMany(mappedBy = "album")
+	private List<AlbumComment> albumComments;
+
 	@ManyToMany
-	@JoinTable(name = "favorite_album", joinColumns = @JoinColumn(name = "album_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JoinTable(
+		name = "favorite_album", 
+		joinColumns = @JoinColumn(name = "album_id"), 
+		inverseJoinColumns = @JoinColumn(name = "user_id")
+	)
 	private List<User> favoritedBy;
 
 	@ManyToOne
-	@JoinTable(name = "album_genre", joinColumns = @JoinColumn(name = "album_id"), inverseJoinColumns = @JoinColumn(name = "genre_id"))
+	@JoinTable(
+		name = "album_genre",
+		joinColumns = @JoinColumn(name = "album_id"),
+		inverseJoinColumns = @JoinColumn(name = "genre_id")
+	)
 	private Genre genre;
 
-	@OneToMany(mappedBy = "album")
-	private List<AlbumComment> albumComments;
 
 	public void addAlbumComment(AlbumComment albumComment) {
 		if (albumComments == null) {

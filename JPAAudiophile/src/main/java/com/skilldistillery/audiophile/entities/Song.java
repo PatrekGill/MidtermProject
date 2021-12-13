@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.query.criteria.internal.expression.ConcatExpression;
+
 @Entity
 public class Song {
 
@@ -169,6 +171,10 @@ public class Song {
 		boolean removed = false;
 		if (artists != null && artists.contains(artist)) {
 			removed = artists.remove(artist);
+		}
+		
+		if (artist.getSongs().contains(this)) {
+			artist.removeSong(this);
 		}
 		
 		return removed;

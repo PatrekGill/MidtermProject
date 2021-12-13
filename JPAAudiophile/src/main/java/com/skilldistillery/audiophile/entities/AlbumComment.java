@@ -37,6 +37,8 @@ public class AlbumComment {
 	@Column(name = "in_reply_to")
 	private Integer inReplyTo;
 	
+	
+	
 	public AlbumComment() {
 		super();
 	}

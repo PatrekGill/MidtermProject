@@ -144,5 +144,32 @@ class UserTest {
 		assertNotNull(user.getCreatedAlbums());
 		assertTrue(user.getCreatedAlbums().size() > 0);
 	}
+	
+	@Test
+	void test_AlbumComment_to_User_mapping() {
+		assertNotNull(user);
+		assertNotNull(user.getComments());
+		
+		assertFalse(user.getComments().isEmpty());
+		assertEquals("I love it",user.getComments().get(0).getComment());
+	}
+	
+	@Test
+	void test_AlbumRating_to_User_mapping() {
+		assertNotNull(user);
+		assertNotNull(user.getAlbumRatings());
+		
+		assertFalse(user.getAlbumRatings().isEmpty());
+		assertEquals("nice album",user.getAlbumRatings().get(0).getDescription());
+	}
+
+	@Test
+	void test_SongRating_to_User_mapping() {
+		assertNotNull(user);
+		assertNotNull(user.getSongRatings());
+		
+		assertFalse(user.getSongRatings().isEmpty());
+		assertEquals("nice one",user.getSongRatings().get(0).getDescription());
+	}
 
 }
