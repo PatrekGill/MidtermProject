@@ -26,11 +26,45 @@ class SongRatingDAOImplTest {
 		assertNotNull(songRatingList);
 		assertTrue(songRatingList.size() > 0);
 	}
-
+	
 	@Test
-	void test() {
-		  DaoImp = new SongDAOImpl();
-		assertNotNull(DaoImp.findBySongId(2));
+	void test_sortSongRatingsByCreationDate_just_order() {
+		assertNotNull(srDAO);
+		assertNotNull(srDAO.sortSongRatingsByRatingDate(true));
+		assertEquals(3, srDAO.sortSongRatingsByRatingDate(true).get(0).getRating());
 		
 	}
+	
+	@Test
+	void test_sortSongRatingsByCreationDate_number_of_users() {
+		assertNotNull(srDAO);
+		assertNotNull(srDAO.sortSongRatingsByRatingDate(true,1));
+		assertEquals(3, srDAO.sortSongRatingsByRatingDate(true,1).get(0).getRating());
+		assertEquals(1, srDAO.sortSongRatingsByRatingDate(true,1).size());
+		
+	}
+	
+	@Test
+	void test_sortSongRatingsByCreationDate_out_of_bounds() {
+		assertNotNull(srDAO);
+		assertNotNull(srDAO.sortSongRatingsByRatingDate(true,0));
+		assertNotNull(srDAO.sortSongRatingsByRatingDate(true,20));
+		assertEquals(3, srDAO.sortSongRatingsByRatingDate(true,20).get(0).getRating());
+		
+	}
+
+//	@Test
+//	void test_findUserById_expect_admin() {
+//		assertNotNull(srDAO);
+//		assertNotNull(srDAO.sortSongRatingsByRatingDate(1));
+//		assertEquals("admin",srDAO.sortSongRatingsByRatingDate(1).getRating());
+//		
+//	}
+
+//	@Test
+//	void test() {
+//		  DaoImp = new SongDAOImpl();
+//		assertNotNull(DaoImp.findBySongId(2));
+//		
+//	}
 }
