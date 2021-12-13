@@ -18,7 +18,7 @@ public class SongRatingDAOImpl implements SongRatingDAO {
 	
 	@PersistenceContext
 	private EntityManager em;
-	static UserDAOImpl userDAOImpl = new UserDAOImpl();
+	
 	@Override
 	public List<SongRating> findByUsername(String username) {
 		String jpql ="SELECT sr FROM SongRating sr WHERE sr.user.username LIKE :n";
