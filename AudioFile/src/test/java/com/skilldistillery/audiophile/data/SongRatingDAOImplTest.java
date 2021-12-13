@@ -18,8 +18,7 @@ class SongRatingDAOImplTest {
 	@Autowired
 	SongRatingDAO srDAO;
 	
-	@Autowired
-	SongDAOImpl DaoImp;
+	
 	@Test
 	void SongRating_FindByUsername_Test() {
 		List<SongRating> songRatingList = srDAO.findByUsername("admin");
@@ -27,10 +26,5 @@ class SongRatingDAOImplTest {
 		assertTrue(songRatingList.size() > 0);
 	}
 
-	@Test
-	void test() {
-		  DaoImp = new SongDAOImpl();
-		assertNotNull(DaoImp.findBySongId(2));
-		
-	}
+	
 }

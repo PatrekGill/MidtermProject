@@ -31,7 +31,7 @@ public class SongDAOImpl implements SongDAO {
 //	}
 	@Override
 	public Song findBySongId(int id) {
-		String jpql ="SELECT s FROM Song s where s.id =:id";
+		String jpql ="SELECT s FROM Song s where s.id = :id";
 		try {
 			return em.createQuery(jpql,Song.class)
 					 .setParameter("id", id)
@@ -61,7 +61,8 @@ public class SongDAOImpl implements SongDAO {
 	}
 	@Override
 	public List<Song> findByArtistName(String artistName) {
-		// TODO Auto-generated method stub
+		String jpql = "SELECT a.songs FROM Artist a where a.name = :artName";
+		
 		return null;
 	}
 	
