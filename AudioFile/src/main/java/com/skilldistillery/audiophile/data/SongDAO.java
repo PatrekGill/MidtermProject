@@ -7,8 +7,13 @@ import com.skilldistillery.audiophile.entities.Song;
 
 public interface SongDAO {
 
-	Song findBySongId(int id);
-	List<Song> findBySongName (String name);
-	List<Song> sortByCreatDate(LocalDateTime songDate);
-	List<Song> findByArtistName(String artistName);
+	public Song findBySongId(int id);
+	public List<Song> findSongByRating(int rating);
+	public List<Song> findBySongName (String name);
+	public List<Song> findByArtistName(String artistName);
+	public List<Song> findByAlbumName(String albumName);
+	public List<Song> sortByCreatDate();
+	public List<Song> sortBySongRating();
+	public Song addNewSongs(Song song);
+	public boolean deleteNewAddedSong(int id);
 }

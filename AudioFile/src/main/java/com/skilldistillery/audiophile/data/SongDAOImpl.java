@@ -1,6 +1,6 @@
 package com.skilldistillery.audiophile.data;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -10,37 +10,27 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.skilldistillery.audiophile.entities.Song;
-import com.skilldistillery.audiophile.entities.User;
 
 @Repository
 @Transactional
 public class SongDAOImpl implements SongDAO {
 	@PersistenceContext
 	private EntityManager em;
-//	@Override
-//	public  findByUsername(String username) {
-//		// TODO Auto-generated method stub
-//		String jpql ="SELECT u from User u where u.username =:n";
-//		
-//		try {
-//			return em.createQuery(jpql,User.class).setParameter("n",username).getSingleResult();
-//		} catch (Exception e) {s
-//			System.err.println("Invalid user name: "+username);
-//			return null;
-//		}
-//	}
+	
+	/*---------------------------
+	 * Find Song By Song ID
+	 * --------------------------
+	 */
 	@Override
 	public Song findBySongId(int id) {
-		String jpql ="SELECT s FROM Song s where s.id = :id";
-		try {
-			return em.createQuery(jpql,Song.class)
-					 .setParameter("id", id)
-					 .getSingleResult();
-		} catch (Exception e) {
-			System.err.println("Invalid Song id: "+id);
-			return null;
-		}
+		return(Song)em.find(Song.class, id);
 	}
+	
+	/*------------------------
+	 * Find Song By Song Name
+	 * -----------------------
+	 */
+	
 	@Override
 	public List<Song> findBySongName(String name) {
 
@@ -51,20 +41,97 @@ public class SongDAOImpl implements SongDAO {
 				  .getResultList();
 		return songs;
 	}
+	
+	/*---------------------------
+	 * Sort Song By Create Date
+	 * --------------------------
+	 */
+	
 	@Override
-	public List<Song> sortByCreatDate(LocalDateTime songDate) {
-		String jpql ="SELECT s FROM Song s order by createDate";
+	public List<Song> sortByCreatDate() {
+		String jpql ="SELECT s FROM Song s order by s.createDate";
 		List<Song> songs;
 		songs = em.createQuery(jpql,Song.class)
 				  .getResultList();
 		return songs;
 	}
+	
+	/*---------------------------
+	 * Find Song By Artist Name
+	 * --------------------------
+	 */
 	@Override
 	public List<Song> findByArtistName(String artistName) {
 		String jpql = "SELECT a.songs FROM Artist a where a.name = :artName";
-		
-		return null;
+		List<Song> songs = new ArrayList<>();
+		List<Object> objs = em.createQuery(jpql,Object.class)
+				              .setParameter("artName", artistName)
+				              .getResultList();
+		objs.forEach(obj->songs.add((Song)obj));
+		return songs;
 	}
 	
+	/*-------------------------
+	 * Find Song By Album Name
+	 * ------------------------
+	 */
+	@Override
+	public List<Song> findByAlbumName(String albumName) {
+		String jpql = "SELECT a.songs FROM Album a where a.title = :albName";
+		List<Song> songs = new ArrayList<>();
+		List<Object>objs = em.createQuery(jpql,Object.class)
+	              			 .setParameter("albName", albumName)
+	              			 .getResultList();
+		objs.forEach(obj->songs.add((Song)obj));
+		return songs;
+	}
+	
+	/*-----------------------------
+	 * Create a new Song
+	 * ----------------------------
+	 */
+	
+	@Override
+	public Song addNewSongs(Song song) {
+		em.getTransaction().begin();
+		em.persist(song);
+		em.getTransaction().commit();
+		em.close();
+		return song;
+	}
+	
+	@Override
+	public boolean deleteNewAddedSong(int id) {
+		boolean successfullyDelete = false;
+		Song song = em.find(Song.class, id);
+		if (song != null) {
+			em.getTransaction().begin();
+			em.remove(song);
+			successfullyDelete = !em.contains(song);
+			em.getTransaction().commit();
+		}
+		em.close();
+		return successfullyDelete;
+	}
+
+	@Override
+	public List<Song> findSongByRating(int rating) {
+		
+		String jpql = "SELECT s.song FROM SongRating s where s.rating =:rat";
+		List<Song> songs = em.createQuery(jpql,Song.class)
+							 .setParameter("rat", rating)
+							 .getResultList();
+		return songs;
+	}
+
+	@Override
+	public List<Song> sortBySongRating() {
+		String jpql = "SELECT s.song FROM SongRating s order by s.rating";
+		List<Song> songs = em.createQuery(jpql,Song.class)
+							 .getResultList();
+		
+		return songs;
+	}
+
 	
 }
