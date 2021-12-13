@@ -10,10 +10,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 
 @Entity
@@ -28,6 +28,7 @@ public class User {
 	@Column(name="last_name")
 	private String lastName;
 	
+	@CreationTimestamp
 	@Column(name="create_date")
 	private LocalDateTime creationDateTime;
 	
