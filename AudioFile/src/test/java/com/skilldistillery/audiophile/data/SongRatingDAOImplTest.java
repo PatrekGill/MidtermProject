@@ -28,6 +28,20 @@ class SongRatingDAOImplTest {
 	}
 	
 	@Test
+	void findSongRatingByUserId_Test() {
+		assertNotNull(srDAO);
+		assertNotNull(srDAO.findSongRatingByUserId(1));
+		assertEquals(1, srDAO.findSongRatingByUserId(1).getId());
+	}
+	
+	@Test
+	void FindBySongRatingById_Test() {
+		assertNotNull(srDAO);
+		assertNotNull(srDAO.findSongRatingById(1));
+		assertEquals(1, srDAO.findSongRatingById(1).getId());
+	}
+	
+	@Test
 	void test_sortSongRatingsByCreationDate_just_order() {
 		assertNotNull(srDAO);
 		assertNotNull(srDAO.sortSongRatingsByRatingDate(true));
@@ -52,6 +66,13 @@ class SongRatingDAOImplTest {
 		assertEquals(3, srDAO.sortSongRatingsByRatingDate(true,20).get(0).getRating());
 		
 	}
+	
+	@Test
+	void test_sortByRating_Mappings() {
+		assertNotNull(srDAO);
+		assertNotNull(srDAO.sortByRating(0, true).size() > 0);
+	}
+	
 
 //	@Test
 //	void test_findUserById_expect_admin() {
