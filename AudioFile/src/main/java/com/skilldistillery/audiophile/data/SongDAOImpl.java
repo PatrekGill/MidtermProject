@@ -24,7 +24,7 @@ public class SongDAOImpl implements SongDAO {
 //		
 //		try {
 //			return em.createQuery(jpql,User.class).setParameter("n",username).getSingleResult();
-//		} catch (Exception e) {
+//		} catch (Exception e) {s
 //			System.err.println("Invalid user name: "+username);
 //			return null;
 //		}
@@ -32,11 +32,14 @@ public class SongDAOImpl implements SongDAO {
 	@Override
 	public Song findBySongId(int id) {
 		String jpql ="SELECT s FROM Song s where s.id =:id";
-		Song song;
-		song = em.createQuery(jpql,Song.class)
-				 .setParameter("id", id)
-				 .getSingleResult();
-		return song;
+		try {
+			return em.createQuery(jpql,Song.class)
+					 .setParameter("id", id)
+					 .getSingleResult();
+		} catch (Exception e) {
+			System.err.println("Invalid Song id: "+id);
+			return null;
+		}
 	}
 	@Override
 	public List<Song> findBySongName(String name) {

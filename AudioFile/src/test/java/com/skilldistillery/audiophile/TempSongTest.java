@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.skilldistillery.audiophile;
 
 import static org.junit.jupiter.api.Assertions.*;
 
