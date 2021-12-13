@@ -41,10 +41,14 @@ public class ArtistDAOImpl implements ArtistDAO {
 		List<Artist> artists = em.createQuery(jpql,Artist.class)
 								 .setParameter("artName", name)
 								 .getResultList();
-		
 		return artists;
 	}
 
+	/*
+	 * -----------------------
+	 * Sort by Create Date
+	 * -----------------------
+	 */
 	@Override
 	public List<Artist> sortByCreateDate() {
 		String jpql = "SELECT a FROM Artist a order by a.createDate";
@@ -53,6 +57,12 @@ public class ArtistDAOImpl implements ArtistDAO {
 
 		return artists;
 	}
+	
+	/*
+	 * -----------------------
+	 * Find By Song Name
+	 * -----------------------
+	 */
 
 	@Override
 	public List<Artist> findArtistBySongName(String songName) {
@@ -64,6 +74,12 @@ public class ArtistDAOImpl implements ArtistDAO {
 		objs.forEach(obj->artists.add((Artist)obj));
 		return artists;
 	}
+	
+	/*
+	 * -----------------------
+	 * Find by Song Id
+	 * -----------------------
+	 */
 
 	@Override
 	public List<Artist> findArtistBySongid(int songId) {
@@ -74,6 +90,21 @@ public class ArtistDAOImpl implements ArtistDAO {
 							  .getResultList();
 		objs.forEach(obj->artists.add((Artist)obj));
 		return artists;
+	}
+
+	/*
+	 * -----------------------
+	 * Find by Album Name
+	 * -----------------------
+	 */
+	@Override
+	public List<Artist> findArtistByAlbumName(String albumName) {
+		String jpql = "SELECT a.artist FROM Album a where a.name =:name";
+		List<Artist> artists = em.createQuery(jpql,Artist.class)
+				 .setParameter("name", albumName)
+				 .getResultList();
+		return artists;
+		
 	}
 	
 	

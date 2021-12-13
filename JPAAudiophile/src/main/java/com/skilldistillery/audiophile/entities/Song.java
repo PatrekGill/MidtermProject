@@ -16,7 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import org.hibernate.query.criteria.internal.expression.ConcatExpression;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 public class Song {
@@ -35,7 +36,12 @@ public class Song {
 	private int durationInSeconds;
 	
 	@Column(name="create_date")
+	@CreationTimestamp
 	private LocalDateTime createDate;
+	
+	@Column(name="updated_time")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -240,6 +246,16 @@ public class Song {
 		this.favoritedBy = favoritedBy;
 	}
 	
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+
 	public boolean addToFavoritedBy(User user) {
 		if (favoritedBy == null) {
 			favoritedBy = new ArrayList<>();

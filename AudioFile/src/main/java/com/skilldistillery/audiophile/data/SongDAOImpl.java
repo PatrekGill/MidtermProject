@@ -133,5 +133,15 @@ public class SongDAOImpl implements SongDAO {
 		return songs;
 	}
 
+	@Override
+	public List<Song> findByLyricsKeyword(String keyword) {
+		// TODO Auto-generated method stub
+		String jpql = "SELECT s FROM Song s where s.lyrics like :keywords";
+		List<Song> songs = em.createQuery(jpql,Song.class)
+				 .setParameter("keywords", "%"+keyword+"%")
+				 .getResultList();
+			return songs;
+	}
+
 	
 }

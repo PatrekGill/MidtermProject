@@ -11,4 +11,5 @@ public interface ArtistDAO {
 	public List<Artist> sortByCreateDate();
 	public List<Artist> findArtistBySongName(String songName);
 	public List<Artist> findArtistBySongid(int songId);
+	public List<Artist> findArtistByAlbumName(String albumName);
 }

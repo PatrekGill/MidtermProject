@@ -16,6 +16,7 @@ class ArtistDAPOImplTest {
 	void test_find_by_Artist_id() {
 		
 		assertNotNull(DAOImp.findArtistById(1));
+		assertNotNull(DAOImp.findArtistById(1).getAlbums().get(1).getAlbumComments());
 	}
 	@Test
 	void test_find_by_Artist_name() {
@@ -36,6 +37,11 @@ class ArtistDAPOImplTest {
 	void test_find_by_songID() {
 		
 		assertNotNull(DAOImp.findArtistById(2));
+	}
+	@Test
+	void test_find_by_Album_Name() {
+		
+		assertNotNull(DAOImp.findArtistByAlbumName("A1A"));
 	}
 
 }

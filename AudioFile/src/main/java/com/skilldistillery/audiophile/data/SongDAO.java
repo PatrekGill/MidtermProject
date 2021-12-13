@@ -12,6 +12,7 @@ public interface SongDAO {
 	public List<Song> findBySongName (String name);
 	public List<Song> findByArtistName(String artistName);
 	public List<Song> findByAlbumName(String albumName);
+	public List<Song> findByLyricsKeyword(String keyword);
 	public List<Song> sortByCreatDate();
 	public List<Song> sortBySongRating();
 	public Song addNewSongs(Song song);

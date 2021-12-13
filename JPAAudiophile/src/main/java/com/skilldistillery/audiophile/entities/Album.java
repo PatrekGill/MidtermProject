@@ -7,14 +7,16 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.transaction.Transactional;
 
 @Entity
 public class Album {
@@ -62,6 +64,10 @@ public class Album {
 		inverseJoinColumns = @JoinColumn(name = "genre_id")
 	)
 	private Genre genre;
+	
+	@ManyToOne
+	@JoinColumn(name = "artist_id")
+	private Artist artist;
 
 
 	public void addAlbumComment(AlbumComment albumComment) {
@@ -311,6 +317,20 @@ public class Album {
 		if (albumRatings != null) {
 			albumRatings.remove(albumRating);
 		}
+	}
+	
+	/*
+	 * ----------------------------------------------------------------------------
+	 * get/set Artist
+	 * ----------------------------------------------------------------------------
+	 */
+
+	public Artist getArtist() {
+		return artist;
+	}
+
+	public void setArtist(Artist artist) {
+		this.artist = artist;
 	}
 
 	/*

@@ -55,6 +55,12 @@ class SongDAOImpTest {
 		assertNotNull(DaoImp.sortBySongRating());
 		
 	}
+	@Test
+	void test_for_find_by_Song_lyrics_keyword() {
+		
+		assertNotNull(DaoImp.findByLyricsKeyword("you"));
+		
+	}
 	
 	
 	
