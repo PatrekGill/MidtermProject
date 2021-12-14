@@ -8,18 +8,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class Genre {
 
-		@Id
-		@GeneratedValue(strategy = GenerationType.IDENTITY)
-		private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 		
 	private String name;
 	
-	@OneToMany(mappedBy= "genre")
+	@ManyToMany(mappedBy="genres")
 	private List<Album> albums;
 	
 	/* ----------------------------------------------------------------------------
@@ -56,30 +56,44 @@ public class Genre {
 	---------------------------------------------------------------------------- */
 
 	public List<Album> getAlbums() {
+		if (albums == null) {
+			albums = new ArrayList<>();
+		}
 		return albums;
 	}
-
 	public void setAlbums(List<Album> albums) {
 		this.albums = albums;
 	}
 	
-	public void addAlbum(Album album) {
-		if(albums == null) albums = new ArrayList<>();
-		if(!albums.contains(album)) {
-			albums.add(album);
-			if(album.getGenre() != null) {
-				album.getGenre().getAlbums().remove(album);
-				
+	public boolean addAlbum(Album album) {
+		if (albums == null) {
+			albums = new ArrayList<>();
+		}
+		
+		boolean addedToList = false;
+		if (album != null) {
+			if (! albums.contains(album)) {
+				albums.add(album);
 			}
-			album.setGenre(this);
+			
+			if (! album.getGenres().contains(this)) {
+				addedToList = album.getGenres().add(this);
+			}
 		}
+		
+		return addedToList;
 	}
-	
-	public void removeAlbums(Album album) {
-		album.setGenre(null);
-		if(albums != null) {
-			albums.remove(album);
+	public boolean removeAlbum(Album album) {
+		boolean removed = false;
+		if (albums != null && albums.contains(album)) {
+			removed = albums.remove(album);
 		}
+		
+		if (album.getGenres().contains(this)) {
+			album.removeGenre(this);
+		}
+		
+		return removed;
 	}
 
 	/* ----------------------------------------------------------------------------

@@ -71,7 +71,7 @@ class AlbumDAOImplTest {
 	@Test
 	@DisplayName("test find albums by genre")
 	void test6() {
-		List<Album> a = albumDAO.findAlbumsByGenre("Country");
+		List<Album> a = albumDAO.findAlbumsByGenreName("Country");
 		assertNotNull(a);
 		assertTrue(a.size() > 0);
 	}
@@ -101,7 +101,7 @@ class AlbumDAOImplTest {
 	}
 	
 	@Test
-	@DisplayName("Test sort albums by creationg date")
+	@DisplayName("Test sort albums by creation date")
 	void void10(){
 		List<Album> a = albumDAO.sortAlbumsByCreateDate(false);
 		assertNotNull(a);

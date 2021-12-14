@@ -74,8 +74,8 @@ public class AlbumDAOImpl implements AlbumDAO{
 	}
 
 	@Override
-	public List<Album> findAlbumsByGenre(String genre) {
-		String jpql = "SELECT a FROM Album a WHERE a.genre.name LIKE :genre";
+	public List<Album> findAlbumsByGenreName(String genre) {
+		String jpql = "SELECT a FROM Album a JOIN a.genres g WHERE g.name LIKE :genre";
 		
 		return em.createQuery(jpql, Album.class)
 				.setParameter("genre", "%" + genre + "%")
