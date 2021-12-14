@@ -5,12 +5,13 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
-import com.skilldistillery.audiophile.entities.Album;
 import com.skilldistillery.audiophile.entities.Genre;
 
 @Repository
 @Transactional
+@Service
 public class GenreDAOImpl implements GenreDAO {
 
 	@PersistenceContext
@@ -18,14 +19,7 @@ public class GenreDAOImpl implements GenreDAO {
 
 	@Override
 	public Genre findGenreById(int id) {
-		String jpql = "SELECT g FROM Genre g WHERE g.id =:id";
-
-		try {
-			return em.createQuery(jpql, Genre.class).setParameter("id", id).getSingleResult();
-		} catch (Exception e) {
-			System.err.println("Invalid genre id: " + id);
-			return null;
-		}
+		return em.find(Genre.class, id);
 	}
 
 	@Override
