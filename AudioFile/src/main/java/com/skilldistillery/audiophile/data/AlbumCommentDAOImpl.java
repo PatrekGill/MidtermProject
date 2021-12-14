@@ -8,12 +8,14 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.skilldistillery.audiophile.entities.AlbumComment;
 
 
 @Repository
 @Transactional
+@Service
 public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 
 	@PersistenceContext
@@ -23,12 +25,9 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 	public List<AlbumComment> findByUsername(String username) {
 		String jpql = "SELECT ac FROM AlbumComment ac WHERE ac.user.username LIKE :n";
 
-		try {
-			return em.createQuery(jpql, AlbumComment.class).setParameter("n", "%" + username + "%").getResultList();
-		} catch (Exception e) {
-			System.err.println("Invalid user name: " + username);
-			return null;
-		}
+		return em.createQuery(jpql, AlbumComment.class)
+				.setParameter("n", "%" + username + "%")
+				.getResultList();
 	}
 
 	@Override
@@ -36,7 +35,9 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 		String jpql = "SELECT ac FROM AlbumComment ac WHERE ac.user.id =:n";
 
 		try {
-			return em.createQuery(jpql, AlbumComment.class).setParameter("n", id).getSingleResult();
+			return em.createQuery(jpql, AlbumComment.class)
+					.setParameter("n", id)
+					.getSingleResult();
 		} catch (Exception e) {
 			System.err.println("Invalid user name: " + id);
 			return null;
@@ -44,15 +45,12 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 	}
 
 	@Override
-	public List<AlbumComment> findByComment(String albumComment) {
+	public List<AlbumComment> findByComment(String comment) {
 		String jpql = "SELECT ac FROM AlbumComment ac WHERE ac.comment LIKE :n";
 
-		try {
-			return em.createQuery(jpql, AlbumComment.class).setParameter("n", "%" + albumComment + "%").getResultList();
-		} catch (Exception e) {
-			System.err.println("Invalid user name: " + albumComment);
-			return null;
-		}
+		return em.createQuery(jpql, AlbumComment.class)
+				.setParameter("n", "%" + comment + "%")
+				.getResultList();
 	}
 
 	@Override
@@ -64,12 +62,7 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 	public List <AlbumComment> findByAlbumId(int id) {
 		String jpql = "SELECT ac FROM AlbumComment ac WHERE ac.album.id =:n";
 
-		try {
-			return em.createQuery(jpql, AlbumComment.class).setParameter("n", id).getResultList();
-		} catch (Exception e) {
-			System.err.println("Invalid album id: " + id);
-			return null;
-		}
+		return em.createQuery(jpql, AlbumComment.class).setParameter("n", id).getResultList();
 	}
 
 	@Override
@@ -101,7 +94,8 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 
 		return albumComments;
 	}
-
+	
+	@Override
 	public List<AlbumComment> sortAlbumCommentByCommentDate(boolean ascendingOrder) {
 		String jpql = "SELECT ac FROM AlbumComment ac ORDER BY ac.commentDate";
 
@@ -119,6 +113,46 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 		}
 
 		return albumComments;
+	}
+	
+	@Override
+	public boolean updateComment(int id, String newComment) {
+		boolean updated = false;
+		
+		AlbumComment managedAlbumComment = em.find(AlbumComment.class, id);
+		if (managedAlbumComment != null) {
+			managedAlbumComment.setComment(newComment);
+			updated = true;
+		}
+		
+		return updated;
+	}
+	
+	
+	@Override
+	public AlbumComment createAlbumComment(AlbumComment albumComment) {
+		em.persist(albumComment);
+		em.flush();
+		
+		return albumComment;
+	}
+	
+	@Override
+	public boolean deleteAlbumComment(int id) {
+		AlbumComment managedAlbumComment = em.find(AlbumComment.class,id);
+		boolean deleted = false;
+		
+		if (managedAlbumComment != null) {
+			em.remove(managedAlbumComment);
+			
+			managedAlbumComment = em.find(AlbumComment.class,id);
+			if (managedAlbumComment == null) {
+				deleted = true;
+			}
+		}
+		
+		
+		return deleted;
 	}
 
 }

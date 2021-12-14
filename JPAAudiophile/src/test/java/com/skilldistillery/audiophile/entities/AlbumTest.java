@@ -98,8 +98,8 @@ class AlbumTest {
 	@DisplayName("test album to genre mapping")
 	void test2() {
 		assertNotNull(album);
-		assertNotNull(album.getGenre());
-		assertEquals("country", album.getGenre().getName());
+		assertNotNull(album.getGenres());
+		assertEquals("country", album.getGenres().get(0).getName());
 	}
 	
 	@Test
