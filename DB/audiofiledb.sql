@@ -247,6 +247,7 @@ CREATE TABLE IF NOT EXISTS `album_rating` (
   `user_id` INT NOT NULL,
   `description` TEXT NULL,
   `rating_date` DATETIME NULL,
+  `update_time` DATETIME NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_album_rating_album1_idx` (`album_id` ASC),
   INDEX `fk_album_rating_user1_idx` (`user_id` ASC),
@@ -278,6 +279,7 @@ CREATE TABLE IF NOT EXISTS `song_rating` (
   `user_id` INT NOT NULL,
   `description` TEXT NULL,
   `rating_date` DATETIME NULL,
+  `update_time` DATETIME NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_song_rating_song1_idx` (`song_id` ASC),
   INDEX `fk_song_rating_user1_idx` (`user_id` ASC),
@@ -333,6 +335,7 @@ CREATE TABLE IF NOT EXISTS `album_comment` (
   `comment` TEXT NULL,
   `comment_date` DATETIME NULL,
   `in_reply_to` INT NULL,
+  `update_time` DATETIME NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_album_comment_user1_idx` (`user_id` ASC),
   INDEX `fk_album_comment_album1_idx` (`album_id` ASC),
@@ -541,7 +544,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `audiofiledb`;
-INSERT INTO `album_rating` (`id`, `rating`, `album_id`, `user_id`, `description`, `rating_date`) VALUES (1, 3, 1, 1, 'nice album', '2018-01-02');
+INSERT INTO `album_rating` (`id`, `rating`, `album_id`, `user_id`, `description`, `rating_date`, `update_time`) VALUES (1, 3, 1, 1, 'nice album', '2018-01-02', NULL);
 
 COMMIT;
 
@@ -551,7 +554,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `audiofiledb`;
-INSERT INTO `song_rating` (`id`, `rating`, `song_id`, `user_id`, `description`, `rating_date`) VALUES (1, 3, 2, 1, 'nice one', '2018-02-03');
+INSERT INTO `song_rating` (`id`, `rating`, `song_id`, `user_id`, `description`, `rating_date`, `update_time`) VALUES (1, 3, 2, 1, 'nice one', '2018-02-03', NULL);
 
 COMMIT;
 
@@ -592,7 +595,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `audiofiledb`;
-INSERT INTO `album_comment` (`id`, `user_id`, `album_id`, `comment`, `comment_date`, `in_reply_to`) VALUES (1, 1, 1, 'I love it', '2018-01-01', NULL);
+INSERT INTO `album_comment` (`id`, `user_id`, `album_id`, `comment`, `comment_date`, `in_reply_to`, `update_time`) VALUES (1, 1, 1, 'I love it', '2018-01-01', NULL, NULL);
 
 COMMIT;
 
