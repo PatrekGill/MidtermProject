@@ -18,5 +18,8 @@ public class HomeController {
 		model.addAttribute("DEBUG",userDAO.findByUsername("admin"));
 		return "home";
 	}
+	
+	
+			
 
 }
