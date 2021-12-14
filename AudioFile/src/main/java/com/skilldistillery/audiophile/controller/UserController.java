@@ -14,7 +14,7 @@ public class UserController {
 	@Autowired
 	private UserDAO user;
 
-	@GetMapping(path = "login.do")
+	@GetMapping(path = "login")
 	public String getLogin(HttpSession session) {
 		if(session.getAttribute("user") != null) {
 			return"index";
