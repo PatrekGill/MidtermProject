@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
+import com.skilldistillery.audiophile.entities.AlbumRating;
 import com.skilldistillery.audiophile.entities.SongRating;
 
 @Repository
@@ -22,12 +23,7 @@ public class SongRatingDAOImpl implements SongRatingDAO {
 	public List<SongRating> findByUsername(String username) {
 		String jpql = "SELECT sr FROM SongRating sr WHERE sr.user.username LIKE :n";
 
-		try {
-			return em.createQuery(jpql, SongRating.class).setParameter("n", "%" + username + "%").getResultList();
-		} catch (Exception e) {
-			System.err.println("Invalid user name: " + username);
-			return null;
-		}
+		return em.createQuery(jpql, SongRating.class).setParameter("n", "%" + username + "%").getResultList();
 	}
 
 	@Override
@@ -42,35 +38,62 @@ public class SongRatingDAOImpl implements SongRatingDAO {
 		}
 	}
 
+	/* ----------------------------------------------------------------------------
+		sortedByRating
+	---------------------------------------------------------------------------- */
 	@Override
-	public List<SongRating> sortByRating(int songRating, boolean ascendingOrder) {
-		String jpql = "SELECT sr FROM SongRating sr WHERE sr.rating =:n";
-
-		try {
-			return em.createQuery(jpql, SongRating.class).setParameter("n", songRating).getResultList();
-		} catch (Exception e) {
-			System.err.println("Invalid user name: " + songRating);
-			return null;
-		}
-	}
-
-	public List<SongRating> sortByRating(boolean ascendingOrder) {
-		String jpql = "SELECT sr FROM SongRating sr WHERE sr.rating =:n";
-
+	public List<SongRating> sortedByRating(int songId, boolean ascendingOrder) {
+		String jpql = "SELECT sr FROM SongRating sr WHERE sr.song.id = :id ORDER BY sr.rating";
+		
 		if (ascendingOrder) {
 			jpql += " ASC";
-
+			
 		} else {
 			jpql += " DESC";
-
+			
 		}
-
-		List<SongRating> ratings = em.createQuery(jpql, SongRating.class).getResultList();
-		if (ratings == null) {
-			ratings = new ArrayList<>();
+		
+		List<SongRating> songRatings = em.createQuery(jpql, SongRating.class)
+				.setParameter("id",songId)
+				.getResultList();
+		if (songRatings == null) {
+			songRatings = new ArrayList<>();
 		}
-
-		return ratings;
+		
+		return songRatings;
+	}
+	
+	@Override
+	public List<SongRating> sortedByRating(int songId, boolean ascendingOrder, int numberOfEntriesToShow) {
+		String jpql = "SELECT sr FROM SongRating sr WHERE sr.song.id = :id ORDER BY sr.rating";
+		
+		if (ascendingOrder) {
+			jpql += " ASC";
+			
+		} else {
+			jpql += " DESC";
+			
+		}
+		
+		List<SongRating> songRatings = em.createQuery(jpql, SongRating.class)
+				.setParameter("id",songId)
+				.getResultList();
+		if (songRatings != null && numberOfEntriesToShow > 0) {
+			if (!songRatings.isEmpty()) {
+				if (numberOfEntriesToShow > songRatings.size()) {
+					numberOfEntriesToShow = songRatings.size();
+				}
+				
+				songRatings = songRatings.subList(0, numberOfEntriesToShow);
+			}
+			
+		} else {
+			songRatings = new ArrayList<>();
+			
+		}
+		
+		
+		return songRatings;
 	}
 
 	@Override
