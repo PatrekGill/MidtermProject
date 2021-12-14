@@ -22,7 +22,6 @@ public class AlbumRating {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column
 	private String description;
 	
 	
@@ -34,7 +33,6 @@ public class AlbumRating {
 	@UpdateTimestamp
 	private LocalDateTime updateDateTime;
 	
-	@Column
 	private int rating;
 	
 	@ManyToOne

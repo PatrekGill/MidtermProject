@@ -16,10 +16,8 @@ import com.skilldistillery.audiophile.entities.AlbumComment;
 class AlbumCommentDAOImplTest {
 	
 	@Autowired
-	AlbumCommentDAO acDAO;
+	AlbumCommentDAOImpl acDAO;
 	
-	@Autowired
-	AlbumCommentDAOImpl DaoImp;
 	@Test
 	void AlbumComment_FindByUsername_Test() {
 		List<AlbumComment> albumCommentList = acDAO.findByUsername("admin");
@@ -70,7 +68,7 @@ class AlbumCommentDAOImplTest {
 	@Test
 	void test_findByAlbumComment_Mappings() {
 		assertNotNull(acDAO);
-		assertNotNull(acDAO.findByComment(null).size() > 0);
+		assertTrue(acDAO.findByComment("love").size() > 0);
 	}
 
 }
