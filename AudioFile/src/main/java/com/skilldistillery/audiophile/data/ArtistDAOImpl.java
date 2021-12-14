@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import com.skilldistillery.audiophile.entities.Artist;
-import com.skilldistillery.audiophile.entities.Song;
 
 @Repository
 @Transactional
@@ -52,6 +51,21 @@ public class ArtistDAOImpl implements ArtistDAO {
 	@Override
 	public List<Artist> sortByCreateDate() {
 		String jpql = "SELECT a FROM Artist a order by a.createDate";
+		List<Artist> artists = em.createQuery(jpql,Artist.class)
+								 .getResultList();
+
+		return artists;
+	}
+	
+	/*
+	 * -----------------------
+	 * Sort by update Date
+	 * -----------------------
+	 */
+	
+	@Override
+	public List<Artist> sortByUpdateTime() {
+		String jpql = "SELECT a FROM Artist a order by a.updatedAt";
 		List<Artist> artists = em.createQuery(jpql,Artist.class)
 								 .getResultList();
 
@@ -106,6 +120,106 @@ public class ArtistDAOImpl implements ArtistDAO {
 		return artists;
 		
 	}
+	
+	/*-----------------------------
+	 * add Artist
+	 * ----------------------------
+	 */
+
+	@Override
+	public Artist addNewArtist(Artist artist) {
+		em.getTransaction().begin();
+		em.persist( artist);
+		em.getTransaction().commit();
+		em.close();
+		return artist ;
+	}
+
+	/*-----------------------------
+	 * update Artist Name
+	 * ----------------------------
+	 */
+	@Override
+	public boolean updateArtistName(int id, String newName) {
+
+		boolean updated = false;
+		if(newName != null) {
+			Artist updateArtistName = em.find(Artist.class, id);
+			updateArtistName.setName(newName);
+			updated = true;
+		}
+		
+		return updated;
+	}
+
+	/*-----------------------------
+	 * update Artist Image
+	 * ----------------------------
+	 */
+	@Override
+	public boolean updateArtistImage(int id, String newImage) {
+		boolean updated = false;
+		if(newImage != null) {
+			Artist updateArtistImage = em.find(Artist.class, id);
+			updateArtistImage.setImageUrl(newImage);
+			updated = true;
+		}
+		
+		return updated;
+	}
+	
+	/*-----------------------------
+	 * update Artist Description
+	 * ----------------------------
+	 */
+
+	@Override
+	public boolean updateArtistDescription(int id, String newDescription) {
+		boolean updated = false;
+		if(newDescription != null) {
+			Artist updateArtistDesc = em.find(Artist.class, id);
+			updateArtistDesc.setDescription(newDescription);
+			updated = true;
+		}
+		
+		return updated;
+	}
+
+	/*-----------------------------
+	 * update Artist
+	 * ----------------------------
+	 */
+	@Override
+	public boolean updatedArtist(int id, Artist artist) {
+		Artist updateArtist = em.find(Artist.class, id);
+		boolean updated = false;
+		if(updateArtist != null && artist !=null) {
+			updateArtistName(id, artist.getName());
+			updateArtistImage(id, artist.getImageUrl());
+			updateArtistDescription(id, artist.getDescription());
+		}
+		return updated;
+	}
+	/*-----------------------------
+	 * delete Artist By ID
+	 * ----------------------------
+	 */
+	@Override
+	public boolean deleteArtist(int id) {
+		boolean successfullyDeleted = false;
+		Artist artist = em.find(Artist.class, id);
+		
+		if (artist != null) {
+			em.getTransaction().begin();
+			em.remove(artist);
+			successfullyDeleted = !em.contains(artist);
+			em.getTransaction().commit();
+		}
+		em.close();
+		return successfullyDeleted;
+	}
+
+
 	
 	
 	

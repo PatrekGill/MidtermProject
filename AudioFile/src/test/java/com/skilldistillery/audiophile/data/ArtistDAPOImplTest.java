@@ -28,6 +28,11 @@ class ArtistDAPOImplTest {
 		
 		assertNotNull(DAOImp.sortByCreateDate());
 	}
+//	@Test
+//	void test_sort_by_Update_date() {
+//		
+//		assertNotNull(DAOImp.sortByUpdateTime());
+//	}
 	@Test
 	void test_find_by_Song_Name() {
 		
