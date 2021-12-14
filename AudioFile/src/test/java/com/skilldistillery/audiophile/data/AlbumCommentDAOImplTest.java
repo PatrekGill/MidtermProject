@@ -45,7 +45,7 @@ class AlbumCommentDAOImplTest {
 	void test_sortAlbumCommentsByCreationDate_just_order() {
 		assertNotNull(acDAO);
 		assertNotNull(acDAO.sortAlbumCommentByCommentDate(true));
-		assertEquals(3, acDAO.sortAlbumCommentByCommentDate(true).get(0).getComment());
+		assertEquals("I love it", acDAO.sortAlbumCommentByCommentDate(true).get(0).getComment());
 		
 	}
 	
@@ -53,7 +53,7 @@ class AlbumCommentDAOImplTest {
 	void test_sortAlbumCommentsByCreationDate_number_of_users() {
 		assertNotNull(acDAO);
 		assertNotNull(acDAO.sortAlbumCommentByCommentDate(true,1));
-		assertEquals(3, acDAO.sortAlbumCommentByCommentDate(true,1).get(0).getComment());
+		assertEquals("I love it", acDAO.sortAlbumCommentByCommentDate(true,1).get(0).getComment());
 		assertEquals(1, acDAO.sortAlbumCommentByCommentDate(true,1).size());
 		
 	}
@@ -63,7 +63,7 @@ class AlbumCommentDAOImplTest {
 		assertNotNull(acDAO);
 		assertNotNull(acDAO.sortAlbumCommentByCommentDate(true,0));
 		assertNotNull(acDAO.sortAlbumCommentByCommentDate(true,20));
-		assertEquals(3, acDAO.sortAlbumCommentByCommentDate(true,20).get(0).getComment());
+		assertEquals("I love it", acDAO.sortAlbumCommentByCommentDate(true,20).get(0).getComment());
 		
 	}
 	
