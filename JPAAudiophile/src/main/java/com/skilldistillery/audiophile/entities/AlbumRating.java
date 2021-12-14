@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 @Table(name="album_rating")
 public class AlbumRating {
@@ -22,7 +24,9 @@ public class AlbumRating {
 	@Column
 	private String description;
 	
+	
 	@Column(name="rating_date")
+	@CreationTimestamp
 	private LocalDateTime ratingDate;
 	
 	@Column
