@@ -1,6 +1,7 @@
 package com.skilldistillery.audiophile.data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -104,17 +105,6 @@ public class AlbumDAOImpl implements AlbumDAO{
 	}
 	
 	@Override
-	public List<Album> sortAlbumsByRating(){
-		String jpql = "SELECT a FROM Album a LEFT JOIN a.albumRatings ar GROUP BY a ORDER BY AVG(ar.rating)";
-		try {
-			return em.createQuery(jpql, Album.class).getResultList();
-		}catch(Exception e) {
-			System.err.println("No albums found");
-			return null;
-		}
-	}
-
-	@Override
 	public boolean addAlbum(Album album) {
 		boolean creationSuccess = false;
 		em.getTransaction().begin();
@@ -156,11 +146,43 @@ public class AlbumDAOImpl implements AlbumDAO{
 			return null;
 		}
 	}
+	
+	@Override
+	public List<Album> sortAlbumsByRating(boolean ascendingOrder){
+		String jpql = "SELECT a FROM Album a LEFT JOIN a.albumRatings ar GROUP BY a ORDER BY AVG(ar.rating)";
+		
+		if (ascendingOrder) {
+			jpql += " ASC";
+			
+		} else {
+			jpql += " DESC";
+			
+		}
+		
+		List<Album> albums = em.createQuery(jpql, Album.class).getResultList();
+		if(albums == null) {
+			albums = new ArrayList<>();
+		}
+		return albums;
+	}
 
 	@Override
-	public List<Album> sortAlbumsByCreateDate() {
+	public List<Album> sortAlbumsByCreateDate(boolean ascendingOrder) {
 			String jpql ="SELECT a FROM Album a ORDER BY a.creationDateTime";
-		return null;
+			
+			if (ascendingOrder) {
+				jpql += " ASC";
+				
+			} else {
+				jpql += " DESC";
+				
+			}
+			
+			List<Album> albums = em.createQuery(jpql, Album.class).getResultList();
+			if(albums == null) {
+				albums = new ArrayList<>();
+			}
+			return albums;
 	}
 
 }

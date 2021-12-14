@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.skilldistillery.audiophile.entities.Album;
+import com.skilldistillery.audiophile.entities.Song;
 
 @SpringBootTest
 class AlbumDAOImplTest {
@@ -78,7 +79,31 @@ class AlbumDAOImplTest {
 	@Test
 	@DisplayName("test find albums by average rating")
 	void test7() {
-		List<Album> a = albumDAO.sortAlbumsByRating();
+		List<Album> a = albumDAO.sortAlbumsByRating(true);
+		assertNotNull(a);
+		assertTrue(a.size() > 0);
+	}
+	
+	@Test
+	@DisplayName("Test songs from album")
+	void test8() {
+		List<Song> s = albumDAO.getSongsFromAlbum(albumDAO.findAlbumById(2));
+		assertNotNull(s);
+		assertTrue(s.size() > 0);
+	}
+	
+	@Test
+	@DisplayName("Test sort albums by rating")
+	void test9() {
+		List<Album> a = albumDAO.sortAlbumsByRating(false);
+		assertNotNull(a);
+		assertTrue(a.size() > 0);
+	}
+	
+	@Test
+	@DisplayName("Test sort albums by creationg date")
+	void void10(){
+		List<Album> a = albumDAO.sortAlbumsByCreateDate(false);
 		assertNotNull(a);
 		assertTrue(a.size() > 0);
 	}

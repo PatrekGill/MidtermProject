@@ -4,10 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.skilldistillery.audiophile.entities.Album;
-import com.skilldistillery.audiophile.entities.Artist;
-import com.skilldistillery.audiophile.entities.Genre;
 import com.skilldistillery.audiophile.entities.Song;
-import com.skilldistillery.audiophile.entities.User;
 
 public interface AlbumDAO {
 	
@@ -32,12 +29,8 @@ public interface AlbumDAO {
 	 * ----------------------------------------------------------------------------
 	 */
 	
-	List<Album> sortAlbumsByRating();
-	List<Album> sortAlbumsByCreateDate();
-	
-	
-	
-	
+	List<Album> sortAlbumsByRating(boolean ascendingOrder);
+	List<Album> sortAlbumsByCreateDate(boolean ascendingOder);
 	
 	/*
 	 * ----------------------------------------------------------------------------
