@@ -14,7 +14,7 @@ public class HomeController {
 	@Autowired
 	private UserDAO userDAO;
 	
-	@RequestMapping(path = {"/","home.do"})
+	@RequestMapping(path = {"/","home"})
 	public String home(Model model) {
 		model.addAttribute("DEBUG",userDAO.findByUsername("admin"));
 		return "home";

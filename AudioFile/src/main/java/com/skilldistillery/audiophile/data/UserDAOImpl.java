@@ -97,6 +97,10 @@ public class UserDAOImpl implements UserDAO {
 		return users;
 	}
 	
+	/* ----------------------------------------------------------------------------
+	login
+---------------------------------------------------------------------------- */
+	
 	public User login(String username, String password) {
 		String jpql = "SELECT u FROM User u WHERE u.username =:username AND u.password =:pass";
 
