@@ -6,15 +6,15 @@ import com.skilldistillery.audiophile.entities.Artist;
 
 public interface ArtistDAO {
 
-	public Artist findArtistById(int id);
+	public Artist findById(int id);
 
-	public List<Artist> findByArtistName(String name);
+	public List<Artist> findByArtistsName(String name);
 
-	public List<Artist> findArtistBySongName(String songName);
+	public List<Artist> findArtistsBySongName(String songName);
 
-	public List<Artist> findArtistBySongid(int songId);
+	public List<Artist> findArtistsBySongid(int songId);
 
-	public Artist findArtistByAlbumName(String albumName);
+	public Artist findPrimaryArtistByAlbumName(String albumName);
 
 	public List<Artist> sortByCreateDate();
 
@@ -28,7 +28,7 @@ public interface ArtistDAO {
 
 	public boolean updateArtistDescription(int id, String newDescription);
 
-	public boolean updatedArtist(int id, Artist artist);
+	public boolean updateArtist(int id, Artist artist);
 
 	public boolean deleteArtist(int id);
 }

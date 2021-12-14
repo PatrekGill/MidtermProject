@@ -1,14 +1,13 @@
 package com.skilldistillery.audiophile.data;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.skilldistillery.audiophile.entities.Song;
 
 public interface SongDAO {
 
-	public Song findBySongId(int id);
-	public List<Song> findSongByRating(int rating);
+	public Song findById(int id);
+	public List<Song> findSongsByRating(int rating);
 	public List<Song> findBySongName (String name);
 	public List<Song> findByArtistName(String artistName);
 	public List<Song> findByAlbumName(String albumName);
@@ -18,7 +17,7 @@ public interface SongDAO {
 	public List<Song> sortByUpdateTime();
 	
 	//CRUD
-	public Song addNewSongs(Song song);
+	public Song addNewSong(Song song);
 	public boolean updateSongName(int id, String newName);
 	public boolean updateSongLyrics(int id, String newLyrics);
 	public boolean updateSongDurationSeconds(int id, int newDurationSeconds);
