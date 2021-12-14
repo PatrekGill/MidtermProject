@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.skilldistillery.audiophile.entities.AlbumRating;
-import com.skilldistillery.audiophile.entities.User;
 
 @Repository
 @Transactional
@@ -35,7 +34,7 @@ public class AlbumRatingDAOImpl implements AlbumRatingDAO {
 	---------------------------------------------------------------------------- */
 	@Override
 	public List<AlbumRating> sortedByRating(int albumId, boolean ascendingOrder) {
-		String jpql = "SELECT ar FROM AlbumRating ar WHERE ar.albumId = :id ORDER BY ar.rating";
+		String jpql = "SELECT ar FROM AlbumRating ar WHERE ar.album.id = :id ORDER BY ar.rating";
 		
 		if (ascendingOrder) {
 			jpql += " ASC";
@@ -57,7 +56,7 @@ public class AlbumRatingDAOImpl implements AlbumRatingDAO {
 	
 	@Override
 	public List<AlbumRating> sortedByRating(int albumId, boolean ascendingOrder, int numberOfEntriesToShow) {
-		String jpql = "SELECT ar FROM AlbumRating ar WHERE ar.albumId = :id ORDER BY ar.rating";
+		String jpql = "SELECT ar FROM AlbumRating ar WHERE ar.album.id = :id ORDER BY ar.rating";
 		
 		if (ascendingOrder) {
 			jpql += " ASC";
@@ -93,7 +92,7 @@ public class AlbumRatingDAOImpl implements AlbumRatingDAO {
 	---------------------------------------------------------------------------- */
 	@Override
 	public List<AlbumRating> sortedByCreatationDate(int albumId, boolean ascendingOrder) {
-		String jpql = "SELECT ar FROM AlbumRating ar WHERE ar.albumId = :id ORDER BY ar.ratingDate";
+		String jpql = "SELECT ar FROM AlbumRating ar WHERE ar.album.id = :id ORDER BY ar.ratingDate";
 		
 		if (ascendingOrder) {
 			jpql += " ASC";
@@ -115,7 +114,7 @@ public class AlbumRatingDAOImpl implements AlbumRatingDAO {
 
 	@Override
 	public List<AlbumRating> sortedByCreatationDate(int albumId, boolean ascendingOrder, int numberOfEntriesToShow) {
-		String jpql = "SELECT ar FROM AlbumRating ar WHERE ar.albumId = :id ORDER BY ar.ratingDate";
+		String jpql = "SELECT ar FROM AlbumRating ar WHERE ar.album.id = :id ORDER BY ar.ratingDate";
 		
 		if (ascendingOrder) {
 			jpql += " ASC";
@@ -152,7 +151,7 @@ public class AlbumRatingDAOImpl implements AlbumRatingDAO {
 	@Override
 	public boolean updateRating(int id, int newRating) {
 		boolean updated = false;
-		if (newRating > 0 && newRating < 10) {
+		if (newRating > 0 && newRating <= 10) {
 			AlbumRating managedAlbumRating = em.find(AlbumRating.class, id);
 			managedAlbumRating.setRating(newRating);
 			

@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.transaction.Transactional;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
@@ -30,6 +31,7 @@ public class Album {
 	private String description;
 
 	@Column(name = "create_date")
+	@CreationTimestamp
 	private LocalDateTime creationDateTime;
 
 	@Column(name = "release_date")

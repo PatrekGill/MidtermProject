@@ -44,7 +44,6 @@ class UserDAOImplTest {
 		assertNotNull(userDAO.sortUsersByCreationDate(true,0));
 		assertNotNull(userDAO.sortUsersByCreationDate(true,20));
 		assertEquals("admin", userDAO.sortUsersByCreationDate(true,20).get(0).getUsername());
-		
 	}
 
 	@Test
