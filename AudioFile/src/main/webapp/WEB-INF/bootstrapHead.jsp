@@ -7,75 +7,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-    .search-design{
-    padding-top:10px;
-    height: 100%;
-    margin:auto;
-    color: black;
-    }
-    
-    .text-manipulator{
-    margin-top: 50px;
-    font-size:1000%;
-    font:Helvetica;
-    line-height:60%;
-    }
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 100%}
-    
-    /* Set gray background color and 100% height */
-    .sidenav {
-      padding-top: 20px;
-      background-color: #242424;
-      height: 100%;
-    }
-    a{
-    color:white;
-    font:Helvetica;
-    }
-    a:hover{
-    color:#B8860B;
-    }
-      body {
-    background-image: url(logosAndGraphics/monkeyHalf.png);
-    background-size:300px;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-color: #B8860B;
-    background-position: right bottom;
-    color:white;
- 	}
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #242424;
-      color: white;
-      padding: 15px;
-    }
-    .page-footer {
-    position:absolute;
-    bottom:0;
-    width:100%;
-    justify-content:center;
-    }
-    .footer-contents{
-    margin:auto;
-    }
-    
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .row.content {height:auto;} 
-    }
-  </style>
+  <link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
 <div class="mainContent">
@@ -114,27 +46,28 @@
   <div class="row content">
     <div class="col-sm-2 sidenav">
       <p><a href="#">Top Albums</a></p>
+      <div class="spacer">
+      <li>Album 1</li>
+      <li>Album 2</li>
+      <li>Album 3</li>
+      </div>
       <p><a href="#">Top Artists</a></p>
+      <div class="spacer">
+      <li>Artist 1</li>
+      <li>Artist 2</li>
+      <li>Artist 3</li>
+      </div>
       <p><a href="#">Top Songs</a></p>
+      <li>Song 1</li>
+      <li>Song 2</li>
+      <li>Song 3</li>
     </div>
     <div class="col-sm-8 text-left text-manipulator"> 
       <p>Music</p>
       <p>Just</p>
       <p>Got</p>
       <p>Better</p>
-    <!--   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      <hr>
-      <h3>Test</h3>
-      <p>Lorem ipsum...</p> -->
-    </div>
-  <!--   <div class="col-sm-2 sidenav">
-      <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div>
-    </div> -->
+  <!--   </div>
   </div>
 </div>
 </div>
@@ -145,3 +78,4 @@
 
 </body>
 </html>
+ -->
