@@ -8,11 +8,13 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import com.skilldistillery.audiophile.entities.Song;
 
 @Repository
 @Transactional
+@Service
 public class SongDAOImpl implements SongDAO {
 	@PersistenceContext
 	private EntityManager em;
@@ -22,21 +24,20 @@ public class SongDAOImpl implements SongDAO {
 	 * --------------------------
 	 */
 	@Override
-	public Song findBySongId(int id) {
-		return (Song) em.find(Song.class, id);
+	public Song findById(int id) {
+		return em.find(Song.class, id);
 	}
 
 	/*------------------------
 	 * Find Song By Song Name
 	 * -----------------------
 	 */
-
 	@Override
 	public List<Song> findBySongName(String name) {
-
-		String jpql = "SELECT s FROM Song s where s.name = :songName";
-		List<Song> songs;
-		songs = em.createQuery(jpql, Song.class).setParameter("songName", name).getResultList();
+		String jpql = "SELECT s FROM Song s where s.name LIKE :songName";
+		List<Song> songs = em.createQuery(jpql, Song.class)
+				.setParameter("songName", "%" + name + "%")
+				.getResultList();
 		return songs;
 	}
 
@@ -44,7 +45,6 @@ public class SongDAOImpl implements SongDAO {
 	 * Sort Song By Create Date
 	 * --------------------------
 	 */
-
 	@Override
 	public List<Song> sortByCreatDate() {
 		String jpql = "SELECT s FROM Song s order by s.createDate";
@@ -59,9 +59,11 @@ public class SongDAOImpl implements SongDAO {
 	 */
 	@Override
 	public List<Song> findByArtistName(String artistName) {
-		String jpql = "SELECT a.songs FROM Artist a where a.name = :artName";
+		String jpql = "SELECT a.songs FROM Artist a where a.name LIKE :artName";
 		List<Song> songs = new ArrayList<>();
-		List<Object> objs = em.createQuery(jpql, Object.class).setParameter("artName", artistName).getResultList();
+		List<Object> objs = em.createQuery(jpql, Object.class)
+				.setParameter("artName", "%" + artistName + "%")
+				.getResultList();
 		objs.forEach(obj -> songs.add((Song) obj));
 		return songs;
 	}
@@ -72,9 +74,11 @@ public class SongDAOImpl implements SongDAO {
 	 */
 	@Override
 	public List<Song> findByAlbumName(String albumName) {
-		String jpql = "SELECT a.songs FROM Album a where a.title = :albName";
+		String jpql = "SELECT a.songs FROM Album a where a.title LIKE :albName";
 		List<Song> songs = new ArrayList<>();
-		List<Object> objs = em.createQuery(jpql, Object.class).setParameter("albName", albumName).getResultList();
+		List<Object> objs = em.createQuery(jpql, Object.class)
+				.setParameter("albName", "%" + albumName + "%")
+				.getResultList();
 		objs.forEach(obj -> songs.add((Song) obj));
 		return songs;
 	}
@@ -83,13 +87,11 @@ public class SongDAOImpl implements SongDAO {
 	 * Create a new Song
 	 * ----------------------------
 	 */
-
 	@Override
-	public Song addNewSongs(Song song) {
-		em.getTransaction().begin();
+	public Song addNewSong(Song song) {
 		em.persist(song);
-		em.getTransaction().commit();
-		em.close();
+		em.flush();
+		
 		return song;
 	}
 
@@ -97,15 +99,16 @@ public class SongDAOImpl implements SongDAO {
 	 * Update Song name
 	 * ----------------------------
 	 */
-
 	@Override
 	public boolean updateSongName(int id, String newName) {
+		
 		boolean updated = false;
 		if (newName != null) {
 			Song updateSongName = em.find(Song.class, id);
 			updateSongName.setName(newName);
 			updated = true;
 		}
+		
 		return updated;
 	}
 
@@ -115,12 +118,14 @@ public class SongDAOImpl implements SongDAO {
 	 */
 	@Override
 	public boolean updateSongLyrics(int id, String newLyrics) {
+		
 		boolean updated = false;
 		if (newLyrics != null) {
 			Song updateSongLyrics = em.find(Song.class, id);
 			updateSongLyrics.setLyrics(newLyrics);
 			updated = true;
 		}
+		
 		return updated;
 	}
 
@@ -161,18 +166,16 @@ public class SongDAOImpl implements SongDAO {
 	 * delete Song By ID
 	 * ----------------------------
 	 */
-
 	@Override
 	public boolean deleteNewAddedSong(int id) {
 		boolean successfullyDelete = false;
+		
 		Song song = em.find(Song.class, id);
 		if (song != null) {
-			em.getTransaction().begin();
 			em.remove(song);
 			successfullyDelete = !em.contains(song);
-			em.getTransaction().commit();
 		}
-		em.close();
+		
 		return successfullyDelete;
 	}
 
@@ -181,7 +184,7 @@ public class SongDAOImpl implements SongDAO {
 	 * ----------------------------
 	 */
 	@Override
-	public List<Song> findSongByRating(int rating) {
+	public List<Song> findSongsByRating(int rating) {
 
 		String jpql = "SELECT s.song FROM SongRating s where s.rating =:rat";
 		List<Song> songs = em.createQuery(jpql, Song.class).setParameter("rat", rating).getResultList();

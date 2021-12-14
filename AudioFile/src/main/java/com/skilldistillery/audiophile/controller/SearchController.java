@@ -41,24 +41,24 @@ public class SearchController {
 	@RequestMapping(path = "searchBySongId.do", params = "songId", method = RequestMethod.GET)
 	public ModelAndView getBySongId(@RequestParam("songId") int songId)  {
 		ModelAndView mv = new ModelAndView();
-		Song song = songDAO.findBySongId(songId);
+		Song song = songDAO.findById(songId);
 		mv.addObject("Song", song);
 		mv.setViewName("result");
 		return mv;
 	}
 	
-	@RequestMapping(path = "searchBySongName.do", params = "songAlbumName", method = RequestMethod.GET)
-	public ModelAndView getBySongName(@RequestParam("songAlbumName") String songAlbumName)  {
+	@RequestMapping(path = "searchBySongName.do", params = "songName", method = RequestMethod.GET)
+	public ModelAndView getBySongName(@RequestParam("songName") String songName)  {
 		ModelAndView mv = new ModelAndView();
-		List<Song> songs = songDAO.findBySongName(songAlbumName);
+		List<Song> songs = songDAO.findBySongName(songName);
 		mv.addObject("Songs", songs);
 		mv.setViewName("result");
 		return mv;
 	}
-	@RequestMapping(path = "searchByAlbumName.do", params = "albumName", method = RequestMethod.GET)
-	public ModelAndView getByAlbumName(@RequestParam("albumName") String albumName)  {
+	@RequestMapping(path = "searchByAlbumName.do", params = "songAlbumName", method = RequestMethod.GET)
+	public ModelAndView getByAlbumName(@RequestParam("songAlbumName") String songAlbumName)  {
 		ModelAndView mv = new ModelAndView();
-		List<Song> songs = songDAO.findByAlbumName(albumName);
+		List<Song> songs = songDAO.findByAlbumName(songAlbumName);
 		mv.addObject("Songs", songs);
 		mv.setViewName("result");
 		return mv;
@@ -82,7 +82,7 @@ public class SearchController {
 	@RequestMapping(path = "searchBySongRating.do", params = "SongRating", method = RequestMethod.GET)
 	public ModelAndView getBySongRating(@RequestParam("SongRating") int SongRating)  {
 		ModelAndView mv = new ModelAndView();
-		List<Song> songs = songDAO.findSongByRating(SongRating);
+		List<Song> songs = songDAO.findSongsByRating(SongRating);
 		mv.addObject("Songs", songs);
 		mv.setViewName("result");
 		return mv;
@@ -151,7 +151,7 @@ public class SearchController {
 	@RequestMapping(path = "searchAlbumByGenre.do", params = "AlbumGenre", method = RequestMethod.GET)
 	public ModelAndView getAlbumByGenre(@RequestParam("AlbumGenre") String AlbumGenre)  {
 		ModelAndView mv = new ModelAndView();
-		List<Album> albums = albumDAO.findAlbumsByGenre(AlbumGenre);
+		List<Album> albums = albumDAO.findAlbumsByGenreName(AlbumGenre);
 		mv.addObject("Albums", albums);
 		mv.setViewName("result");
 		return mv;
@@ -181,7 +181,7 @@ public class SearchController {
 	@RequestMapping(path = "searchArtistByArtistId.do", params = "ArtistId", method = RequestMethod.GET)
 	public ModelAndView getArtistByArtistID(@RequestParam("ArtistId") int ArtistId)  {
 		ModelAndView mv = new ModelAndView();
-		Artist artist = artistDAO.findArtistById(ArtistId);
+		Artist artist = artistDAO.findById(ArtistId);
 		mv.addObject("Artist", artist);
 		mv.setViewName("result");
 		return mv;
@@ -189,7 +189,7 @@ public class SearchController {
 	@RequestMapping(path = "searchArtistByArtistName.do", params = "ArtistName", method = RequestMethod.GET)
 	public ModelAndView getArtistByArtistName(@RequestParam("ArtistName") String ArtistName)  {
 		ModelAndView mv = new ModelAndView();
-		List<Artist> artists = artistDAO.findByArtistName(ArtistName);
+		List<Artist> artists = artistDAO.findByArtistsName(ArtistName);
 		mv.addObject("Artists", artists);
 		mv.setViewName("result");
 		return mv;
@@ -197,7 +197,7 @@ public class SearchController {
 	@RequestMapping(path = "searchArtistBySongName.do", params = "ArtistSongName", method = RequestMethod.GET)
 	public ModelAndView getArtistBySongName(@RequestParam("ArtistSongName") String ArtistSongName)  {
 		ModelAndView mv = new ModelAndView();
-		List<Artist> artists = artistDAO.findArtistBySongName(ArtistSongName);
+		List<Artist> artists = artistDAO.findArtistsBySongName(ArtistSongName);
 		mv.addObject("Artists", artists);
 		mv.setViewName("result");
 		return mv;
@@ -205,7 +205,7 @@ public class SearchController {
 	@RequestMapping(path = "searchArtistByAlbumName.do", params = "ArtistAlbumName", method = RequestMethod.GET)
 	public ModelAndView getArtistByAlbumName(@RequestParam("ArtistAlbumName") String ArtistAlbumName)  {
 		ModelAndView mv = new ModelAndView();
-		Artist artist = artistDAO.findArtistByAlbumName(ArtistAlbumName);
+		Artist artist = artistDAO.findPrimaryArtistByAlbumName(ArtistAlbumName);
 		mv.addObject("Artist", artist);
 		mv.setViewName("result");
 		return mv;
