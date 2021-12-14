@@ -60,6 +60,12 @@ class UserDAOImplTest {
 		assertNull(userDAO.findUserById(0));
 	}
 	
+	@Test
+	void test_user_login() {
+		assertNotNull(userDAO);
+		assertEquals("Kings", userDAO.login("admin", "admin").getFirstName());
+	}
+	
 //	@Test
 //	void test_createUser_deleteUser() {
 //		User user = new User();
