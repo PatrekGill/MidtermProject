@@ -43,8 +43,7 @@
        <li>Email: ${user.email }</li>
        <li>Username: ${user.username } </li>
       </ul>
+      
 		</div>
 		</c:when>
-		
-		
 		</c:choose>
