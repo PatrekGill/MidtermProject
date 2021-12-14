@@ -1,6 +1,7 @@
 package com.skilldistillery.audiophile.data;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -104,17 +105,6 @@ public class AlbumDAOImpl implements AlbumDAO{
 	}
 	
 	@Override
-	public List<Album> findAlbumsByAverageRating(int rating){
-		String jpql = "SELECT a FROM Album a JOIN a.albumRatings ar WHERE AVG(ar.rating) BETWEEN :startRating AND :endRating";
-		try {
-			return em.createQuery(jpql, Album.class).setParameter("startRating", rating).setParameter("endRating", rating + 1).getResultList();
-		}catch(Exception e) {
-			System.err.println("No albums found from: " + rating);
-			return null;
-		}
-	}
-
-	@Override
 	public boolean addAlbum(Album album) {
 		boolean creationSuccess = false;
 		em.getTransaction().begin();
@@ -155,6 +145,44 @@ public class AlbumDAOImpl implements AlbumDAO{
 			System.err.println("No songs found from: " + album);
 			return null;
 		}
+	}
+	
+	@Override
+	public List<Album> sortAlbumsByRating(boolean ascendingOrder){
+		String jpql = "SELECT a FROM Album a LEFT JOIN a.albumRatings ar GROUP BY a ORDER BY AVG(ar.rating)";
+		
+		if (ascendingOrder) {
+			jpql += " ASC";
+			
+		} else {
+			jpql += " DESC";
+			
+		}
+		
+		List<Album> albums = em.createQuery(jpql, Album.class).getResultList();
+		if(albums == null) {
+			albums = new ArrayList<>();
+		}
+		return albums;
+	}
+
+	@Override
+	public List<Album> sortAlbumsByCreateDate(boolean ascendingOrder) {
+			String jpql ="SELECT a FROM Album a ORDER BY a.creationDateTime";
+			
+			if (ascendingOrder) {
+				jpql += " ASC";
+				
+			} else {
+				jpql += " DESC";
+				
+			}
+			
+			List<Album> albums = em.createQuery(jpql, Album.class).getResultList();
+			if(albums == null) {
+				albums = new ArrayList<>();
+			}
+			return albums;
 	}
 
 }
