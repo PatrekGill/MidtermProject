@@ -44,7 +44,7 @@ class SongRatingTest {
 	void test() {
 		assertNotNull(songrating);
 		assertEquals("nice one", songrating.getDescription());
-		assertEquals(3, songrating.getRatingdate().getDayOfMonth());
+		assertEquals(3, songrating.getRatingDate().getDayOfMonth());
 		assertEquals(3, songrating.getRating());
 		assertEquals("Door Number Three", songrating.getSong().getName());
 		assertEquals("admin@gmail.com", songrating.getUser().getEmail());
