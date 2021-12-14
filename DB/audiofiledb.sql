@@ -33,8 +33,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `role` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
 ENGINE = InnoDB;
 
 
@@ -52,7 +51,6 @@ CREATE TABLE IF NOT EXISTS `artist` (
   `create_date` DATETIME NULL,
   `update_time` DATETIME NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `fk_artist_user1_idx` (`user_id` ASC),
   CONSTRAINT `fk_artist_user1`
     FOREIGN KEY (`user_id`)
@@ -78,7 +76,6 @@ CREATE TABLE IF NOT EXISTS `album` (
   `artist_id` INT NOT NULL,
   `update_time` DATETIME NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `fk_album_user1_idx` (`user_id` ASC),
   UNIQUE INDEX `title_UNIQUE` (`title` ASC),
   INDEX `fk_album_artist1_idx` (`artist_id` ASC),
@@ -109,7 +106,6 @@ CREATE TABLE IF NOT EXISTS `song` (
   `create_date` DATETIME NULL,
   `update_time` DATETIME NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `fk_song_user1_idx` (`user_id` ASC),
   CONSTRAINT `fk_song_user1`
     FOREIGN KEY (`user_id`)
@@ -130,8 +126,6 @@ CREATE TABLE IF NOT EXISTS `favorite_album` (
   PRIMARY KEY (`user_id`, `album_id`),
   INDEX `fk_user_has_album_album1_idx` (`album_id` ASC),
   INDEX `fk_user_has_album_user1_idx` (`user_id` ASC),
-  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC),
-  UNIQUE INDEX `album_id_UNIQUE` (`album_id` ASC),
   CONSTRAINT `fk_user_has_album_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
@@ -156,8 +150,6 @@ CREATE TABLE IF NOT EXISTS `favorite_song` (
   PRIMARY KEY (`user_id`, `song_id`),
   INDEX `fk_user_has_song_song1_idx` (`song_id` ASC),
   INDEX `fk_user_has_song_user1_idx` (`user_id` ASC),
-  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC),
-  UNIQUE INDEX `song_id_UNIQUE` (`song_id` ASC),
   CONSTRAINT `fk_user_has_song_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `user` (`id`)
@@ -180,8 +172,7 @@ CREATE TABLE IF NOT EXISTS `genre` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `type_UNIQUE` (`name` ASC),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `type_UNIQUE` (`name` ASC))
 ENGINE = InnoDB;
 
 
@@ -196,8 +187,6 @@ CREATE TABLE IF NOT EXISTS `album_genre` (
   PRIMARY KEY (`album_id`, `genre_id`),
   INDEX `fk_album_has_genre_genre1_idx` (`genre_id` ASC),
   INDEX `fk_album_has_genre_album1_idx` (`album_id` ASC),
-  UNIQUE INDEX `album_id_UNIQUE` (`album_id` ASC),
-  UNIQUE INDEX `genre_id_UNIQUE` (`genre_id` ASC),
   CONSTRAINT `fk_album_has_genre_album1`
     FOREIGN KEY (`album_id`)
     REFERENCES `album` (`id`)
@@ -251,9 +240,6 @@ CREATE TABLE IF NOT EXISTS `album_rating` (
   PRIMARY KEY (`id`),
   INDEX `fk_album_rating_album1_idx` (`album_id` ASC),
   INDEX `fk_album_rating_user1_idx` (`user_id` ASC),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC),
-  UNIQUE INDEX `album_id_UNIQUE` (`album_id` ASC),
   CONSTRAINT `fk_album_rating_album1`
     FOREIGN KEY (`album_id`)
     REFERENCES `album` (`id`)
@@ -283,9 +269,6 @@ CREATE TABLE IF NOT EXISTS `song_rating` (
   PRIMARY KEY (`id`),
   INDEX `fk_song_rating_song1_idx` (`song_id` ASC),
   INDEX `fk_song_rating_user1_idx` (`user_id` ASC),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `song_id_UNIQUE` (`song_id` ASC),
-  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC),
   CONSTRAINT `fk_song_rating_song1`
     FOREIGN KEY (`song_id`)
     REFERENCES `song` (`id`)
@@ -398,6 +381,7 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 START TRANSACTION;
 USE `audiofiledb`;
 INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `create_date`, `image_url`, `enabled`, `role`) VALUES (1, 'admin', 'admin', 'Kings', 'Jam', 'admin@gmail.com', '2021-09-21', 'Look at this awesome pose!', 1, NULL);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `create_date`, `image_url`, `enabled`, `role`) VALUES (2, 'king', 'king2021', 'king', 'jinx', 'king2021@gmail.com', '2021-12-14', 'why not', 1, NULL);
 
 COMMIT;
 
@@ -461,6 +445,7 @@ COMMIT;
 START TRANSACTION;
 USE `audiofiledb`;
 INSERT INTO `favorite_album` (`user_id`, `album_id`) VALUES (1, 1);
+INSERT INTO `favorite_album` (`user_id`, `album_id`) VALUES (2, 2);
 
 COMMIT;
 
@@ -471,6 +456,8 @@ COMMIT;
 START TRANSACTION;
 USE `audiofiledb`;
 INSERT INTO `favorite_song` (`user_id`, `song_id`) VALUES (1, 2);
+INSERT INTO `favorite_song` (`user_id`, `song_id`) VALUES (2, 3);
+INSERT INTO `favorite_song` (`user_id`, `song_id`) VALUES (2, 11);
 
 COMMIT;
 
@@ -545,6 +532,7 @@ COMMIT;
 START TRANSACTION;
 USE `audiofiledb`;
 INSERT INTO `album_rating` (`id`, `rating`, `album_id`, `user_id`, `description`, `rating_date`, `update_time`) VALUES (1, 3, 1, 1, 'nice album', '2018-01-02', NULL);
+INSERT INTO `album_rating` (`id`, `rating`, `album_id`, `user_id`, `description`, `rating_date`, `update_time`) VALUES (2, 4, 2, 2, 'what an awesome album', '2021-12-14', NULL);
 
 COMMIT;
 
@@ -555,6 +543,8 @@ COMMIT;
 START TRANSACTION;
 USE `audiofiledb`;
 INSERT INTO `song_rating` (`id`, `rating`, `song_id`, `user_id`, `description`, `rating_date`, `update_time`) VALUES (1, 3, 2, 1, 'nice one', '2018-02-03', NULL);
+INSERT INTO `song_rating` (`id`, `rating`, `song_id`, `user_id`, `description`, `rating_date`, `update_time`) VALUES (2, 4, 5, 2, 'it is amazing', '2021-12-14', NULL);
+INSERT INTO `song_rating` (`id`, `rating`, `song_id`, `user_id`, `description`, `rating_date`, `update_time`) VALUES (3, 2, 1, 2, 'its ok', '2019-11-14', NULL);
 
 COMMIT;
 
@@ -596,6 +586,7 @@ COMMIT;
 START TRANSACTION;
 USE `audiofiledb`;
 INSERT INTO `album_comment` (`id`, `user_id`, `album_id`, `comment`, `comment_date`, `in_reply_to`, `update_time`) VALUES (1, 1, 1, 'I love it', '2018-01-01', NULL, NULL);
+INSERT INTO `album_comment` (`id`, `user_id`, `album_id`, `comment`, `comment_date`, `in_reply_to`, `update_time`) VALUES (2, 2, 2, 'enjoy a lot, i will recommend to my friends', '2021-12-14', NULL, NULL);
 
 COMMIT;
 
@@ -606,6 +597,7 @@ COMMIT;
 START TRANSACTION;
 USE `audiofiledb`;
 INSERT INTO `user_friend` (`user_id`, `friend_id`) VALUES (1, 1);
+INSERT INTO `user_friend` (`user_id`, `friend_id`) VALUES (2, 2);
 
 COMMIT;
 
