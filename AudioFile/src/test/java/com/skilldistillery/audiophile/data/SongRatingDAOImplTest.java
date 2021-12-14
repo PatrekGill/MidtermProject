@@ -71,7 +71,7 @@ class SongRatingDAOImplTest {
 	@Test
 	void test_sortByRating_Mappings() {
 		assertNotNull(srDAO);
-		assertNotNull(srDAO.sortByRating(0, true).size() > 0);
+		assertTrue(srDAO.sortedByRating(1, true).size() > 0);
 	}
 	
 

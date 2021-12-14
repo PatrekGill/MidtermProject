@@ -42,7 +42,7 @@ public class UserDAOImpl implements UserDAO {
 	---------------------------------------------------------------------------- */
 	@Override
 	public User findUserById(int id) {
-		return (User)em.find(User.class, id);
+		return em.find(User.class, id);
 	}
 	
 
@@ -95,6 +95,22 @@ public class UserDAOImpl implements UserDAO {
 		}
 		
 		return users;
+	}
+	
+	/* ----------------------------------------------------------------------------
+	login
+---------------------------------------------------------------------------- */
+	
+	public User login(String username, String password) {
+		String jpql = "SELECT u FROM User u WHERE u.username =:username AND u.password =:pass";
+
+		try {
+			return em.createQuery(jpql,User.class).setParameter("username",username).setParameter("pass", password).getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.err.println("Invalid username or password");
+			return null;
+		}
 	}
 
 

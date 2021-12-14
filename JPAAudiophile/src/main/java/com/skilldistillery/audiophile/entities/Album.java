@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.transaction.Transactional;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -65,13 +63,13 @@ public class Album {
 	)
 	private List<User> favoritedBy;
 
-	@ManyToOne
+	@ManyToMany
 	@JoinTable(
 		name = "album_genre",
 		joinColumns = @JoinColumn(name = "album_id"),
 		inverseJoinColumns = @JoinColumn(name = "genre_id")
 	)
-	private Genre genre;
+	private List<Genre> genres;
 	
 	@ManyToOne
 	@JoinColumn(name = "artist_id")
@@ -121,12 +119,47 @@ public class Album {
 
 	/*
 	 * ----------------------------------------------------------------------------
-	 * get/set Genre
+	 * Genre list setting
 	 * ----------------------------------------------------------------------------
 	 */
-	public Genre getGenre() {
-		return genre;
+	public List<Genre> getGenres() {
+		return genres;
 	}
+	public void setGenres(List<Genre> genres) {
+		this.genres = genres;
+	}
+	
+	public boolean addGenre(Genre genre) {
+		if (genres == null) {
+			genres = new ArrayList<>();
+		}
+		
+		boolean addedToList = false;
+		if (genre != null) {
+			if (! genres.contains(genre)) {
+				genres.add(genre);
+			}
+			
+			if (! genre.getAlbums().contains(this)) {
+				addedToList = genre.getAlbums().add(this);
+			}
+		}
+		
+		return addedToList;
+	}
+	public boolean removeGenre(Genre genre)  {
+		boolean removed = false;
+		if (genres != null && genres.contains(genre)) {
+			removed = genres.remove(genre);
+		}
+		
+		if (genre.getAlbums().contains(this)) {
+			genre.removeAlbum(this);
+		}
+		
+		return removed;
+	}
+	
 	
 	/*
 	 * ----------------------------------------------------------------------------
@@ -137,14 +170,10 @@ public class Album {
 	public List<AlbumComment> getAlbumComments() {
 		return albumComments;
 	}
-
 	public void setAlbumComments(List<AlbumComment> albumComments) {
 		this.albumComments = albumComments;
 	}
 
-	public void setGenre(Genre genre) {
-		this.genre = genre;
-	}
 
 	/*
 	 * ----------------------------------------------------------------------------
