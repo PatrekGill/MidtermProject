@@ -44,7 +44,7 @@ class AlbumRatingTest {
 	void test() {
 		assertNotNull(albumrating);
 		assertEquals("nice album", albumrating.getDescription());
-		assertEquals(2018, albumrating.getRatingdate().getYear());
+		assertEquals(2018, albumrating.getRatingDate().getYear());
 		assertEquals(3, albumrating.getRating());
 		assertEquals(2021, albumrating.getUser().getCreationDateTime().getYear());
 		assertEquals("A1A", albumrating.getAlbum().getTitle());

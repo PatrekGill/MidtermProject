@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name = "album_comment")
 public class AlbumComment {
@@ -28,6 +30,10 @@ public class AlbumComment {
 	@ManyToOne
 	@JoinColumn(name = "album_id")
 	private Album album;
+	
+	@Column(name="update_time")
+	@UpdateTimestamp
+	private LocalDateTime updateDateTime;
 	
 	private String comment;
 
@@ -100,6 +106,14 @@ public class AlbumComment {
 
 	public void setInReplyTo(Integer inReplyTo) {
 		this.inReplyTo = inReplyTo;
+	}
+
+	
+	public LocalDateTime getUpdateDateTime() {
+		return updateDateTime;
+	}
+	public void setUpdateDateTime(LocalDateTime updateDateTime) {
+		this.updateDateTime = updateDateTime;
 	}
 
 

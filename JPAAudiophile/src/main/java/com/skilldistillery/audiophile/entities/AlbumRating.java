@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name="album_rating")
@@ -28,6 +29,10 @@ public class AlbumRating {
 	@Column(name="rating_date")
 	@CreationTimestamp
 	private LocalDateTime ratingDate;
+	
+	@Column(name="update_time")
+	@UpdateTimestamp
+	private LocalDateTime updateDateTime;
 	
 	@Column
 	private int rating;
@@ -62,11 +67,11 @@ public class AlbumRating {
 		this.description = description;
 	}
 
-	public LocalDateTime getRatingdate() {
+	public LocalDateTime getRatingDate() {
 		return ratingDate;
 	}
 
-	public void setRatingdate(LocalDateTime ratingDate) {
+	public void setRatingDate(LocalDateTime ratingDate) {
 		this.ratingDate = ratingDate;
 	}
 
@@ -92,6 +97,14 @@ public class AlbumRating {
 
 	public void setAlbum(Album album) {
 		this.album = album;
+	}
+	
+	public LocalDateTime getUpdateDateTime() {
+		return updateDateTime;
+	}
+
+	public void setUpdateDateTime(LocalDateTime updateDateTime) {
+		this.updateDateTime = updateDateTime;
 	}
 
 	@Override
