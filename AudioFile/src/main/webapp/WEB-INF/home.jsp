@@ -6,6 +6,8 @@
 <meta charset="UTF-8">
 <title>AudioFile</title>
 <jsp:include page="bootstrapHead.jsp"/>
+<!-- Include body parameters -->
+<jsp:include page="bootstrapFooter.jsp"/>
 </head>
 <body>
 </body>
