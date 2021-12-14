@@ -156,8 +156,6 @@ footer {
 					<p>Just</p>
 					<p>Got</p>
 					<p>Better</p>
-					
-			</div>
-		</div>
-	</div>
+					</div>
+					</div>
 

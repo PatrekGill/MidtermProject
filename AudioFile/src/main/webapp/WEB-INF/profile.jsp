@@ -47,3 +47,5 @@
 		</div>
 		</c:when>
 		</c:choose>
+		
+		</div>
