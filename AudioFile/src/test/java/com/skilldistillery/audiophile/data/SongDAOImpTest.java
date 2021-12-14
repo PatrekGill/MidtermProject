@@ -29,6 +29,12 @@ class SongDAOImpTest {
 		assertNotNull(DaoImp.sortByCreatDate());
 		
 	}
+	@Test
+	void test_for_sort_by_update_date() {
+		
+		assertNotNull(DaoImp.sortByUpdateTime());
+		
+	}
 	
 	@Test
 	void test_for_find_by_Artist_Name() {

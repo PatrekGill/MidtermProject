@@ -112,11 +112,11 @@ public class ArtistDAOImpl implements ArtistDAO {
 	 * -----------------------
 	 */
 	@Override
-	public List<Artist> findArtistByAlbumName(String albumName) {
-		String jpql = "SELECT a.artist FROM Album a where a.name =:name";
-		List<Artist> artists = em.createQuery(jpql,Artist.class)
+	public Artist findArtistByAlbumName(String albumName) {
+		String jpql = "SELECT a.artist FROM Album a where a.title =:name";
+		Artist artists = em.createQuery(jpql,Artist.class)
 				 .setParameter("name", albumName)
-				 .getResultList();
+				 .getSingleResult();
 		return artists;
 		
 	}

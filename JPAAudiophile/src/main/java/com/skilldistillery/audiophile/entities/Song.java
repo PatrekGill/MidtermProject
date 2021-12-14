@@ -39,7 +39,7 @@ public class Song {
 	@CreationTimestamp
 	private LocalDateTime createDate;
 	
-	@Column(name="updated_time")
+	@Column(name="update_time")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
@@ -246,6 +246,16 @@ public class Song {
 		this.favoritedBy = favoritedBy;
 	}
 	
+//	public LocalDateTime getUpdatedAt() {
+//		return updatedAt;
+//	}
+//
+//
+//	public void setUpdatedAt(LocalDateTime updatedAt) {
+//		this.updatedAt = updatedAt;
+//	}
+
+
 	public LocalDateTime getUpdatedAt() {
 		return updatedAt;
 	}

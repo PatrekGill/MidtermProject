@@ -2,6 +2,8 @@ package com.skilldistillery.audiophile.data;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import javax.transaction.Transactional;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,10 +15,11 @@ class ArtistDAPOImplTest {
 	ArtistDAOImpl DAOImp;
 
 	@Test
+	@Transactional
 	void test_find_by_Artist_id() {
 		
 		assertNotNull(DAOImp.findArtistById(1));
-		assertNotNull(DAOImp.findArtistById(1).getAlbums().get(1).getAlbumComments());
+		assertNotNull(DAOImp.findArtistById(1).getAlbums());
 	}
 	@Test
 	void test_find_by_Artist_name() {
@@ -28,11 +31,11 @@ class ArtistDAPOImplTest {
 		
 		assertNotNull(DAOImp.sortByCreateDate());
 	}
-//	@Test
-//	void test_sort_by_Update_date() {
-//		
-//		assertNotNull(DAOImp.sortByUpdateTime());
-//	}
+	@Test
+	void test_sort_by_Update_date() {
+		
+		assertNotNull(DAOImp.sortByUpdateTime());
+	}
 	@Test
 	void test_find_by_Song_Name() {
 		

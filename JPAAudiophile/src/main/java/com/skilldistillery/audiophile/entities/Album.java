@@ -18,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.transaction.Transactional;
 
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 public class Album {
 	@Id
@@ -35,6 +37,10 @@ public class Album {
 
 	@Column(name = "image_url")
 	private String imageURL;
+	
+	@Column(name="update_time")
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -331,6 +337,14 @@ public class Album {
 
 	public void setArtist(Artist artist) {
 		this.artist = artist;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 
 	/*

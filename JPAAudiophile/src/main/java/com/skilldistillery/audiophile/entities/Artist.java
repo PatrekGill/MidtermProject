@@ -29,7 +29,7 @@ public class Artist {
 	@Column(name="name")
 	private String name;
 	
-	@Column(name="updated_time")
+	@Column(name="update_time")
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 	

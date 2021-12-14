@@ -10,7 +10,7 @@ public interface ArtistDAO {
 	public List<Artist> findByArtistName( String name);
 	public List<Artist> findArtistBySongName(String songName);
 	public List<Artist> findArtistBySongid(int songId);
-	public List<Artist> findArtistByAlbumName(String albumName);
+	public Artist findArtistByAlbumName(String albumName);
 	public List<Artist> sortByCreateDate();
 	public List<Artist> sortByUpdateTime();
 	
