@@ -194,7 +194,7 @@ public class SongDAOImpl implements SongDAO {
 	 */
 	@Override
 	public List<Song> sortBySongRating() {
-		String jpql = "SELECT s.song FROM SongRating s order by s.rating";
+		String jpql = "SELECT s.song FROM SongRating s order by s.rating desc";
 		List<Song> songs = em.createQuery(jpql, Song.class).getResultList();
 
 		return songs;

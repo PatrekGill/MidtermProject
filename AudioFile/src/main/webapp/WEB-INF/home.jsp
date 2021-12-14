@@ -16,6 +16,7 @@
 <h2>Add other users of our site to friends and compare.</h2>
 </center>
 <center>
+<a href="search">Search page</a>
 <form method="post" action="/login"><button type="submit">Login</button></form>
 <form method="post" action="/register"><button type="submit">Create Account</button></form>
 </center>
