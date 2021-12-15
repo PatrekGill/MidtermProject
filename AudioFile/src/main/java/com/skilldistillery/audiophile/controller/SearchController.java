@@ -34,19 +34,21 @@ public class SearchController {
 	 * Search for Songs
 	 * ---------------------------
 	 */
-	@RequestMapping({  "search"})
+	@RequestMapping({  "search1"})
 	public String findbyId(Model model) {
-		return "search";
+		return "search1";
 	}
 	@GetMapping(path ="search")
-	public String searchAll(@RequestParam("keyword")  String keyword , Model model) {
-		List<Song> songs = songDAO.findBySongName(keyword);
-		List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
-		List<Song> song = songDAO.findBySongName(keyword);
-		
-		model.addAttribute("Songs", songs);
-		model.addAttribute("Song", song.get(0));
-		model.addAttribute("Albums", albums);
+	public String searchAll(@RequestParam("keyword")  String keyword , Model model, @RequestParam("searchAll")  String searchAll) {
+		if(searchAll.equals("All")){
+			List<Song> songs = songDAO.findBySongName(keyword);
+			List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
+			List<Song> song = songDAO.findBySongName(keyword);
+			
+//			model.addAttribute("Songs", songs);
+			model.addAttribute("Song", song.get(0));
+			model.addAttribute("Albums", albums);
+		}
 		return "result";
 	}
 
