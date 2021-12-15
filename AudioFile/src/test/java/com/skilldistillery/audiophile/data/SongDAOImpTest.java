@@ -39,8 +39,15 @@ class SongDAOImpTest {
 	}
 
 	@Test
+
+	void test_for_find_by_Artist_Name() {
+
+		assertNotNull(DaoImp.findByArtistName("Adele"));
+//		assertEquals("Adele",DaoImp.findByArtistName("Adele").get(1).getArtists().get(1).getName());
+	}
 	void test_findByArtistName() {
 		assertNotNull(DaoImp.findByArtistName("jimmy buffett"));
+
 		assertNotNull(DaoImp.findByArtistName("jimmy buffett").get(1).getAlbum());
 
 	}

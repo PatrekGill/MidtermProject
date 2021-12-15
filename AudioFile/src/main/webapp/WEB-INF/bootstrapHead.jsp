@@ -35,10 +35,11 @@
 						<li><a href="#">Recent Messages</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<li><form class="form-inline my-2 my-lg-0">
+						<li><form class="form-inline my-2 my-lg-0" action ="search" method =GET>
+						
 								<div class="search-design">
 									<input class="form-control mr-sm-2" type="search"
-										placeholder="Search" aria-label="Search">
+										placeholder="Search" aria-label="Search" name ="keyword">
 									<button class="btn btn-outline-success my-2 my-sm-0"
 										type="submit">Search</button>
 								</div>
