@@ -24,30 +24,20 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Profile</a></li>
+        <li><a href="profile">Profile</a></li>
         <li><a href="#">Trending</a></li>
         <li><a href="#">Recent Messages</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-      	<li><form class="form-inline my-2 my-lg-0">
+      	<li><form class="form-inline my-2 my-lg-0" action="search" method=GET>
       	<div class="search-design">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       	</div>
     </li>
-    <li>
-    <div class="select-padder">
-    <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-  <option selected>Search by:</option>
-    </div>
-   <option value="All">All</option>
-  <option value="Album">Album</option>
-  <option value="Artist">Artist</option>
-  <option value="Genre">Genre</option>
-  <option value="Song">Song</option>
-</select></li>
     </form>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+    
+        <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
       </ul>
     </div>
   </div>
@@ -73,20 +63,4 @@
       <li><a href="#">Song 2</a></li>
       <li><a href="#">Song 3</a></li>
     </div>
-    <div class="col-sm-8 text-left text-manipulator"> 
-      <p>Music</p>
-      <p>Just</p>
-      <p>Got</p>
-      <p>Better</p>
-  <!--   </div>
-  </div>
-</div>
-</div>
-
-<footer class="container-fluid text-center page-footer">
-  <div class="footer-contents"><a href="#">Subscribe</a></div>
-</footer>
-
-</body>
-</html>
- -->
+   

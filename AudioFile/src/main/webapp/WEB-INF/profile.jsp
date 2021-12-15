@@ -10,7 +10,7 @@
 	<c:when test="${ empty user}">
 
 		<div>
-			<h1>Profile</h1>
+			<h1>Login or create Account</h1>
 			<form action="login" method="post">
 				<p>
 					Username: <input class="textbox" name="username" />
@@ -19,6 +19,9 @@
 					Password: <input class="textbox" name="password" />
 				</p>
 				<input type="submit" value="Log In">
+			</form>
+			<form action="createAccount" method="post">
+			<input type="button" >
 			</form>
 		</div>
 	</c:when>
