@@ -7,80 +7,49 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Song</title>
-</head>
-<body>
-	<c:choose>
-		<c:when test="${! empty Song}">
-			<ul>
-				<li>Name: ${Song.name}</li>
+<jsp:include page="bootstrapHead.jsp"/>
+<div class="col-sm-8 text-left">
+	<c:if test="${! empty Songs}">
+		<h1>Song Information</h1>
+		<ul>
+			<c:forEach var="x" items="${Songs}">
+
+				<li>Name: ${x.name}</li>
 				<br>
-				<li>Lyrics: ${Song.lyrics}</li>
+				<li>Lyrics: ${x.lyrics}</li>
 				<br>
-				<li>Duration Seconds: ${Song.durationInSeconds}</li>
+				<li>Duration Seconds: ${x.durationInSeconds}</li>
 				<br>
-			</ul>
-		
-		<c:if test="${! empty Songs}">
-			<ul>
-				<c:forEach var="x" items="${Songs}">
+			</c:forEach>
+	</c:if>
 
-					<li>Name: ${x.name}</li>
-					<br>
-					<li>Lyrics: ${x.lyrics}</li>
-					<br>
-					<li>Duration Seconds: ${x.durationInSeconds}</li>
-					<br>
-				</c:forEach>
-			</ul>
-		</c:if> 
-		<c:if test="${! empty Album}">
-			<ul>
+	<c:if test="${! empty Albums}">
+		<h1>Album Information</h1>
+		<ul>
+			<c:forEach var="x" items="${Albums}">
 
-					<li>Name: ${Album.title}</li>
-					<br>
-					<li>Description: ${Album.description}</li>
-					<br>
-					<li>Release Date: ${Album.releaseDate}</li>
-					<br>
-			</ul>
-		</c:if> 
-		<c:if test="${! empty Albums}">
-			<ul>
-				<c:forEach var="x" items="${Albums}">
+				<li>Name: ${x.title}</li>
+				<br>
+				<li>Description: ${x.description}</li>
+				<br>
+				<li>Release Date: ${x.releaseDate}</li>
+				<br>
+			</c:forEach>
+		</ul>
+	</c:if>
 
-					<li>Name: ${x.title}</li>
-					<br>
-					<li>Description: ${x.description}</li>
-					<br>
-					<li>Release Date: ${x.releaseDate}</li>
-					<br>
-				</c:forEach>
-			</ul>
-		</c:if> 
-		<c:if test="${! empty Artist}">
-			<ul>
+	<c:if test="${! empty Artists}">
+		<h1>Artist Information</h1>
+		<ul>
+			<c:forEach var="x" items="${Artists}">
 
-					<li>Name: ${Artist.name}</li>
-					<br>
-					<li>Description: ${Artist.description}</li>
-					<br>
-			</ul>
-		</c:if> 
-		<c:if test="${! empty Artists}">
-			<ul>
-				<c:forEach var="x" items="${Artists}">
-
-					<li>Name: ${x.name}</li>
-					<br>
-					<li>Description: ${x.description}</li>
-					<br>
-				</c:forEach>
-			</ul>
-			</c:if>
-		</c:when> 
-		<c:otherwise>
-			<p>No song found</p>
-		</c:otherwise>
-	</c:choose>
-</body>
-</html>
+				<li>Name: ${x.name}</li>
+				<br>
+				<li>Description: ${x.description}</li>
+				<br>
+			</c:forEach>
+		</ul>
+	</c:if>s
+	</div>
+<jsp:include page="bootstrapFooter.jsp"/>
+	
