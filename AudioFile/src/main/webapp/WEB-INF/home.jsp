@@ -14,8 +14,4 @@
 					</div>
 
 
-<center>
-<a href="search">Search page</a>
-</center>
-
 <jsp:include page="bootstrapFooter.jsp"/>
