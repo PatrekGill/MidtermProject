@@ -1,0 +1,52 @@
+.albumImage {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 0.5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 500px;
+    height: 500px;
+}
+
+.albumImage-md {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 0.5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 400px;
+    height: 400px;
+}
+
+.albumImage-sm {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 200px;
+    height: 200px;
+}
+
+.albumText {
+    padding-top: 25px;
+    text-align: Left;
+}
+.albumText-title {
+    font-size: 45px;
+    font-family: Impact, fantasy;
+    font-variant: small-caps;
+    font-stretch: ultra-expanded;
+}
+.albumText-artist, a:hover {
+    font-size: 20px;
+    font-weight: bold;
+    font-family: Arial;
+    color: White;
+}
+
+.albumImage-div {
+    padding-top: 20px;
+}

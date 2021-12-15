@@ -18,4 +18,6 @@ public interface AlbumRatingDAO {
 	
 	List<AlbumRating> sortedByCreatationDate(int albumId, boolean ascendingOrder);
 	List<AlbumRating> sortedByCreatationDate(int albumId, boolean ascendingOrder, int numberOfEntriesToShow);
+
+	Double getAverageAlbumRating(int albumId);
 }

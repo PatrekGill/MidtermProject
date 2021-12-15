@@ -107,6 +107,14 @@ class AlbumRatingDAOImplTest {
 		);
 	}
 	
+	@Test
+	void test_getAverageAlbumRating() {
+		Double average = dao.getAverageAlbumRating(1);
+		assertNotNull(average);
+		assertEquals(average,3.0,1);
+		
+	}
+	
 //	@Test
 //	void test_createAlbumRating_deleteAlbumRating() {
 //		AlbumRating rating = new AlbumRating();
