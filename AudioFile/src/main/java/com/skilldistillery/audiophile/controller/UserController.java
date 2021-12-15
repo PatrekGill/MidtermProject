@@ -19,7 +19,7 @@ public class UserController {
 
 	@Autowired
 	private UserDAO userDAO;
-	
+
 	@Autowired
 	private AlbumDAO albumDAO;
 
@@ -50,52 +50,84 @@ public class UserController {
 	@GetMapping(path = "profile")
 	public String getAccoutnPage(HttpSession session, Album album) {
 		User user = (User) session.getAttribute("user");
-		if(user == null) {
+		if(session.getAttribute("update") != null) {
+		session.removeAttribute("update");
+		}
+		if (user == null) {
 			return "profile";
 		}
 		session.setAttribute("albumsCreated", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
 		return "profile";
 	}
-	
+
 	@GetMapping(path = "createAccount")
 	public String getCreateAccountPage(HttpSession session) {
 		return "createAccount";
 	}
-	
+
 	@PostMapping(path = "createAccount")
 	public String createAccount(User user, RedirectAttributes redir) {
 		try {
-			if(userDAO.createUser(user) != null) {
+			if (userDAO.createUser(user) != null) {
 				redir.addFlashAttribute("success", "Account successfully created!");
 				return "redirect:profile";
-			}else {
+			} else {
 				throw new Exception("Failed to create account");
-		}
-		}catch (Exception e) {
+			}
+		} catch (Exception e) {
 			redir.addFlashAttribute("error", e.getMessage() + ": " + user.toString());
 			e.printStackTrace();
 		}
 		return "redirect:profile";
 	}
-	
-	@PostMapping(path="deleteAccount")
+
+	@PostMapping(path = "deleteAccount")
 	public String deleteAccount(RedirectAttributes redir, HttpSession session) {
 		try {
 			User userToDelete = (User) session.getAttribute("user");
-			if(userDAO.deleteUser(userToDelete.getId())){
+			if (userDAO.deleteUser(userToDelete.getId())) {
 				session.removeAttribute("user");
-				redir.addFlashAttribute("success", "User deleted");
+				redir.addFlashAttribute("success", "Account deleted");
 				return "redirect:/";
-			}else {
+			} else {
 				throw new Exception("cannot delete film.");
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			redir.addFlashAttribute("error", e.getMessage());
 			e.printStackTrace();
 		}
 		return "redirect:/";
 	}
+
+	@GetMapping(path = "updateAccount")
+	public String getUpdateAccount(HttpSession session) {
+		try {
+			User userToUpdate = (User) session.getAttribute("user");
+			session.setAttribute("update", userToUpdate);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "profile";
+	}
 	
-	
+	@PostMapping(path ="updateAccount")
+	public String postUpdateAccount(User user, HttpSession session, RedirectAttributes redir) {
+		try {
+			User userToUpdate = (User) session.getAttribute("user");
+			if(userDAO.updateUser(userToUpdate.getId(), user)) {
+				session.setAttribute("user", userDAO.findUserById(userToUpdate.getId()));
+				session.removeAttribute("update");
+				redir.addFlashAttribute("success", "Account updated");
+				return "redirect:profile";
+			}else {
+				throw new Exception("cannot delete film.");
+			}
+			
+		} catch (Exception e) {
+			redir.addFlashAttribute("error", e.getMessage());
+			e.printStackTrace();
+		}
+		return "redirect:profile";
+	}
 
 }

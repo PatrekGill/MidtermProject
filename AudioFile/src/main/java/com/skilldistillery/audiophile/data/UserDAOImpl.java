@@ -245,6 +245,7 @@ public class UserDAOImpl implements UserDAO {
 		
 		boolean updated = false;
 		if (managedUser != null && user != null) {
+			
 			updateUsername(id, user.getUsername());
 			updatePassword(id, user.getPassword());
 			updateFirstName(id, user.getFirstName());
@@ -254,6 +255,8 @@ public class UserDAOImpl implements UserDAO {
 			updateEnabled(id, user.isEnabled());
 			
 			updated = true;
+		}else {
+			System.out.println("no user found");
 		}
 		
 		
