@@ -12,12 +12,10 @@
 					<p>Got</p>
 					<p>Better</p>
 					</div>
-<jsp:include page="bootstrapFooter.jsp"/>
 
 
 <center>
 <a href="search">Search page</a>
 </center>
 
-</body>
-</html>
+<jsp:include page="bootstrapFooter.jsp"/>
