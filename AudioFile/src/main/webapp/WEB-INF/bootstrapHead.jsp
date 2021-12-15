@@ -23,7 +23,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="home.do"><img src="logosAndGraphics/monkeyVector.png" class="img-fluid" alt="..." width="24" height="30"></a>
+      <a class="navbar-brand" href="home"><img src="logosAndGraphics/monkeyVector.png" class="img-fluid" alt="..." width="24" height="30"></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
