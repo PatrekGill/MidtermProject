@@ -1,13 +1,14 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="css/main.css"/>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 <div class="mainContent">
@@ -19,12 +20,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="home.do"><img src="logosAndGraphics/monkeyVector.png" class="img-fluid" alt="..." width="24" height="30"></a>
+      <a class="navbar-brand" href="home"><img src="logosAndGraphics/monkeyVector.png" class="img-fluid" alt="..." width="24" height="30"></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Profile</a></li>
+        <li><a href="profile">Profile</a></li>
         <li><a href="#">Trending</a></li>
         <li><a href="#">Recent Messages</a></li>
       </ul>
@@ -48,7 +49,14 @@
 </select>
     </form>
 </li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+<c:choose>
+<c:when test="${empty user }">
+        <li><a href="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </c:when>
+      <c:otherwise>
+      <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+      </c:otherwise>
+      </c:choose>
       </ul>
     </div>
   </div>

@@ -10,7 +10,7 @@
 	<c:when test="${ empty user}">
 
 		<div>
-			<h1>Profile</h1>
+			<h1>Login or create Account</h1>
 			<form action="login" method="post">
 				<p>
 					Username: <input class="textbox" name="username" />
@@ -19,6 +19,9 @@
 					Password: <input class="textbox" name="password" />
 				</p>
 				<input type="submit" value="Log In">
+			</form>
+			<form action="createAccount" method="get">
+			<input type="submit" value="Create Account">
 			</form>
 		</div>
 	</c:when>
@@ -37,17 +40,25 @@
 		</div>
 		<c:if test="${not empty albumsCreated}">
 		<table>
+		<tr>
+		<th>Albums added by you</th>
+		</tr>
 			<c:forEach items="${albumsCreated}" var="album">
 				<tr>
-					<td>${album.title }</td>
+					<td><a href="album">${album.title }</a></td>
 				</tr>
 
 			</c:forEach>
 		</table>
 		</c:if>
+		<form action="deleteAccount" method="post">
+		<input type="submit" value="Delete Account">
+		</form>
 	</c:when>
 	
 </c:choose>
+
+
 
 
 <jsp:include page="bootstrapFooter.jsp" />
