@@ -13,7 +13,7 @@
 
 <body>
 
-	<header class="p-3 bg-dark text-white">
+	<header class="p-0.5 bg-dark text-white">
 		<div class="p-3 bg-dark text-white">
 			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
@@ -28,7 +28,7 @@
 				<form class="col-12 col-lg-5 mb-3 mb-lg-0 me-lg-3" action="search.do" method="GET">
 					<div class="input-group">
 						<div class="col-sm-3">
-							<select class="form-select" id="searchType" name="searchType" data-width="50%">
+							<select class="form-select" id="searchType" name="searchType">
 								<option value="All" selected>All</option>
 								<option value="Albums">Albums</option>
 								<option value="Artists">Artists</option>
