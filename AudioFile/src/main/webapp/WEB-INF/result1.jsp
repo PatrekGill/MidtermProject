@@ -11,6 +11,7 @@
 <body>
 	<c:choose>
 		<c:when test="${! empty Song}">
+			<h1>Song Information</h1>
 			<ul>
 				<li>Name: ${Song.name}</li>
 				<br>
@@ -19,8 +20,8 @@
 				<li>Duration Seconds: ${Song.durationInSeconds}</li>
 				<br>
 			</ul>
-		</c:when>
-		<c:when test="${! empty Songs}">
+		<c:if test="${! empty Songs}">
+			<h1>Song Information</h1>
 			<ul>
 				<c:forEach var="x" items="${Songs}">
 
@@ -32,8 +33,8 @@
 					<br>
 				</c:forEach>
 			</ul>
-		</c:when>> 
-		<c:when test="${! empty Album}">
+		</c:if>
+		<c:if test="${! empty Album}">
 			<ul>
 
 					<li>Name: ${Album.title}</li>
@@ -43,8 +44,9 @@
 					<li>Release Date: ${Album.releaseDate}</li>
 					<br>
 			</ul>
-		</c:when> 
-		<c:when test="${! empty Albums}">
+		</c:if> 
+		<c:if test="${! empty Albums}">
+		<h1>Album Information</h1>
 			<ul>
 				<c:forEach var="x" items="${Albums}">
 
@@ -56,8 +58,8 @@
 					<br>
 				</c:forEach>
 			</ul>
-		</c:when> 
-		<c:when test="${! empty Artist}">
+		</c:if> 
+		<c:if test="${! empty Artist}">
 			<ul>
 
 					<li>Name: ${Artist.name}</li>
@@ -65,8 +67,9 @@
 					<li>Description: ${Artist.description}</li>
 					<br>
 			</ul>
-		</c:when> 
-		<c:when test="${! empty Artists}">
+		</c:if> 
+		<c:if test="${! empty Artists}">
+		<h1>Artist Information</h1>
 			<ul>
 				<c:forEach var="x" items="${Artists}">
 
@@ -76,6 +79,7 @@
 					<br>
 				</c:forEach>
 			</ul>
+		</c:if> 
 		</c:when> 
 		<c:otherwise>
 			<p>No song found</p>

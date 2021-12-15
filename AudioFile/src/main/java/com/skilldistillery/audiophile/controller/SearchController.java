@@ -39,15 +39,33 @@ public class SearchController {
 		return "search1";
 	}
 	@GetMapping(path ="search")
-	public String searchAll(@RequestParam("keyword")  String keyword , Model model) {
-		List<Song> songs = songDAO.findBySongName(keyword);
-		List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
-		List<Song> song = songDAO.findBySongName(keyword);
-		List<Artist> artists = artistDAO.findByArtistsName(keyword);
-//		model.addAttribute("Songs", songs);
-		model.addAttribute("Song", song.get(0));
-		model.addAttribute("Albums", albums);
-		model.addAttribute("Artists", artists);
+
+	public String searchAll(@RequestParam("keyword")  String keyword , Model model, @RequestParam("searchAll")  String searchAll) {
+		if(searchAll.equals("All")){
+			List<Song> songs = songDAO.findBySongName(keyword);
+			List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
+			List<Song> song = songDAO.findBySongName(keyword);
+			List<Artist> artists = artistDAO.findByArtistsName(keyword);
+			
+//			model.addAttribute("Songs", songs);
+			model.addAttribute("Song", song.get(0));
+			model.addAttribute("Albums", albums);
+			model.addAttribute("Artists", artists);
+			return "result1";
+		}
+		  if(searchAll.equals("Album")) {
+				List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
+				model.addAttribute("Albums", albums);
+			}  if(searchAll.equals("Artist")) {
+				List<Artist> artists = artistDAO.findByArtistsName(keyword);
+				model.addAttribute("Artists", artists);
+			}  if(searchAll.equals("Genre")) {
+				List<Album> albums = albumDAO.findAlbumsByGenreName(keyword);
+				model.addAttribute("Albums", albums);
+			}  if(searchAll.equals("Song")) {
+				List<Song> songs = songDAO.findBySongName(keyword);
+				model.addAttribute("Songs", songs);
+			}
 		return "result";
 	}
 

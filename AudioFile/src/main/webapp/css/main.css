@@ -10,6 +10,13 @@
     color: black;
     }
     
+    .select-padder{
+    padding-top:15px;
+    padding-left: 5px;
+    height: 100%;
+    margin:auto;
+    color: black;
+    }
     .text-manipulator{
     margin-top: 50px;
     font-size:1000%;
