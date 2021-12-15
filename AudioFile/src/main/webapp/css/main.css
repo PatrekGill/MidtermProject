@@ -1,4 +1,10 @@
     /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .col{
+    position: fixed;
+    padding-left:10px;
+    bottom: 36px;
+    }
+    
     .mainContent{
     position:relative;
     }
@@ -14,6 +20,32 @@
     padding-top:10px;
     height: 100%;
     margin:auto;
+    color: black;
+    }
+    
+    .albums-by-you{
+    position: absolute;
+    height: 100%;
+    width: 80%;
+    margin-left: 20%;
+    }
+    .center-alignment{
+    position:absolute;
+    height: 100%;
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
+    }
+    
+    .spacer{
+    padding-bottom:10px;
+    }
+    .account-design{
+    position:absolute;
+    height: 100%;
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%;
     color: black;
     }
     
@@ -41,7 +73,7 @@
       height: 100%;
     }
     .spacer{
-    padding-bottom:10px;
+    margin:10px;
     }
     a{
     color:white;

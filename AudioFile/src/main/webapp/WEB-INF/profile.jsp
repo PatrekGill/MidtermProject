@@ -28,21 +28,23 @@
 	<c:when test="${user != null }">
 
 		<c:if test="${empty update }">
-		<div>
+		<div class="center-alignment">
 			<h2>Your Account Details</h2>
-			<ul>
-				<li>First name: ${user.firstName}</li>
-				<li>Last name: ${user.lastName }</li>
-				<li>Account created on: ${user.creationDateTime }</li>
-				<li>Email: ${user.email }</li>
-				<li>Username: ${user.username }</li>
-			</ul>
+				<p>First name: ${user.firstName}</p>
+				<p>Last name: ${user.lastName }</p>
+				<p>Account created on: ${user.creationDateTime }</p>
+				<p>Email: ${user.email }</p>
+				<p>Username: ${user.username }</p>
+			<div class="account-design">
 			<form action="deleteAccount" method="post">
 		<input type="submit" value="Delete Account">
 		</form>
+		<div class="spacer">
 		<form action="updateAccount" method="get">
 		<input type="submit" value="Update Account">
 		</form>
+		</div>
+			</div>
 		</div>
 		</c:if>
 		<c:if test="${not empty update }">
@@ -61,6 +63,7 @@
 		</div>
 		</c:if>
 		<c:if test="${not empty albumsCreated}">
+		<div class="albums-by-you">
 		<table>
 		<tr>
 		<th>Albums added by you</th>
@@ -72,6 +75,7 @@
 
 			</c:forEach>
 		</table>
+		</div>
 		</c:if>
 	</c:when>
 	
