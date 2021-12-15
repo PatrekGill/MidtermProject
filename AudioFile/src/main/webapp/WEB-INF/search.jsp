@@ -8,7 +8,6 @@
 </head>
 <body>
 <h1>Search for songs you want</h1>
-
  
 <form action=searchBySongId.do method="GET">
 Song ID:

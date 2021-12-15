@@ -171,4 +171,18 @@ public class AlbumDAOImpl implements AlbumDAO{
 		return albums;
 	}
 
+	@Override
+	public List<Album> findAlbumsByTitle(String albumsTitle) {
+		String jpql = "SELECT a FROM Album a WHERE a.title LIKE :title";
+		
+		try {
+			return em.createQuery(jpql, Album.class)
+					.setParameter("title", "%" + albumsTitle + "%")
+					.getResultList();
+		}catch(Exception e) {
+			System.err.println("No album found from: " + albumsTitle);
+			return null;
+		}
+	}
+
 }

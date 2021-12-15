@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +37,17 @@ public class SearchController {
 	@RequestMapping({  "search"})
 	public String findbyId(Model model) {
 		return "search";
+	}
+	@GetMapping(path ="search")
+	public String searchAll(@RequestParam("keyword")  String keyword , Model model) {
+		List<Song> songs = songDAO.findBySongName(keyword);
+		List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
+		List<Song> song = songDAO.findBySongName(keyword);
+		
+		model.addAttribute("Songs", songs);
+		model.addAttribute("Song", song.get(0));
+		model.addAttribute("Albums", albums);
+		return "result";
 	}
 
 	@RequestMapping(path = "searchBySongId.do", params = "songId", method = RequestMethod.GET)

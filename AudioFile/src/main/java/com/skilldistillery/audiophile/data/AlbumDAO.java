@@ -17,6 +17,7 @@ public interface AlbumDAO {
 	Album findAlbumById(int id);
 	Album findAlbumByTitle(String albumTitle);
 	Album findAlbumBySongTitle(String songName);
+	List<Album> findAlbumsByTitle(String albumsTitle);
 	List<Album> findAlbumsByArtistName(String artistName);
 	List<Album> findAlbumByCreationDate(LocalDateTime creationDate);
 	List<Album> findAlbumsByGenreName(String genre);
