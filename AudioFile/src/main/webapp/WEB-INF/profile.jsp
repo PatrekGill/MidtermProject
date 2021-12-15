@@ -20,8 +20,8 @@
 				</p>
 				<input type="submit" value="Log In">
 			</form>
-			<form action="createAccount" method="post">
-			<input type="button" >
+			<form action="createAccount" method="get">
+			<input type="submit" value="Create Account">
 			</form>
 		</div>
 	</c:when>
@@ -51,9 +51,14 @@
 			</c:forEach>
 		</table>
 		</c:if>
+		<form action="deleteAccount" method="post">
+		<input type="submit" value="Delete Account">
+		</form>
 	</c:when>
 	
 </c:choose>
+
+
 
 
 <jsp:include page="bootstrapFooter.jsp" />

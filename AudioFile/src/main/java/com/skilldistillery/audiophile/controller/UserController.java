@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.audiophile.data.AlbumDAO;
 import com.skilldistillery.audiophile.data.UserDAO;
@@ -24,9 +25,6 @@ public class UserController {
 
 	@GetMapping(path = "login")
 	public String getLogin(HttpSession session) {
-		if (session.getAttribute("user") != null) {
-			return "index";
-		}
 		return "profile";
 	}
 
@@ -35,7 +33,7 @@ public class UserController {
 			@RequestParam("password") String password) {
 		User user = userDAO.login(username, password);
 		if (user == (null)) {
-			return "login";
+			return "profile";
 		}
 		session.setAttribute("user", user);
 
@@ -52,8 +50,52 @@ public class UserController {
 	@GetMapping(path = "profile")
 	public String getAccoutnPage(HttpSession session, Album album) {
 		User user = (User) session.getAttribute("user");
+		if(user == null) {
+			return "profile";
+		}
 		session.setAttribute("albumsCreated", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
 		return "profile";
 	}
+	
+	@GetMapping(path = "createAccount")
+	public String getCreateAccountPage(HttpSession session) {
+		return "createAccount";
+	}
+	
+	@PostMapping(path = "createAccount")
+	public String createAccount(User user, RedirectAttributes redir) {
+		try {
+			if(userDAO.createUser(user) != null) {
+				redir.addFlashAttribute("success", "Account successfully created!");
+				return "redirect:profile";
+			}else {
+				throw new Exception("Failed to create account");
+		}
+		}catch (Exception e) {
+			redir.addFlashAttribute("error", e.getMessage() + ": " + user.toString());
+			e.printStackTrace();
+		}
+		return "redirect:profile";
+	}
+	
+	@PostMapping(path="deleteAccount")
+	public String deleteAccount(RedirectAttributes redir, HttpSession session) {
+		try {
+			User userToDelete = (User) session.getAttribute("user");
+			if(userDAO.deleteUser(userToDelete.getId())){
+				session.removeAttribute("user");
+				redir.addFlashAttribute("success", "User deleted");
+				return "redirect:/";
+			}else {
+				throw new Exception("cannot delete film.");
+			}
+		}catch(Exception e) {
+			redir.addFlashAttribute("error", e.getMessage());
+			e.printStackTrace();
+		}
+		return "redirect:/";
+	}
+	
+	
 
 }
