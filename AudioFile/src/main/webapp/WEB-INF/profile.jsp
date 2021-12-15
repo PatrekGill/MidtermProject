@@ -37,9 +37,12 @@
 		</div>
 		<c:if test="${not empty albumsCreated}">
 		<table>
+		<tr>
+		<th>Albums added by you</th>
+		</tr>
 			<c:forEach items="${albumsCreated}" var="album">
 				<tr>
-					<td>${album.title }</td>
+					<td><a href="album">${album.title }</a></td>
 				</tr>
 
 			</c:forEach>
