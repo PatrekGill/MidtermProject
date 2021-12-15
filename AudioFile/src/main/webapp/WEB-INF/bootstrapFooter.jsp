@@ -1,6 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 </div>
 </div>
+</div>
+</div>
 <div class="col">
 	<c:choose>
 		<c:when test="${ success != null }">

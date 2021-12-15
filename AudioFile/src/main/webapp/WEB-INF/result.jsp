@@ -7,9 +7,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Song</title>
-</head>
-<body>
-
+<jsp:include page="bootstrapHead.jsp"/>
+<div class="col-sm-8 text-left">
 	<c:if test="${! empty Songs}">
 		<h1>Song Information</h1>
 		<ul>
@@ -46,7 +45,7 @@
 				<br> --%>
 			</c:forEach>
 		</ul>
-	</c:if>
-
-</body>
-</html>
+	</c:if>s
+	</div>
+<jsp:include page="bootstrapFooter.jsp"/>
+	

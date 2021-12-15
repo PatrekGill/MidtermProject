@@ -1,4 +1,11 @@
     /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .mainContent{
+    position:relative;
+    }
+    
+    .content-wrap{
+    padding-bottom: 2.5rem;
+    }
     .navbar {
       margin-bottom: 0;
       border-radius: 0;
@@ -62,10 +69,10 @@
       padding: 15px;
     }
     .page-footer {
-    position:absolute;
-    bottom:0;
-    width:100%;
+    bottom: 0;
     justify-content:center;
+    position: fixed;
+    width: 100%;
     }
     .footer-contents{
     margin:auto;
