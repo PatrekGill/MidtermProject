@@ -34,9 +34,9 @@ public class SearchController {
 	 * Search for Songs
 	 * ---------------------------
 	 */
-	@RequestMapping({  "search"})
+	@RequestMapping({  "search1"})
 	public String findbyId(Model model) {
-		return "search";
+		return "search1";
 	}
 	@GetMapping(path ="search")
 	public String searchAll(@RequestParam("keyword")  String keyword , Model model) {
@@ -44,7 +44,7 @@ public class SearchController {
 		List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
 		List<Song> song = songDAO.findBySongName(keyword);
 		
-		model.addAttribute("Songs", songs);
+//		model.addAttribute("Songs", songs);
 		model.addAttribute("Song", song.get(0));
 		model.addAttribute("Albums", albums);
 		return "result";
