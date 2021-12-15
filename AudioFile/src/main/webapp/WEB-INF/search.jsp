@@ -8,16 +8,57 @@
 </head>
 <body>
 <h1>Search for songs you want</h1>
+
+ 
 <form action=searchBySongId.do method="GET">
- 	Song ID:
+Song ID:
  	<input type="text" name="songId"/>
  	<input type="submit" value="Get Song Data " />
+ 	</form>
+<form action=sortBySongRating.do method="GET">
+<label for="songId"></label>
+
+<select id="songId" name="songId">
+  <option value="">Get Sorting Songs</option>
+  <option value="2">Saab 95</option>
+  <option value="3">Mercedes SLK</option>
+  <option value="4">Audi TT</option>
+</select>
+<input type="submit" value="Submit">
+ 	<!-- Song ID:
+ 	<input type="text" name="songId"/>
+ 	<input type="submit" value="Get Song Data " />
+ 	Song Name:
+ 	<input type="text" name="songName"/>
+ 	<input type="submit" value="Get Song Data " /> -->
  </form>
-<form action=searchBySongName.do method="GET">
+ <input list="brow" type="text" >
+<datalist id="brow">
+  <option value="Internet Explorer">
+  <option value="Firefox">
+  <option value="Chrome">
+  <option value="Opera">
+  <option value="Safari">
+</datalist>  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+<!-- <form action=searchBySongName.do method="GET">
  	Song Name:
  	<input type="text" name="songName"/>
  	<input type="submit" value="Get Song Data " />
+ </form> -->
+<!-- <form action=searchByEverything.do method="GET">
+
+ 	Album Name:
+ 	<input type="text" name="anything"/>
+ 	<input type="submit" value="Get Song Data " />
  </form>
+
 <form action=searchByAlbumName.do method="GET">
  	Album Name:
  	<input type="text" name="songAlbumName"/>
@@ -111,6 +152,6 @@
  	Album Name:
  	<input type="text" name="ArtistAlbumName"/>
  	<input type="submit" value=" Get Artist Data" />
- </form>
+ </form> -->
 </body>
 </html>
