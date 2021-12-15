@@ -43,10 +43,11 @@ public class SearchController {
 		List<Song> songs = songDAO.findBySongName(keyword);
 		List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
 		List<Song> song = songDAO.findBySongName(keyword);
-		
+		List<Artist> artists = artistDAO.findByArtistsName(keyword);
 //		model.addAttribute("Songs", songs);
 		model.addAttribute("Song", song.get(0));
 		model.addAttribute("Albums", albums);
+		model.addAttribute("Artists", artists);
 		return "result";
 	}
 

@@ -12,6 +12,7 @@
 	<c:choose>
 		<c:when test="${! empty Song}">
 			<ul>
+			<h1>Song Information</h1>
 				<li>Name: ${Song.name}</li>
 				<br>
 				<li>Lyrics: ${Song.lyrics}</li>
@@ -33,6 +34,7 @@
 				</c:forEach>
 			</ul>
 		</c:if> 
+		<h1>Album Information</h1>
 		<c:if test="${! empty Album}">
 			<ul>
 
@@ -57,6 +59,7 @@
 				</c:forEach>
 			</ul>
 		</c:if> 
+		<h1>Artist Information</h1>
 		<c:if test="${! empty Artist}">
 			<ul>
 
