@@ -13,14 +13,10 @@
 		<h1>Song Information</h1>
 		<ul>
 			<c:forEach var="x" items="${Songs}">
-
-				<li>Name: ${x.name}</li>
-				<br>
-				<li>Lyrics: ${x.lyrics}</li>
-				<br>
-				<li>Duration Seconds: ${x.durationInSeconds}</li>
-				<br>
+				<form action="searchBySongName.do" method="GET"></form>
+				<li><a href="searchBySongName.do?songName=${x.name}">${x.name}</a></li>
 			</c:forEach>
+		</ul>
 	</c:if>
 
 	<c:if test="${! empty Albums}">
@@ -29,11 +25,11 @@
 			<c:forEach var="x" items="${Albums}">
 
 				<li>Name: ${x.title}</li>
-				<br>
+				<%-- <br>
 				<li>Description: ${x.description}</li>
 				<br>
 				<li>Release Date: ${x.releaseDate}</li>
-				<br>
+				<br> --%>
 			</c:forEach>
 		</ul>
 	</c:if>
@@ -44,9 +40,9 @@
 			<c:forEach var="x" items="${Artists}">
 
 				<li>Name: ${x.name}</li>
-				<br>
+				<%-- <br>
 				<li>Description: ${x.description}</li>
-				<br>
+				<br> --%>
 			</c:forEach>
 		</ul>
 	</c:if>s

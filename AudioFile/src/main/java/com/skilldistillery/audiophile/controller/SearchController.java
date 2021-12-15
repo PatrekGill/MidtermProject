@@ -45,27 +45,23 @@ public class SearchController {
 			model.addAttribute("Songs", songs);
 			model.addAttribute("Albums", albums);
 			model.addAttribute("Artists", artists);
-		}
-		else if (searchAll.equals("Album")) {
+		} else if (searchAll.equals("Album")) {
 			List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
 			model.addAttribute("Albums", albums);
-		}
-		else if (searchAll.equals("Artist")) {
+		} else if (searchAll.equals("Artist")) {
 			List<Artist> artists = artistDAO.findByArtistsName(keyword);
 			model.addAttribute("Artists", artists);
-		}
-		else if (searchAll.equals("Genre")) {
+		} else if (searchAll.equals("Genre")) {
 			List<Album> albums = albumDAO.findAlbumsByGenreName(keyword);
 			model.addAttribute("Albums", albums);
-		}
-		else if (searchAll.equals("Song")) {
+		} else if (searchAll.equals("Song")) {
 			List<Song> songs = songDAO.findBySongName(keyword);
 			model.addAttribute("Songs", songs);
 		}
 		return "result";
 	}
 
-	@RequestMapping(path = "searchBySongId.do", params = "songId", method = RequestMethod.GET)
+	@RequestMapping(path = "getSong.do", params = "songId", method = RequestMethod.GET)
 	public ModelAndView getBySongId(@RequestParam("songId") int songId) {
 		ModelAndView mv = new ModelAndView();
 		Song song = songDAO.findById(songId);
@@ -78,8 +74,9 @@ public class SearchController {
 	public ModelAndView getBySongName(@RequestParam("songName") String songName) {
 		ModelAndView mv = new ModelAndView();
 		List<Song> songs = songDAO.findBySongName(songName);
-		mv.addObject("Songs", songs);
-		mv.setViewName("result");
+		Song song = songs.get(0);
+		mv.addObject("Song", song);
+		mv.setViewName("SongDetails");
 		return mv;
 	}
 
