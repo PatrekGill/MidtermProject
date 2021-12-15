@@ -6,7 +6,12 @@
 <meta charset="UTF-8">
 <title>AudioFile</title>
 <jsp:include page="bootstrapHead.jsp"/>
-<!-- Include body parameters -->
+<div class="col-sm-8 text-left text-manipulator">
+					<p>Music</p>
+					<p>Just</p>
+					<p>Got</p>
+					<p>Better</p>
+					</div>
 <jsp:include page="bootstrapFooter.jsp"/>
 </head>
 <body>
