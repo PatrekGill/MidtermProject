@@ -49,7 +49,11 @@
 	width:100px;
 }
 
-
+.dropdown-shower{
+	padding-top: 10px;
+	height: 100%;
+	margin: auto;
+}
 label {
 	color: white;
 	text-align:right;
@@ -73,6 +77,11 @@ label {
 	color: black;
 }
 
+.dropdown-padder {
+	color: black;
+	padding-top: 4px;
+}
+
 .text-manipulator {
 	margin-top: 50px;
 	font-size: 1000%;
@@ -91,6 +100,7 @@ label {
 	background-color: #242424;
 	height: 100%;
 }
+
 
 .spacer {
 	margin-top: 10px;
@@ -115,6 +125,15 @@ body {
 	color: white;
 }
 
+.dropdown-menu{
+	color:black;
+	width: 100%;
+    width: 30px !important;
+}
+.dropdown-item{
+	color:black;
+	text-align: center;
+}
 .container-boy {
 	text-align: center;
 }
