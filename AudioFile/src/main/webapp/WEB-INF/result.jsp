@@ -49,7 +49,7 @@
 				<br>
 			</c:forEach>
 		</ul>
-	</c:if>s
+	</c:if>
 	</div>
 <jsp:include page="bootstrapFooter.jsp"/>
 	

@@ -93,23 +93,10 @@
 						<p>
 							<a href="#">Top Albums</a>
 						</p>
-						<div class="spacer">
-							<li><a href="#">Album 1</a></li>
-							<li><a href="#">Album 2</a></li>
-							<li><a href="#">Album 3</a></li>
-						</div>
 						<p>
 							<a href="#">Top Artists</a>
 						</p>
-						<div class="spacer">
-							<li><a href="#">Artist 1</a></li>
-							<li><a href="#">Artist 2</a></li>
-							<li><a href="#">Artist 3</a></li>
-						</div>
 						<p>
 							<a href="#">Top Songs</a>
 						</p>
-						<li><a href="#">Song 1</a></li>
-						<li><a href="#">Song 2</a></li>
-						<li><a href="#">Song 3</a></li>
 					</div>

@@ -107,8 +107,8 @@ label {
 }
 
 a {
-	color: white;
 	font: Helvetica;
+	color: white;
 }
 
 a:hover {
@@ -127,8 +127,6 @@ body {
 
 .dropdown-menu{
 	color:black;
-	width: 100%;
-    width: 30px !important;
 }
 .dropdown-item{
 	color:black;
