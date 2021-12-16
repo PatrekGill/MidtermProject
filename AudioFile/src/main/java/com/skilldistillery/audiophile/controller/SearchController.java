@@ -43,31 +43,48 @@ public class SearchController {
 
 	public String searchAll(@RequestParam("keyword") String keyword, Model model,
 			@RequestParam("searchAll") String searchAll) {
-		if (searchAll.equals("All")) {
+		boolean notPopulateWith = false;
+		if (searchAll.equals("All") || (searchAll.equals("Genre") && keyword == "")) {
 			List<Song> songs = songDAO.findBySongName(keyword);
 			List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
 			List<Artist> artists = artistDAO.findByArtistsName(keyword);
-
+			if (songs.isEmpty() && albums.isEmpty() && artists.isEmpty()) {
+				notPopulateWith = true;
+			}
 			model.addAttribute("Songs", songs);
 			model.addAttribute("Albums", albums);
 			model.addAttribute("Artists", artists);
 		} else if (searchAll.equals("Album")) {
 			List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
 			model.addAttribute("Albums", albums);
+			if (albums.isEmpty()) {
+				notPopulateWith = true;
+			}
 		} else if (searchAll.equals("Artist")) {
 			List<Artist> artists = artistDAO.findByArtistsName(keyword);
 			model.addAttribute("Artists", artists);
-		} else if (searchAll.equals("Genre")) {
-			List<Album> albums = albumDAO.findAlbumsByGenreName(keyword);
-			model.addAttribute("Albums", albums);
+			if (artists.isEmpty()) {
+				notPopulateWith = true;
+			}
+
 		} else if (searchAll.equals("Song")) {
 			List<Song> songs = songDAO.findBySongName(keyword);
 			model.addAttribute("Songs", songs);
+			if (songs.isEmpty()) {
+				notPopulateWith = true;
+			}
+		} else if (searchAll.equals("Genre") && keyword != "") {
+			List<Album> albums = albumDAO.findAlbumsByGenreName(keyword);
+			model.addAttribute("Albums", albums);
+			if (albums.isEmpty()) {
+				notPopulateWith = true;
+			}
 		}
+		model.addAttribute("NotPopulated", notPopulateWith);
 		return "result";
 	}
 	/*
-	 * ---------------------------
+	 * --------------------------- 
 	 * Song details page result
 	 * ---------------------------
 	 */
@@ -91,9 +108,9 @@ public class SearchController {
 		long MM = durationSeconds / 60;
 		long SS = durationSeconds % 60;
 		newDurationSeconds = String.format("%02d:%02d", MM, SS);
-		if(song.getSongRatings().size()>0) {
+		if (song.getSongRatings().size() > 0) {
 			for (SongRating songRating : song.getSongRatings()) {
-				ratingDate= songRating.getRatingDate();
+				ratingDate = songRating.getRatingDate();
 				String newRatingDate = ratingDate.format(formatter);
 				String description = songRating.getDescription();
 				int rating = songRating.getRating();
@@ -101,8 +118,8 @@ public class SearchController {
 				mv.addObject("Comments", description);
 				mv.addObject("Rating", rating);
 			}
-		}else {
-			String noComment ="";
+		} else {
+			String noComment = "";
 			mv.addObject("RateDate", noComment);
 		}
 		mv.addObject("Song", song);
@@ -114,9 +131,8 @@ public class SearchController {
 		return mv;
 	}
 	/*
-	 * ------------------------------------------------------------
-	 * Below not used , just in case
-	 * ------------------------------------------------------------
+	 * ------------------------------------------------------------ Below not used ,
+	 * just in case ------------------------------------------------------------
 	 */
 
 	@RequestMapping(path = "getSong.do", params = "songId", method = RequestMethod.GET)
@@ -127,6 +143,7 @@ public class SearchController {
 		mv.setViewName("result");
 		return mv;
 	}
+
 	@RequestMapping(path = "searchByAlbumName.do", params = "songAlbumName", method = RequestMethod.GET)
 	public ModelAndView getByAlbumName(@RequestParam("songAlbumName") String songAlbumName) {
 		ModelAndView mv = new ModelAndView();
