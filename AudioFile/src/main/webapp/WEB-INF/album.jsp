@@ -46,10 +46,10 @@
                         <c:when test="${not empty album.songs}">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Song</th>
-                                    <th>Artist</th>
-                                    <th>Length(s)</th>
+                                    <th class="albumTable-songNumber">#</th>
+                                    <th class="albumTable-songName">SONG</th>
+                                    <th class="albumTable-artists">ARTIST(s)</th>
+                                    <th class="albumTable-duration">LENGTH (seconds)</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -59,7 +59,14 @@
                                         <td>${song.name}</td>
                                         <td>
                                             <c:forEach items="${song.artists}" var="artist" varStatus="j">
-                                                ${artist.name} 
+                                                <c:choose>
+                                                    <c:when test="${j.index == 0}">
+                                                        ${artist.name}
+                                                    </c:when>
+                                                    <c:otherwise>
+                                						,${artist.name}
+                                					</c:otherwise>
+                                                </c:choose>
                                             </c:forEach>
                                         </td>
                                         <td>${song.durationInSeconds}</td>

@@ -76,7 +76,18 @@ table.table tr th:first-child {
 table.table tr th:last-child {
 	width: 100px;
 }
-
+th.albumTable-songNumber {
+    width: 5%;
+}
+th.albumTable-songName {
+    width: 45%;
+}
+th.albumTable-artists {
+    width: 45%;
+}
+th.albumTable-duration {
+    width: 5%;
+}
 
 
 /* table.table th i {
