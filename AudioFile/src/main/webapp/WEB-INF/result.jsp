@@ -14,28 +14,28 @@
 			<c:if test="${! empty Songs}">
 				<h1>Song Information</h1>
 				<ul>
-					<c:forEach var="x" items="${Songs}">
+					<c:forEach var="song" items="${Songs}">
 						<form action="searchBySongName.do" method="GET"></form>
-						<li><a href="searchBySongName.do?songName=${x.name}">${x.name}</a></li>
+						<li><a href="searchBySongName.do?songName=${song.name}">${song.name}</a></li>
 					</c:forEach>
 				</ul>
 			</c:if>
 			<c:if test="${! empty Albums}">
 				<h1>Album Information</h1>
 				<ul>
-					<c:forEach var="x" items="${Albums}">
+					<c:forEach var="album" items="${Albums}">
 
-						<li>${x.title}</li>
+						<li>${album.title}</li>
 					</c:forEach>
 				</ul>
 			</c:if>
 			<c:if test="${! empty Artists}">
 				<h1>Artist Information</h1>
 				<ul>
-					<c:forEach var="x" items="${Artists}">
-
-						<li>${x.name}</li>
-						<img src="${x.imageUrl}">
+					<c:forEach var="artist" items="${Artists}">
+						<form action="artistProfile" method="get"></form>
+						<li><a href="artistProfile?id=${artist.id}">${artist.name}</a></li>
+						<img src="${artist.imageUrl}">
 					</c:forEach>
 				</ul>
 			</c:if>
