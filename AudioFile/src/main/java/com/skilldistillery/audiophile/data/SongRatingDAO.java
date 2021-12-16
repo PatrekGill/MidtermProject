@@ -9,7 +9,8 @@ public interface SongRatingDAO {
 
 	List<SongRating> findByUsername (String username);
 	public SongRating findSongRatingById(int id);
-	public SongRating findSongRatingByUserId(int id);
+	public List<SongRating> findSongRatingsByUserId(int id);
+	public SongRating findSongRatingByUserIdSongId(int userid ,int songid);
 	
 	List<SongRating> sortedByRating(int songId, boolean ascendingOrder);
 	List<SongRating> sortedByRating(int songId, boolean ascendingOrder, int numberOfEntriesToShow);
