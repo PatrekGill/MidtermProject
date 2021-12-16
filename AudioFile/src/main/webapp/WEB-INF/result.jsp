@@ -24,7 +24,7 @@
 		<ul>
 			<c:forEach var="x" items="${Albums}">
 
-				<li>Name: ${x.title}</li>
+				<li>${x.title}</li>
 				<%-- <br>
 				<li>Description: ${x.description}</li>
 				<br>
@@ -39,13 +39,15 @@
 		<ul>
 			<c:forEach var="x" items="${Artists}">
 
-				<li>Name: ${x.name}</li>
+				<li>${x.name}</li>
+				<img src="${x.imageUrl}">
+				<%-- <li>${x.imageUrl}</li> --%>
 				<%-- <br>
 				<li>Description: ${x.description}</li>
 				<br> --%>
 			</c:forEach>
 		</ul>
-	</c:if>s
+	</c:if>
 	</div>
 <jsp:include page="bootstrapFooter.jsp"/>
 	

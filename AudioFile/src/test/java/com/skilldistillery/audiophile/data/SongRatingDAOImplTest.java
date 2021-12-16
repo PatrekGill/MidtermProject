@@ -31,8 +31,14 @@ class SongRatingDAOImplTest {
 	@Test
 	void findSongRatingByUserId_Test() {
 		assertNotNull(srDAO);
-		assertNotNull(srDAO.findSongRatingByUserId(1));
-		assertEquals(1, srDAO.findSongRatingByUserId(1).getId());
+		assertNotNull(srDAO.findSongRatingsByUserId(1));
+		assertNotNull(srDAO.findSongRatingsByUserId(2).size()>0);
+	}
+	@Test
+	void findSongRatingByUserIdAndSongId_Test() {
+		assertNotNull(srDAO);
+		assertNotNull(srDAO.findSongRatingByUserIdSongId(2,1));
+		assertEquals(4,srDAO.findSongRatingByUserIdSongId(2,5).getRating());
 	}
 	
 	@Test
