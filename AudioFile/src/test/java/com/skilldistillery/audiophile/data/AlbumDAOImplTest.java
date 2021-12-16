@@ -108,5 +108,13 @@ class AlbumDAOImplTest {
 		assertTrue(a.size() > 0);
 	}
 	
+	@Test
+	@DisplayName("Test getting albums by artist name and sorting them by rating")
+	void test11() {
+		List<Album> a = albumDAO.findAlbumsByArtistSortByRating(false, "Jimmy Buffett");
+		assertNotNull(a);
+		assertTrue(a.size() > 0);
+	}
+	
 
 }

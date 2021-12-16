@@ -15,8 +15,9 @@
 			<br>
 			<li>Duration Seconds: ${Song.durationInSeconds}</li>
 			<br>
-			<c:forEach var="y" items="${Song.artists}">
-				<li>Artist Name :${y.name}</li>
+			<c:forEach var="artist" items="${Song.artists}">
+			<form action="artistProfile" method="get"></form>
+				<li><a href="artistProfile?id=${artist.id}">${artist.name}</a></li>
 			</c:forEach>
 		</ul>
 	</c:if>

@@ -185,4 +185,20 @@ public class AlbumDAOImpl implements AlbumDAO{
 		}
 	}
 
+	@Override
+	public List<Album> findAlbumsByArtistSortByRating(boolean ascendingOrder, String artistName) {
+		String jpql = "SELECT a FROM Album a"
+				+ " JOIN a.albumRatings ar"
+				+ " WHERE a.artist.name =:artistName"
+				+ " GROUP BY a ORDER BY AVG(ar.rating)";
+		try {
+			return em.createQuery(jpql, Album.class)
+					.setParameter("artistName", artistName)
+					.getResultList();
+		}catch(Exception e) {
+			System.err.println("No albums found from: " + artistName);
+		return null;
+		}
+	}
+
 }
