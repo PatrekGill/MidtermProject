@@ -113,7 +113,9 @@
                                                     <img class="user-image-md" src="${comment.user.imageURL}" alt="Profile Image">
                                                 </a>
                                             </td>
-                                            <td>${comment.comment}</td>
+                                            <td class="commentTable-commentText">
+                                                <p>${comment.comment}</p>
+                                            </td>
                                             <td>${comment.commentDate}</td>
                                         </tr>
                                     </c:forEach>
@@ -126,17 +128,14 @@
                             </c:choose>
                         </tbody>
 
-                        <c:if test="${not empty albumComments}">
-                            <tfoot>
-                                <tr>
-                                    <td>
-                                        <form type=submit value="Show All" style="width:100%" action="index.html" method="GET"></form>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </c:if>
-
                     </table>
+                    <c:if test="${not empty albumComments}">
+
+                        <form class="" action="index.html" method="GET">
+                            <button type="submit" class="btn btn-warning show-all-btn">Show All</button>
+                        </form>
+
+                    </c:if>
                 </div>
             </div>
 
