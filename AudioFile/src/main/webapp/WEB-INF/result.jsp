@@ -34,7 +34,7 @@
 				<ul>
 					<c:forEach var="x" items="${Artists}">
 
-						<li>${x.name}</li>
+					<li><a href="artistProfile?id=${x.id}">${x.name}</a></li>
 						<img src="${x.imageUrl}">
 					</c:forEach>
 				</ul>
