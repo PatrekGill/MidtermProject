@@ -1,120 +1,132 @@
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
-    .col{
-    position: fixed;
-    padding-left:10px;
-    bottom: 36px;
-    }
-    
-    .mainContent{
-    position:relative;
-    }
-    
-    .content-wrap{
-    padding-bottom: 2.5rem;
-    }
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-    .search-design{
-    padding-top:10px;
-    height: 100%;
-    margin:auto;
-    color: black;
-    }
-    
-    .albums-by-you{
-    position: absolute;
-    height: 100%;
-    width: 80%;
-    margin-left: 20%;
-    }
-    .center-alignment{
-    position:absolute;
-    height: 100%;
-    width: 40%;
-    margin-left: 30%;
-    margin-right: 30%;
-    }
-    
-    .spacer{
-    padding-bottom:10px;
-    }
-    .account-design{
-    position:absolute;
-    height: 100%;
-    width: 40%;
-    margin-left: 30%;
-    margin-right: 30%;
-    color: black;
-    }
-    
-    .select-padder{
-    padding-top:15px;
-    padding-left: 5px;
-    height: 100%;
-    margin:auto;
-    color: black;
-    }
-    .text-manipulator{
-    margin-top: 50px;
-    font-size:1000%;
-    font:Helvetica;
-    line-height:60%;
-    }
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 100%}
-    
-    /* Set gray background color and 100% height */
-    .sidenav {
-      padding-top: 20px;
-      padding-bottom: 20px;
-      background-color: #242424;
-      height: 100%;
-    }
-    .spacer{
+/* Remove the navbar's default margin-bottom and rounded borders */
+.col {
+	position: fixed;
+	padding-left: 10px;
+	bottom: 36px;
+}
+
+.mainContent {
+	position: relative;
+}
+
+.content-wrap {
+	padding-bottom: 2.5rem;
+}
+
+.navbar {
+	margin-bottom: 0;
+	border-radius: 0;
+}
+
+.search-design {
+	padding-top: 10px;
+	height: 100%;
+	margin: auto;
+	color: black;
+}
+
+/* .albums-by-you {
+	padding-left: 10px;
+	position:absolute;
+} */
+
+.center-alignment {
+	position: absolute;
+	height: 100%;
+	width: 40%;
+	margin-left: 30%;
+	margin-right: 30%;
+}
+
+.spacer {
+	padding-bottom: 10px;
+}
+
+.account-design {
+	position: absolute;
+	height: 100%;
+	width: 40%;
+	margin-left: 30%;
+	margin-right: 30%;
+	color: black;
+}
+
+.select-padder {
+	padding-top: 15px;
+	padding-left: 5px;
+	height: 100%;
+	margin: auto;
+	color: black;
+}
+
+.text-manipulator {
+	margin-top: 50px;
+	font-size: 1000%;
+	font: Helvetica;
+	line-height: 60%;
+}
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {
+	height: 100%
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	background-color: #242424;
+	height: 100%;
+}
+/* .spacer{
     margin:10px;
-    }
-    a{
-    color:white;
-    font:Helvetica;
-    }
-    a:hover{
-    color:#B8860B;
-    }
-      body {
-    background-image: url(../logosAndGraphics/monkeyHalf.png);
-    background-size:300px;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-color: #B8860B;
-    background-position: right bottom;
-    color:white;
- 	}
- 	.boxed{
- 	border: 1px solid white;
- 	}
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #242424;
-      color: white;
-      padding: 15px;
-    }
-    .page-footer {
-    bottom: 0;
-    justify-content:center;
-    position: fixed;
-    width: 100%;
-    }
-    .footer-contents{
-    margin:auto;
-    }
-    
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .row.content {height:auto;} 
-    }
+    } */
+a {
+	color: white;
+	font: Helvetica;
+}
+
+a:hover {
+	color: #B8860B;
+}
+
+body {
+	background-image: url(../logosAndGraphics/monkeyHalf.png);
+	background-size: 300px;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-color: #B8860B;
+	background-position: right bottom;
+	color: white;
+}
+
+.boxed {
+	border: 1px solid white;
+}
+/* Set black background color, white text and some padding */
+footer {
+	background-color: #242424;
+	color: white;
+	padding: 15px;
+}
+
+.page-footer {
+	bottom: 0;
+	justify-content: center;
+	position: fixed;
+	width: 100%;
+}
+
+.footer-contents {
+	margin: auto;
+}
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+	.sidenav {
+		height: auto;
+		padding: 15px;
+	}
+	.row.content {
+		height: auto;
+	}
+}
