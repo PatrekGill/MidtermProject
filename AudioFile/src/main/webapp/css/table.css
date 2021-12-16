@@ -33,11 +33,12 @@
 	font-size: 24px;
 }
 
+/*
 .table-title .btn-group {
 	float: right;
 }
 
-/* .table-title .btn {
+.table-title .btn {
 	color: #fff;
 	float: right;
 	font-size: 13px;
@@ -60,7 +61,7 @@
 	margin-top: 2px;
 } */
 
-table.table tr th, table.table tr td {
+table.music-table tr th, table.music-table tr td {
     text-align: left;
 	border-color: #e9e9e9;
     color: white;
@@ -69,13 +70,19 @@ table.table tr th, table.table tr td {
 	vertical-align: middle;
 }
 
-table.table tr th:first-child {
+table.music-table td a:hover {
+    color: white;
+}
+
+table.music-table tr th:first-child {
 	width: 60px;
 }
 
-table.table tr th:last-child {
+table.music-table tr th:last-child {
 	width: 100px;
 }
+
+
 th.albumTable-songNumber {
     width: 5%;
 }

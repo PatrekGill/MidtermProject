@@ -23,7 +23,7 @@
 
                     <c:if test="${not empty album.artist}">
                         <%-- Must be changed to artist page --%>
-                        <a class="albumText-artist" href="album.do?albumId=${album.id}">${album.artist.name}</a>
+                        <a class="albumText-artist" href="artist.do?artistId=${album.artist.id}">${album.artist.name}</a>
                     </c:if>
 
                     <p>${album.description}</p>
@@ -41,7 +41,7 @@
 						</div>
 					</div>
 				</div>
-                <table class="table table-hover">
+                <table class="music-table table-hover">
                     <c:choose>
                         <c:when test="${not empty album.songs}">
                             <thead>
@@ -56,15 +56,15 @@
                                 <c:forEach items="${album.songs}" var="song" varStatus="i">
                                     <tr>
                                         <td>${i.count}</td>
-                                        <td>${song.name}</td>
+                                        <td> <a href="song.do?songId=${song.id}">${song.name}</a> </td>
                                         <td>
                                             <c:forEach items="${song.artists}" var="artist" varStatus="j">
                                                 <c:choose>
                                                     <c:when test="${j.index == 0}">
-                                                        ${artist.name}
+                                                        <a href="artist.do?artistId=${artist.id}">${artist.name}</a>
                                                     </c:when>
                                                     <c:otherwise>
-                                						,${artist.name}
+                                						<a href="artist.do?artistId=${artist.id}">,${artist.name}</a>
                                 					</c:otherwise>
                                                 </c:choose>
                                             </c:forEach>
