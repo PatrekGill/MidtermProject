@@ -1,6 +1,8 @@
 package com.skilldistillery.audiophile.controller;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.skilldistillery.audiophile.data.AlbumDAO;
 import com.skilldistillery.audiophile.data.ArtistDAO;
 import com.skilldistillery.audiophile.data.SongDAO;
+import com.skilldistillery.audiophile.data.SongRatingDAO;
 import com.skilldistillery.audiophile.entities.Album;
 import com.skilldistillery.audiophile.entities.Artist;
 import com.skilldistillery.audiophile.entities.Song;
+import com.skilldistillery.audiophile.entities.SongRating;
 
 @Controller
 public class SearchController {
@@ -28,6 +32,8 @@ public class SearchController {
 	private AlbumDAO albumDAO;
 	@Autowired
 	private ArtistDAO artistDAO;
+	@Autowired
+	private SongRatingDAO songRatingDAO;
 
 	/*
 	 * --------------------------- Search for Songs ---------------------------
@@ -37,48 +43,103 @@ public class SearchController {
 
 	public String searchAll(@RequestParam("keyword") String keyword, Model model,
 			@RequestParam("searchAll") String searchAll) {
-		if (searchAll.equals("All")) {
+		boolean notPopulateWith = false;
+		if (searchAll.equals("All") || (searchAll.equals("Genre") && keyword == "")) {
 			List<Song> songs = songDAO.findBySongName(keyword);
 			List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
 			List<Artist> artists = artistDAO.findByArtistsName(keyword);
-
+			if (songs.isEmpty() && albums.isEmpty() && artists.isEmpty()) {
+				notPopulateWith = true;
+			}
 			model.addAttribute("Songs", songs);
 			model.addAttribute("Albums", albums);
 			model.addAttribute("Artists", artists);
-		}
-		else if (searchAll.equals("Album")) {
+		} else if (searchAll.equals("Album")) {
 			List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
 			model.addAttribute("Albums", albums);
-		}
-		else if (searchAll.equals("Artist")) {
+			if (albums.isEmpty()) {
+				notPopulateWith = true;
+			}
+		} else if (searchAll.equals("Artist")) {
 			List<Artist> artists = artistDAO.findByArtistsName(keyword);
 			model.addAttribute("Artists", artists);
-		}
-		else if (searchAll.equals("Genre")) {
+			if (artists.isEmpty()) {
+				notPopulateWith = true;
+			}
+
+		} else if (searchAll.equals("Song")) {
+			List<Song> songs = songDAO.findBySongName(keyword);
+			model.addAttribute("Songs", songs);
+			if (songs.isEmpty()) {
+				notPopulateWith = true;
+			}
+		} else if (searchAll.equals("Genre") && keyword != "") {
 			List<Album> albums = albumDAO.findAlbumsByGenreName(keyword);
 			model.addAttribute("Albums", albums);
+			if (albums.isEmpty()) {
+				notPopulateWith = true;
+			}
 		}
-		else if (searchAll.equals("Song")) {
-			List<Song> songs = songDAO.findBySongName(keyword);
-			model.addAttribute("Songs", songs);
-		}
+		model.addAttribute("NotPopulated", notPopulateWith);
 		return "result";
 	}
-
-	@RequestMapping(path = "searchBySongId.do", params = "songId", method = RequestMethod.GET)
-	public ModelAndView getBySongId(@RequestParam("songId") int songId) {
-		ModelAndView mv = new ModelAndView();
-		Song song = songDAO.findById(songId);
-		mv.addObject("Song", song);
-		mv.setViewName("result");
-		return mv;
-	}
+	/*
+	 * --------------------------- 
+	 * Song details page result
+	 * ---------------------------
+	 */
 
 	@RequestMapping(path = "searchBySongName.do", params = "songName", method = RequestMethod.GET)
 	public ModelAndView getBySongName(@RequestParam("songName") String songName) {
 		ModelAndView mv = new ModelAndView();
 		List<Song> songs = songDAO.findBySongName(songName);
-		mv.addObject("Songs", songs);
+		Album album = albumDAO.findAlbumBySongTitle(songName);
+//		Artist artist = artistDAO.findPrimaryArtistByAlbumName(album.getTitle());
+		Song song = songs.get(0);
+		int songId = song.getId();
+		String userName = song.getUser().getUsername();
+		int userId = song.getUser().getId();
+		LocalDateTime createDate = song.getCreateDate();
+		LocalDateTime ratingDate;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		String newCreateDate = createDate.format(formatter);
+		int durationSeconds = song.getDurationInSeconds();
+		String newDurationSeconds;
+		long MM = durationSeconds / 60;
+		long SS = durationSeconds % 60;
+		newDurationSeconds = String.format("%02d:%02d", MM, SS);
+		if (song.getSongRatings().size() > 0) {
+			for (SongRating songRating : song.getSongRatings()) {
+				ratingDate = songRating.getRatingDate();
+				String newRatingDate = ratingDate.format(formatter);
+				String description = songRating.getDescription();
+				int rating = songRating.getRating();
+				mv.addObject("RateDate", newRatingDate);
+				mv.addObject("Comments", description);
+				mv.addObject("Rating", rating);
+			}
+		} else {
+			String noComment = "";
+			mv.addObject("RateDate", noComment);
+		}
+		mv.addObject("Song", song);
+		mv.addObject("Album", album);
+		mv.addObject("User", userName);
+		mv.addObject("CreateDate", newCreateDate);
+		mv.addObject("DurationSeconds", newDurationSeconds);
+		mv.setViewName("SongDetails");
+		return mv;
+	}
+	/*
+	 * ------------------------------------------------------------ Below not used ,
+	 * just in case ------------------------------------------------------------
+	 */
+
+	@RequestMapping(path = "getSong.do", params = "songId", method = RequestMethod.GET)
+	public ModelAndView getBySongId(@RequestParam("songId") int songId) {
+		ModelAndView mv = new ModelAndView();
+		Song song = songDAO.findById(songId);
+		mv.addObject("Song", song);
 		mv.setViewName("result");
 		return mv;
 	}

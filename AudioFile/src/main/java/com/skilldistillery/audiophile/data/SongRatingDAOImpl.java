@@ -27,17 +27,24 @@ public class SongRatingDAOImpl implements SongRatingDAO {
 	}
 
 	@Override
-	public SongRating findSongRatingByUserId(int id) {
+	public List<SongRating> findSongRatingsByUserId(int id) {
 		String jpql = "SELECT sr FROM SongRating sr WHERE sr.user.id =:n";
 
 		try {
-			return em.createQuery(jpql, SongRating.class).setParameter("n", id).getSingleResult();
-		} catch (Exception e) {
-			System.err.println("Invalid user name: " + id);
+			return em.createQuery(jpql, SongRating.class).setParameter("n", id).getResultList();
+		} catch (Exception e) { e.printStackTrace();
+			System.err.println("Invalid user id: " + id);
 			return null;
 		}
 	}
 
+	@Override
+	public SongRating findSongRatingByUserIdSongId(int userid, int songid) {
+		String jpql = "SELECT sr FROM SongRating sr WHERE sr.user.id =:uid and sr.song.id =:sid";
+
+		return em.createQuery(jpql, SongRating.class).setParameter("uid",userid ).setParameter("sid", songid).getSingleResult();
+		 
+	}
 	/* ----------------------------------------------------------------------------
 		sortedByRating
 	---------------------------------------------------------------------------- */
@@ -149,5 +156,6 @@ public class SongRatingDAOImpl implements SongRatingDAO {
 
 		return ratings;
 	}
+
 
 }
