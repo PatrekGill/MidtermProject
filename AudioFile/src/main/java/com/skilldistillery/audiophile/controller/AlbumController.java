@@ -1,5 +1,8 @@
 package com.skilldistillery.audiophile.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import com.skilldistillery.audiophile.data.AlbumDAOImpl;
 import com.skilldistillery.audiophile.data.AlbumRatingDAOImpl;
 import com.skilldistillery.audiophile.data.UserDAOImpl;
 import com.skilldistillery.audiophile.entities.Album;
+import com.skilldistillery.audiophile.entities.AlbumComment;
 
 @Controller
 public class AlbumController {
@@ -29,6 +33,15 @@ public class AlbumController {
 				
 				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(albumId));
 				model.addAttribute("album", album);
+				List<AlbumComment> comments = new ArrayList<>(album.getAlbumComments());
+				if (!comments.isEmpty()) {
+					comments.sort(
+							(comment1, comment2) -> {
+								return comment1.getCommentDate().compareTo(comment2.getCommentDate());
+							});
+					
+					model.addAttribute("albumComments",comments);
+				}
 			}
 			
 		}
