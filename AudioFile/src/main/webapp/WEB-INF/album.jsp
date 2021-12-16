@@ -121,20 +121,21 @@
                                                 </a>
                                             </td>
                                             <td class="commentTable-commentText">
-                                                <p class="commentTable-dateText" style="font-size:14px">
-                                                    Posted by: ${comment.user.username} - On:
+                                                <p class="commentTable-dateText">
+                                                    Posted by: ${comment.user.username}
+                                                    <br>
+                                                    On:
                                                     ${comment.commentDate.year}
                                                     ${comment.commentDate.month}
                                                     ${comment.commentDate.dayOfMonth}
-                                                </p>
-                                                <c:if test="${comment.updateDateTime != null}">
-                                                    <p>
+                                                    <br>
+                                                    <c:if test="${comment.updateDateTime != null}">
                                                         Edited On:
                                                         ${comment.updateDateTime.year}
                                                         ${comment.updateDateTime.month}
                                                         ${comment.updateDateTime.dayOfMonth}
-                                                    </p>
-                                                </c:if>
+                                                    </c:if>
+                                                </p>
                                                 <p>${comment.comment}</p>
                                             </td>
                                             <%-- <td>${comment.commentDate}</td> --%>

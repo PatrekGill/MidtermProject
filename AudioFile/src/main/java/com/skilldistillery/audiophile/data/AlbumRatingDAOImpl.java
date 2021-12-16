@@ -58,13 +58,17 @@ public class AlbumRatingDAOImpl implements AlbumRatingDAO {
 	public Double getAverageAlbumRating(int albumId) {
 		String jpql = "SELECT AVG(ar.rating) FROM AlbumRating ar WHERE ar.album.id = :id";
 		
-		Double avgerageRating;
+		Double avgerageRating = null;
 		try {
 			avgerageRating = em.createQuery(jpql, Double.class)
 					.setParameter("id", albumId)
 					.getSingleResult();
 		} catch (Exception e) {
 			System.err.println("Could not get average for album id: " + albumId);
+			avgerageRating = 0.0;
+		}
+		
+		if (avgerageRating == null) {
 			avgerageRating = 0.0;
 		}
 		

@@ -76,9 +76,12 @@ public class AlbumController {
 			
 			Album album = albumDAO.findAlbumById(albumId);
 			if (album != null) {
-				List<AlbumComment> comments = getLatestAlbumComments(albumId);
 				model.addAttribute("album", album);
+				
+				List<AlbumComment> comments = getLatestAlbumComments(albumId);
 				model.addAttribute("albumComments",comments);
+				
+				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(albumId));
 			}
 			
 		}
