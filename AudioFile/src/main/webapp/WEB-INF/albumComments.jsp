@@ -70,7 +70,7 @@
                                                     ${comment.commentDate.month}
                                                     ${comment.commentDate.dayOfMonth}
                                                 </p>
-                                                <c:if test="${}">
+                                                <c:if test="${comment.updateDateTime != null}">
                                                     <p>
                                                         Edited On:
                                                         ${comment.updateDateTime.year}
