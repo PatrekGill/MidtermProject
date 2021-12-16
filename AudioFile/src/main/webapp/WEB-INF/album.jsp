@@ -18,7 +18,7 @@
                             <img class="albumImage-md" src="${album.imageURL}" alt="image of album">
                     </div>
                 </c:if>
-                <div class="col-xs-10 col-sm-3 col-md-4 albumText">
+                <div class="col-xs-10 col-sm-6 col-md-4 col-lg-5 albumText">
                     <h1 class="albumText-title">${album.title}</h1>
 
                     <c:if test="${not empty album.artist}">
