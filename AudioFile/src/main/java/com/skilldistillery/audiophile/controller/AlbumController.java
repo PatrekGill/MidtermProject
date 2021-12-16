@@ -33,13 +33,9 @@ public class AlbumController {
 				
 				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(albumId));
 				model.addAttribute("album", album);
-				List<AlbumComment> comments = new ArrayList<>(album.getAlbumComments());
+				
+				List<AlbumComment> comments = getLatestAlbumComments(albumId);
 				if (!comments.isEmpty()) {
-					comments.sort(
-							(comment1, comment2) -> {
-								return comment1.getCommentDate().compareTo(comment2.getCommentDate());
-							});
-					
 					model.addAttribute("albumComments",comments);
 				}
 			}
@@ -48,4 +44,46 @@ public class AlbumController {
 		
 		return "album";
 	}
+	
+	private List<AlbumComment> getLatestAlbumComments(Integer albumId) {
+		
+		List<AlbumComment> comments = new ArrayList<AlbumComment>();
+		if (albumId != null) {
+			
+			Album album = albumDAO.findAlbumById(albumId);
+			if (album != null) {
+				comments = new ArrayList<>(album.getAlbumComments());
+				
+				if (!comments.isEmpty()) {
+					comments.sort(
+						(comment1, comment2) -> {
+							return comment1.getCommentDate().compareTo(comment2.getCommentDate());
+						}
+					);
+					
+				}
+			}
+			
+		}
+		
+		return comments;
+	}
+	
+	@GetMapping(path="albumComments.do")
+	public String showAlbumComments(Integer albumId, HttpSession session, Model model) {
+		
+		if (albumId != null) {
+			
+			Album album = albumDAO.findAlbumById(albumId);
+			if (album != null) {
+				List<AlbumComment> comments = getLatestAlbumComments(albumId);
+				model.addAttribute("album", album);
+				model.addAttribute("albumComments",comments);
+			}
+			
+		}
+		
+		return "albumComments";
+	}
+	
 }

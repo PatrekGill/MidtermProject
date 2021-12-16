@@ -80,30 +80,28 @@ table.music-table td a:hover {
 	font-weight: bold;
 }
 
-table.music-table tr th:first-child {
-	width: 60px;
-}
-
-table.music-table tr th:last-child {
-	width: 100px;
-}
 
 
 /* ----------------------------------------------------------------------------
 	commentTable
 ---------------------------------------------------------------------------- */
 th.commentTable-userImage {
-	width: 10%;
+	width: 5%;
 }
 th.commentTable-comment {
-	width: 100%;
+	width: 95%;
 }
-th.commentTable-date {
-	width: 20%;
-}
+/* th.commentTable-date {
+	width: 15%;
+} */
 td.commentTable-commentText {
 	font-size: 17px !important;
+	/* vertical-align: middle !important; */
 }
+p.commentTable-dateText {
+	font-size: 14px !important;
+}
+
 
 .show-all-btn {
 	width: 100%;

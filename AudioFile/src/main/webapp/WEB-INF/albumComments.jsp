@@ -1,8 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="bootstrapHead.jsp" />
 
-
-
 <c:choose>
     <c:when test="${empty album}">
         <h1>Could Not Locate Album, Sorry</h1>
@@ -15,7 +13,9 @@
                 <div class="container">
                     <c:if test="${not empty album.imageURL}">
                         <div class="col-xs-6 col-sm-7 col-md-6 col-lg-5 albumImage-div">
-                                <img class="albumImage-md" src="${album.imageURL}" alt="image of album">
+                                <a href="album.do?albumId=${album.id}">
+                                    <img class="albumImage-md" src="${album.imageURL}" alt="image of album">
+                                </a>
                         </div>
                     </c:if>
                     <div class="col-xs-10 col-sm-6 col-md-4 col-lg-5 albumText">
@@ -37,63 +37,6 @@
 
             </div>
 
-            <%-- Song table --%>
-            <div class="table-responsive">
-                <div class="table-wrapper table-body">
-                    <div class="table-title">
-    					<div class="row">
-    						<h2>Songs</h2>
-    					</div>
-    				</div>
-                    <table class="music-table table-hover">
-                        <c:choose>
-                            <c:when test="${not empty album.songs}">
-                                <thead>
-                                    <tr>
-                                        <th class="albumTable-songNumber">#</th>
-                                        <th class="albumTable-songName">SONG</th>
-                                        <th class="albumTable-artists">ARTIST(s)</th>
-                                        <th class="albumTable-duration">LENGTH (seconds)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach items="${album.songs}" var="song" varStatus="i">
-                                        <tr>
-                                            <td>${i.count}</td>
-                                            <td> <a href="song.do?songId=${song.id}">${song.name}</a> </td>
-                                            <td>
-                                                <c:forEach items="${song.artists}" var="artist" varStatus="j">
-                                                    <c:choose>
-                                                        <c:when test="${j.index == 0}">
-                                                            <a class="albumTable-artistText" href="artist.do?artistId=${artist.id}">${artist.name}</a>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                    						<a class="albumTable-artistText" href="artist.do?artistId=${artist.id}">,${artist.name}</a>
-                                    					</c:otherwise>
-                                                    </c:choose>
-                                                </c:forEach>
-                                            </td>
-                                            <td>${song.durationInSeconds}</td>
-                                        </tr>
-                                    </c:forEach>
-                                </tbody>
-                            </c:when>
-                            <c:otherwise>
-        						<tbody>
-        							<tr>
-        								<td>No songs...</td>
-        							</tr>
-        						</tbody>
-        					</c:otherwise>
-                        </c:choose>
-                    </table>
-                </div>
-            </div>
-
-
-            <br>
-
-            <%-- 10 Comments Table --%>
             <div class="table-responsive">
                 <div class="table-wrapper table-body">
                     <div class="table-title">
@@ -127,7 +70,7 @@
                                                     ${comment.commentDate.month}
                                                     ${comment.commentDate.dayOfMonth}
                                                 </p>
-                                                <c:if test="${comment.updateDateTime != null}">
+                                                <c:if test="${}">
                                                     <p>
                                                         Edited On:
                                                         ${comment.updateDateTime.year}
@@ -151,17 +94,8 @@
                         </tbody>
 
                     </table>
-                    <c:if test="${not empty albumComments}">
-
-                        <form class="" action="albumComments.do" method="GET">
-                            <input type="hidden" name="albumId" value="${album.id}">
-                            <button type="submit" class="btn btn-warning show-all-btn">Show All</button>
-                        </form>
-
-                    </c:if>
                 </div>
             </div>
-
         </div>
 
     </c:otherwise>

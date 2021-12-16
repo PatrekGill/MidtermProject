@@ -50,11 +50,22 @@
     margin-bottom: 5px;
     color: white;
 }
+.albumText-artist-sm {
+    font-size: 17px;
+    font-weight: bold;
+    font-family: Arial;
+    margin-bottom: 5px;
+    color: white;
+}
 .albumText p {
     font-weight: 400;
     font-family: Arial;
 }
 a.albumText-artist:hover {
+    text-decoration: none;
+    color: #B8860B;
+}
+a.albumText-artist-sm:hover {
     text-decoration: none;
     color: #B8860B;
 }
