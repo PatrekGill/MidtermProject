@@ -40,12 +40,16 @@
     font-variant: small-caps;
     font-stretch: ultra-expanded;
 }
-.albumText-artist, a:hover {
+.albumText-artist {
     font-size: 20px;
     font-weight: bold;
     font-family: Arial;
-    color: White;
+    color: white;
 }
+a.albumText-artist:hover {
+    color: black;
+}
+
 
 .albumImage-div {
     padding-top: 20px;

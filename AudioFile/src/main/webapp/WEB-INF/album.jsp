@@ -20,10 +20,13 @@
                 </c:if>
                 <div class="col-xs-10 col-sm-3 col-md-4 albumText">
                     <h1 class="albumText-title">${album.title}</h1>
+
                     <c:if test="${not empty album.artist}">
                         <%-- Must be changed to artist page --%>
                         <a class="albumText-artist" href="album.do?albumId=${album.id}">${album.artist.name}</a>
                     </c:if>
+
+                    <p>${album.description}</p>
                 </div>
             </div>
 
@@ -39,22 +42,39 @@
 					</div>
 				</div>
                 <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Song</th>
-                            <th>Artist</th>
-                            <th>Length</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Anna</td>
-                            <td>Pitt</td>
-                            <td>35</td>
-                        </tr>
-                    </tbody>
+                    <c:choose>
+                        <c:when test="${not empty album.songs}">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Song</th>
+                                    <th>Artist</th>
+                                    <th>Length(s)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="${album.songs}" var="song" varStatus="i">
+                                    <tr>
+                                        <td>${i.count}</td>
+                                        <td>${song.name}</td>
+                                        <td>
+                                            <c:forEach items="${song.artists}" var="artist" varStatus="j">
+                                                ${artist.name} 
+                                            </c:forEach>
+                                        </td>
+                                        <td>${song.durationInSeconds}</td>
+                                    </tr>
+                                </c:forEach>
+                            </tbody>
+                        </c:when>
+                        <c:otherwise>
+    						<tbody>
+    							<tr>
+    								<td>No songs...</td>
+    							</tr>
+    						</tbody>
+    					</c:otherwise>
+                    </c:choose>
                 </table>
             </div>
         </div>
