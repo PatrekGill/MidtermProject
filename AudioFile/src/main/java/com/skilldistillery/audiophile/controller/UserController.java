@@ -43,12 +43,13 @@ public class UserController {
 	@GetMapping(path = "logout")
 	public String logoutUser(HttpSession session) {
 		session.removeAttribute("user");
+		session.removeAttribute("albumsCreated");
 		return "redirect:/";
 
 	}
 
 	@GetMapping(path = "profile")
-	public String getAccoutnPage(HttpSession session, Album album) {
+	public String getAccountPage(HttpSession session, Album album) {
 		User user = (User) session.getAttribute("user");
 		if(session.getAttribute("update") != null) {
 		session.removeAttribute("update");
