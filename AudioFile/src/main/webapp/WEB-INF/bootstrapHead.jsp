@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
 <title>Bootstrap Example</title>
+<link rel="shortcut icon" type="image/png" href="logosAndGraphics/monkeyVector.png"/>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -33,7 +34,24 @@
 							<li class="active"><a href="#">Home</a></li>
 							<li><a href="profile">Profile</a></li>
 							<li><a href="#">Trending</a></li>
-							<li><a href="#">Recent Messages</a></li>
+
+							<li><div class="dropdown-padder"></div>
+								<div class="dropdown">
+									<div class="dropdown-padder">
+										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false">
+										Create
+										</button>
+										<div class="dropdown-menu"
+											aria-labelledby="dropdownMenuButton">
+											<ul>
+											<li><a class="dropdown-item" href="#">Add an Album</a></li>
+											<li><a class="dropdown-item" href="#">Add an Artist</a></li>
+											<li><a class="dropdown-item" href="#">Add a Song</a></li>
+											</ul>
+										</div>
+									</div>
+								</div></li>
+
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li><form class="form-inline my-2 my-lg-0" action="search"
@@ -75,6 +93,7 @@
 			<div class="container-fluid text-center">
 				<div class="row content">
 					<div class="col-sm-2 sidenav">
+
 						<div id="headingTopAlbums">
 							<p>
 								<button class="btn btn-link" data-toggle="collapse"
@@ -118,4 +137,5 @@
 							<li><a href="#">Song 3</a></li>
 							<%-- </c:forEach> --%>
 						</div>
+
 					</div>
