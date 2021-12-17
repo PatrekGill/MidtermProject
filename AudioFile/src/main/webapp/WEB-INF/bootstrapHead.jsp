@@ -46,9 +46,9 @@
 										<div class="dropdown-menu"
 											aria-labelledby="dropdownMenuButton">
 											<ul>
-												<li><a class="dropdown-item" href="#">Add an Album</a></li>
-												<li><a class="dropdown-item" href="#">Add an Artist</a></li>
-												<li><a class="dropdown-item" href="#">Add a Song</a></li>
+												<li><a class="dropdown-item" href="addAlbum">Add an Album</a></li>
+												<li><a class="dropdown-item" href="addArtist">Add an Artist</a></li>
+												<li><a class="dropdown-item" href="addSong">Add a Song</a></li>
 											</ul>
 										</div>
 									</div>

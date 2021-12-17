@@ -41,8 +41,8 @@ public class AlbumDAOImpl implements AlbumDAO{
 	}
 
 	@Override
-	public List<Album> findAlbumBySongTitle(String songName) {
-		String jpql ="SELECT a FROM Album a JOIN Song s ON a = s.album WHERE s.name LIKE :songName";
+	public List<Album> findAlbumsBySongTitle(String songName) {
+		String jpql ="SELECT a FROM Album a JOIN a.songs s WHERE s.name LIKE :songName";
 		
 		try {
 			return em.createQuery(jpql, Album.class)
@@ -92,12 +92,10 @@ public class AlbumDAOImpl implements AlbumDAO{
 	}
 	
 	@Override
-	public boolean addAlbum(Album album) {
-		boolean creationSuccess = false;
+	public Album addAlbum(Album album) {
 		em.persist(album);
 		em.flush();
-		creationSuccess = em.contains(album);
-		return creationSuccess;
+		return album;
 	}
 
 	@Override
@@ -126,7 +124,7 @@ public class AlbumDAOImpl implements AlbumDAO{
 
 	@Override
 	public List<Song> getSongsFromAlbum(Album album) {
-		String jpql = "SELECT s FROM Song s WHERE s.album =:a";
+		String jpql = "SELECT s FROM Song s JOIN s.albums a WHERE a =:a";
 		
 		return em.createQuery(jpql, Song.class)
 				.setParameter("a", album)

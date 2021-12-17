@@ -181,7 +181,7 @@ public class SearchController {
 	@RequestMapping(path = "sortBySongRating.do", method = RequestMethod.GET)
 	public ModelAndView sortBySongRating() {
 		ModelAndView mv = new ModelAndView();
-		List<Song> songs = songDAO.sortBySongRating(false, 1);
+		List<Song> songs = songDAO.sortBySongRating(false,2);
 		mv.addObject("Songs", songs);
 		mv.setViewName("result");
 		return mv;
