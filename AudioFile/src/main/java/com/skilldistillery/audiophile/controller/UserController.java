@@ -130,5 +130,15 @@ public class UserController {
 		}
 		return "redirect:profile";
 	}
+	@GetMapping(path = "friendList")
+	public String getFriendPage(HttpSession session, Album album) {
+		User user1 = userDAO.findUserById(2);
+		session.setAttribute("user1", user1);
+		if (user1 == null) {
+			return "friendPage";
+		}
+		session.setAttribute("albumsCreated", albumDAO.findAlbumsByCreatedUsername(user1.getUsername()));
+		return "friendPage";
+	}
 
 }
