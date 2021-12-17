@@ -9,6 +9,7 @@
 
         <%-- picture, album, artist, and description --%>
         <div class="container-fluid">
+
             <div class="row">
                 <div class="container">
                     <c:if test="${not empty album.imageURL}">
@@ -30,12 +31,39 @@
                         </c:if>
 
                         <a class="albumText-artist-sm" href="showAlbumRatings.do?artistId=${album.artist.id}">Average Rating: ${averageRating} / 10</a>
-
+                        <br>
                         <p>${album.description}</p>
                     </div>
                 </div>
-
             </div>
+            <%-- Add Comment --%>
+            <%-- <c:if test="${sessionScope.user != null}"> --%>
+            <%-- testing code --%>
+            <c:if test="${true}">
+                <div class="table-responsive">
+                    <div class="table-wrapper table-body">
+                        <div class="table-title">
+                            <div class="row">
+                                <h2>Leave A Comment</h2>
+                            </div>
+                        </div>
+                        <form action="albumComments.do" id="addAlbumComment" method="POST">
+                            <input type="hidden" name="albumId" value="${album.id }">
+                            <table class="music-table table-hover album-comment-box">
+                                <tbody>
+                                    <tr>
+        								<td>
+        									<textarea class="form-control" rows="5" id="comment" name="commentText" placeholder="Add Comment..."></textarea>
+        								</td>
+        							</tr>
+                                </tbody>
+                            </table>
+                            <button type="submit" class="btn btn-warning table-btn">Post Comment</button>
+                        </form>
+                    </div>
+                </div>
+            </c:if>
+
 
             <div class="table-responsive">
                 <div class="table-wrapper table-body">
@@ -50,7 +78,6 @@
                             <tr>
                                 <th class="commentTable-userImage"></th>
                                 <th class="commentTable-comment"></th>
-                                <%-- <th class="commentTable-date"></th> --%>
                             </tr>
                         </thead>
                         <tbody>
@@ -72,7 +99,7 @@
                                                     ${comment.commentDate.month}
                                                     ${comment.commentDate.dayOfMonth}
                                                     <br>
-                                                    <c:if test="${comment.updateDateTime != null}">
+                                                    <c:if test="${comment.updateDateTime != null && comment.updateDateTime != comment.commentDate}">
                                                         Edited On:
                                                         ${comment.updateDateTime.year}
                                                         ${comment.updateDateTime.month}
@@ -81,7 +108,6 @@
                                                 </p>
                                                 <p>${comment.comment}</p>
                                             </td>
-                                            <%-- <td>${comment.commentDate}</td> --%>
                                         </tr>
 
                                     </c:forEach>

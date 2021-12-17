@@ -1,6 +1,7 @@
 package com.skilldistillery.audiophile.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -42,26 +43,34 @@ class AlbumCommentDAOImplTest {
 	@Test
 	void test_sortAlbumCommentsByCreationDate_just_order() {
 		assertNotNull(acDAO);
-		assertNotNull(acDAO.sortAlbumCommentByCommentDate(true));
-		assertEquals("I love it", acDAO.sortAlbumCommentByCommentDate(true).get(0).getComment());
+		assertNotNull(acDAO.sortAlbumCommentsByCommentDate(true));
+		assertEquals("I love it", acDAO.sortAlbumCommentsByCommentDate(true).get(0).getComment());
 		
 	}
 	
 	@Test
 	void test_sortAlbumCommentsByCreationDate_number_of_users() {
 		assertNotNull(acDAO);
-		assertNotNull(acDAO.sortAlbumCommentByCommentDate(true,1));
-		assertEquals("I love it", acDAO.sortAlbumCommentByCommentDate(true,1).get(0).getComment());
-		assertEquals(1, acDAO.sortAlbumCommentByCommentDate(true,1).size());
+		assertNotNull(acDAO.sortAlbumCommentsByCommentDate(true,1));
+		assertEquals("I love it", acDAO.sortAlbumCommentsByCommentDate(true,1).get(0).getComment());
+		assertEquals(1, acDAO.sortAlbumCommentsByCommentDate(true,1).size());
 		
 	}
 	
 	@Test
 	void test_sortAlbumCommentsByCreationDate_out_of_bounds() {
 		assertNotNull(acDAO);
-		assertNotNull(acDAO.sortAlbumCommentByCommentDate(true,0));
-		assertNotNull(acDAO.sortAlbumCommentByCommentDate(true,20));
-		assertEquals("I love it", acDAO.sortAlbumCommentByCommentDate(true,20).get(0).getComment());
+		assertNotNull(acDAO.sortAlbumCommentsByCommentDate(true,0));
+		assertNotNull(acDAO.sortAlbumCommentsByCommentDate(true,20));
+		assertEquals("I love it", acDAO.sortAlbumCommentsByCommentDate(true,20).get(0).getComment());
+		
+	}
+	@Test
+	void test_sortAlbumCommentsByCreationDate_specific_album() {
+		assertNotNull(acDAO);
+		assertNotNull(acDAO.sortAlbumCommentsByCommentDate(1,true,0));
+		assertNotNull(acDAO.sortAlbumCommentsByCommentDate(1,true,20));
+		assertFalse(acDAO.sortAlbumCommentsByCommentDate(1,true,20).isEmpty());
 		
 	}
 	

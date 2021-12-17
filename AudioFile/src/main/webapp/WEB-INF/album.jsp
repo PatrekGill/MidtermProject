@@ -30,7 +30,7 @@
                         </c:if>
 
                         <a class="albumText-artist-sm" href="showAlbumRatings.do?artistId=${album.artist.id}">Average Rating: ${averageRating} / 10</a>
-
+                        <br>
                         <p>${album.description}</p>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
 
                         <form class="" action="albumComments.do" method="GET">
                             <input type="hidden" name="albumId" value="${album.id}">
-                            <button type="submit" class="btn btn-warning show-all-btn">Show All</button>
+                            <button type="submit" class="btn btn-warning table-btn">Show All</button>
                         </form>
 
                     </c:if>
