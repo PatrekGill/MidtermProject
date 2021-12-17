@@ -74,8 +74,9 @@ class SongDAOImpTest {
 
 	@Test
 	void test_sortBySongRating() {
-		assertNotNull(DaoImp.sortBySongRating());
-		assertFalse(DaoImp.sortBySongRating().isEmpty());
+		assertNotNull(DaoImp.sortBySongRating(false));
+		assertFalse(DaoImp.sortBySongRating(false).isEmpty());
+		assertEquals("Someone like You",DaoImp.sortBySongRating(false).get(0).getName());
 	}
 
 	@Test

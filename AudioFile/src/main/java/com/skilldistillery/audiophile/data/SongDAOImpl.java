@@ -196,11 +196,21 @@ public class SongDAOImpl implements SongDAO {
 	 * ----------------------------
 	 */
 	@Override
-	public List<Song> sortBySongRating() {
-		String jpql = "SELECT s.song FROM SongRating s order by s.rating desc";
+	public List<Song> sortBySongRating(boolean ascendingOder) {
+		String jpql = "SELECT s.song FROM SongRating s order by s.rating ";
+		if (ascendingOder) {
+			jpql += " ASC ";
+			
+		} else {
+			jpql += " DESC ";
+			
+		}
 		List<Song> songs = em.createQuery(jpql, Song.class).getResultList();
-
+		if(songs == null) {
+			songs = new ArrayList<>();
+		}
 		return songs;
+
 	}
 
 	/*-----------------------------

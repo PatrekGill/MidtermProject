@@ -105,6 +105,8 @@ class AlbumDAOImplTest {
 		List<Album> a = albumDAO.sortAlbumsByRating(false);
 		assertNotNull(a);
 		assertTrue(a.size() > 0);
+		assertEquals("Kind of Blue",a.get(0).getTitle());
+		assertEquals("2",a.get(1).getTitle());
 		assertEquals("21",a.get(2).getTitle());
 	}
 	
