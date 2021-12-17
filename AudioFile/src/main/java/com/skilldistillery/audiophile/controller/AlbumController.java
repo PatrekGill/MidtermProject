@@ -87,11 +87,10 @@ public class AlbumController {
 	---------------------------------------------------------------------------- */
 	@PostMapping(path="albumComments.do")
 	public String postComment(Integer albumId, String commentText, HttpSession session, Model model) {
-		int userId = 1;
 		
 		if (albumId != null) {
 			
-			User user = userDAO.findUserById(userId);
+			User user = getSessionUser(session);
 			Album album = albumDAO.findAlbumById(albumId);
 			if (album != null && user != null) {
 				AlbumComment comment = new AlbumComment();
@@ -123,8 +122,7 @@ public class AlbumController {
 			HttpSession session,
 			Model model
 		) {
-		int userId = 1;
-		User user = userDAO.findUserById(userId);
+		User user = getSessionUser(session);
 		
 		if (editCommentId != null) {
 			AlbumComment comment = albumCommentDAO.findAlbumCommentById(editCommentId);
@@ -151,21 +149,23 @@ public class AlbumController {
 	---------------------------------------------------------------------------- */
 	@GetMapping(path="albumRatings.do")
 	public String showRatingsPage(Integer albumId, HttpSession session, Model model) {
-		
-		
 		if (albumId != null) {
 			
 			Album album = albumDAO.findAlbumById(albumId);
 			if (album != null) {
 				model.addAttribute("album", album);
 				
-				int userId = 1;
-				AlbumRating usersRating = albumRatingDAO.findByAlbumAndUserId(albumId, userId);
+				User user = getSessionUser(session);
 				boolean userHasRating = false;
-				if (usersRating != null) {
-					model.addAttribute("usersRating",usersRating);
-					userHasRating = true;
+				if (user != null) {
+					AlbumRating usersRating = albumRatingDAO.findByAlbumAndUserId(albumId, user.getId());
+					if (usersRating != null) {
+						model.addAttribute("usersRating",usersRating);
+						userHasRating = true;
+					}
+					
 				}
+				
 				model.addAttribute("userHasRating",userHasRating);
 				
 				List<AlbumRating> ratings = albumRatingDAO.sortedByCreatationDate(albumId, false);
@@ -197,27 +197,32 @@ public class AlbumController {
 			if (album != null) {
 				model.addAttribute("album", album);
 				 
-				int userId = 1;
-				AlbumRating usersRating = albumRatingDAO.findByAlbumAndUserId(albumId, userId);
-				if (usersRating != null) {
-					// update rating
-					int ratingId = usersRating.getId();
-					albumRatingDAO.updateDescription(ratingId, ratingText);
-					albumRatingDAO.updateRating(ratingId, ratingNumber);
+				User user = getSessionUser(session);
+				if (user != null) {
+					int userId = user.getId();
+					AlbumRating usersRating = albumRatingDAO.findByAlbumAndUserId(albumId, userId);
 					
-				} else {
-					// create rating
-					usersRating = new AlbumRating();
-					usersRating.setAlbum(album);
-					usersRating.setDescription(ratingText);
-					usersRating.setRating(ratingNumber);
-					usersRating.setUser(userDAO.findUserById(userId));
-					albumRatingDAO.createAlbumRating(usersRating);
+					if (usersRating != null) {
+						// update rating
+						int ratingId = usersRating.getId();
+						albumRatingDAO.updateDescription(ratingId, ratingText);
+						albumRatingDAO.updateRating(ratingId, ratingNumber);
+						
+					} else {
+						// create rating
+						usersRating = new AlbumRating();
+						usersRating.setAlbum(album);
+						usersRating.setDescription(ratingText);
+						usersRating.setRating(ratingNumber);
+						usersRating.setUser(userDAO.findUserById(userId));
+						albumRatingDAO.createAlbumRating(usersRating);
+						
+					}
+					
+					model.addAttribute("usersRating",usersRating);
+					model.addAttribute("userHasRating",true);
 					
 				}
-				
-				model.addAttribute("usersRating",usersRating);
-				model.addAttribute("userHasRating",true);
 				
 				List<AlbumRating> ratings = albumRatingDAO.sortedByCreatationDate(albumId, false);
 				model.addAttribute("albumRatings",ratings);
@@ -240,12 +245,15 @@ public class AlbumController {
 			if (album != null) {
 				model.addAttribute("album", album);
 				 
-				int userId = 1;
-				AlbumRating usersRating = albumRatingDAO.findByAlbumAndUserId(albumId, userId);
-				if (usersRating != null) {
-					if (albumRatingDAO.deleteAlbumRating(usersRating.getId())) {
-						model.addAttribute("userHasRating",false);
+				User user = getSessionUser(session);
+				if (user != null) {
+					AlbumRating usersRating = albumRatingDAO.findByAlbumAndUserId(albumId, user.getId());
+					if (usersRating != null) {
+						if (albumRatingDAO.deleteAlbumRating(usersRating.getId())) {
+							model.addAttribute("userHasRating",false);
+						}
 					}
+					
 				}
 				
 				List<AlbumRating> ratings = albumRatingDAO.sortedByCreatationDate(albumId, false);
@@ -272,10 +280,7 @@ public class AlbumController {
 				model.addAttribute("album", comment.getAlbum());
 				model.addAttribute("replyingComments",comment.getReplies());
 
-				int userId = 1;
-				User user = userDAO.findUserById(userId);
-//				model.addAttribute("userOwnsComment",comment.getUser().equals(user));
-				model.addAttribute("userOwnsComment",true);
+				model.addAttribute("userOwnsComment",isSessionUser(session,comment.getUser()));
 			}
 			
 		}
@@ -292,10 +297,9 @@ public class AlbumController {
 		) {
 		
 		if (replyToId != null) {
-			int userId = 1;
-			User user = userDAO.findUserById(userId);
-			AlbumComment originalComment = albumCommentDAO.findAlbumCommentById(replyToId);
 			
+			AlbumComment originalComment = albumCommentDAO.findAlbumCommentById(replyToId);
+			User user = getSessionUser(session);
 			if (originalComment != null && user != null) {
 				Album album = originalComment.getAlbum();
 				
@@ -311,12 +315,30 @@ public class AlbumController {
 				model.addAttribute("originalComment",originalComment);
 				model.addAttribute("album", originalComment.getAlbum());
 				model.addAttribute("replyingComments",albumCommentDAO.findCommentReplys(replyToId));
-				model.addAttribute("userOwnsComment",originalComment.getUser().equals(user));
+				model.addAttribute("userOwnsComment",isSessionUser(session,originalComment.getUser()));
 				model.addAttribute("album", album);		
 				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(album.getId()));
 			}
 		}
 		
 		return "album/pages/commentThread";
+	}
+	
+	private User getSessionUser(HttpSession session) {
+		session.getAttribute("user");
+		User user;
+		try {
+			user = (User)session.getAttribute("user");
+		} catch (Exception e) {
+			System.out.println("Did not find session user");
+			user = null;
+		}
+		
+		return user;
+	}
+	
+	private boolean isSessionUser(HttpSession session, User user) {
+		User sessionUser = getSessionUser(session);
+		return (user != null && sessionUser.equals(user));
 	}
 }
