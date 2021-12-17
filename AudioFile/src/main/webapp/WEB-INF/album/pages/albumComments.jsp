@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<jsp:include page="bootstrapHead.jsp" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<jsp:include page="../../bootstrapHead.jsp" />
 
 <c:choose>
     <c:when test="${empty album}">
@@ -10,9 +11,11 @@
         <%-- picture, album, artist, and description --%>
         <div class="container-fluid">
 
-            <jsp:include page="albumHeader.jsp"/>
+            <jsp:include page="../includes/albumHeader.jsp"/>
 
-            <%-- Add Comment --%>
+            <%-- ------------------------------------------------
+                Add Comment
+            ------------------------------------------------ --%>
             <%-- <c:if test="${sessionScope.user != null}"> --%>
             <%-- testing code --%>
             <c:if test="${true}">
@@ -41,6 +44,9 @@
             </c:if>
 
 
+            <%-- ------------------------------------------------
+                Show Lastest Comments
+            ------------------------------------------------ --%>
             <div class="table-responsive">
                 <div class="table-wrapper table-body">
                     <div class="table-title">
@@ -54,12 +60,14 @@
                             <tr>
                                 <th class="commentTable-userImage"></th>
                                 <th class="commentTable-comment"></th>
+                                <th class="commentTable-icons"></th>
                             </tr>
                         </thead>
                         <tbody>
                             <c:choose>
                                 <c:when test="${not empty albumComments}">
-                                    <c:forEach items="${albumComments}" var="comment" begin="0" end="9">
+                                    <c:forEach items="${albumComments}" var="comment">
+
                                         <tr>
                                             <td>
                                                 <a href="profile.do?userId=${comment.user.id}">
@@ -82,8 +90,14 @@
                                                         ${comment.updateDateTime.dayOfMonth}
                                                     </c:if>
                                                 </p>
-                                                <br>
+
                                                 <p>${comment.comment}</p>
+
+                                                <c:if test="${not empty comment.replies}">
+                                                    <a class="commentTable-dateText" href="commentThread.do?commentId=${comment.id}">
+                                                        View Replies (${fn:length(comment.replies)})
+                                                    </a>
+                                                </c:if>
                                             </td>
                                         </tr>
 
@@ -101,9 +115,6 @@
                 </div>
             </div>
 
-
-
-
         </div>
 
     </c:otherwise>
@@ -112,4 +123,4 @@
 
 
 
-<jsp:include page="bootstrapFooter.jsp" />
+<jsp:include page="../../bootstrapFooter.jsp" />

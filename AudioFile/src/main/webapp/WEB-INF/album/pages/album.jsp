@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<jsp:include page="bootstrapHead.jsp" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<jsp:include page="../../bootstrapHead.jsp" />
 
 
 
@@ -9,11 +10,15 @@
     </c:when>
     <c:otherwise>
 
-        <%-- picture, album, artist, and description --%>
         <div class="container-fluid">
-            <jsp:include page="albumHeader.jsp"/>
+            <%-- ------------------------------------------------
+                picture, album, artist, and description
+            ------------------------------------------------ --%>
+            <jsp:include page="../includes/albumHeader.jsp"/>
 
-            <%-- Song table --%>
+            <%-- ------------------------------------------------
+                Songs Table
+            ------------------------------------------------ --%>
             <div class="table-responsive">
                 <div class="table-wrapper table-body">
                     <div class="table-title">
@@ -66,10 +71,11 @@
                 </div>
             </div>
 
-
             <br>
 
-            <%-- 10 Comments Table --%>
+            <%-- ------------------------------------------------
+                10 latest comments
+            ------------------------------------------------ --%>
             <div class="table-responsive">
                 <div class="table-wrapper table-body">
                     <div class="table-title">
@@ -90,6 +96,7 @@
                             <c:choose>
                                 <c:when test="${not empty albumComments}">
                                     <c:forEach items="${albumComments}" var="comment" begin="0" end="9">
+
                                         <tr>
                                             <td>
                                                 <a href="profile.do?userId=${comment.user.id}">
@@ -112,10 +119,14 @@
                                                         ${comment.updateDateTime.dayOfMonth}
                                                     </c:if>
                                                 </p>
-                                                <br>
                                                 <p>${comment.comment}</p>
+
+                                                <c:if test="${not empty comment.replies}">
+                                                    <a class="commentTable-dateText" href="commentThread.do?commentId=${comment.id}">
+                                                        View Replies (${fn:length(comment.replies)})
+                                                    </a>
+                                                </c:if>
                                             </td>
-                                            <%-- <td>${comment.commentDate}</td> --%>
                                         </tr>
 
                                     </c:forEach>
@@ -141,7 +152,9 @@
             </div>
 
 
-            <%-- 10 Ratings Table --%>
+            <%-- ------------------------------------------------
+                10 latest Ratings
+            ------------------------------------------------ --%>
             <div class="table-responsive">
                 <div class="table-wrapper table-body">
                     <div class="table-title">
@@ -162,6 +175,7 @@
                             <c:choose>
                                 <c:when test="${not empty albumRatings}">
                                     <c:forEach items="${albumRatings}" var="rating" begin="0" end="9">
+
                                         <tr>
                                             <td>
                                                 <a href="profile.do?userId=${rating.user.id}">
@@ -187,10 +201,8 @@
                                                         ${rating.updateDateTime.dayOfMonth}
                                                     </c:if>
                                                 </p>
-                                                <br>
                                                 <p>${rating.description}</p>
                                             </td>
-                                            <%-- <td>${comment.commentDate}</td> --%>
                                         </tr>
 
                                     </c:forEach>
@@ -223,4 +235,4 @@
 
 
 
-<jsp:include page="bootstrapFooter.jsp" />
+<jsp:include page="../../bootstrapFooter.jsp" />

@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<jsp:include page="bootstrapHead.jsp" />
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<jsp:include page="../../bootstrapHead.jsp" />
 
 <c:choose>
     <c:when test="${empty album}">
@@ -10,9 +11,11 @@
         <%-- picture, album, artist, and description --%>
         <div class="container-fluid">
 
-            <jsp:include page="albumHeader.jsp"/>
+            <jsp:include page="../includes/albumHeader.jsp"/>
 
-            <%-- Add Rating --%>
+            <%-- ------------------------------------------------
+                Add Rating
+            ------------------------------------------------ --%>
             <%-- <c:if test="${sessionScope.user != null}"> --%>
             <%-- testing code --%>
             <c:if test="${true}">
@@ -66,7 +69,11 @@
                                 </tbody>
                             </table>
                         </form>
-                        <%-- Delete, update, or post button --%>
+
+
+                        <%-- ------------------------------------------------
+                            Delete, Update, Or Post Button
+                        ------------------------------------------------ --%>
                         <form action="deleteRating.do" id="deleteRatingForm" method="POST">
                             <input type="hidden" name="albumId" value="${album.id }">
                         </form>
@@ -85,6 +92,9 @@
             </c:if>
 
 
+            <%-- ------------------------------------------------
+                Ratings Table
+            ------------------------------------------------ --%>
             <div class="table-responsive">
                 <div class="table-wrapper table-body">
                     <div class="table-title">
@@ -130,7 +140,6 @@
                                                         ${rating.updateDateTime.dayOfMonth}
                                                     </c:if>
                                                 </p>
-                                                <br>
                                                 <p>${rating.description}</p>
                                             </td>
                                         </tr>
@@ -156,4 +165,4 @@
 
 
 
-<jsp:include page="bootstrapFooter.jsp" />
+<jsp:include page="../../bootstrapFooter.jsp" />

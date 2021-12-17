@@ -56,7 +56,7 @@ public class AlbumController {
 			
 		}
 		
-		return "album";
+		return "album/pages/album";
 	}
 	
 	
@@ -80,7 +80,7 @@ public class AlbumController {
 			
 		}
 		
-		return "albumComments";
+		return "album/pages/albumComments";
 	}
 	/* ----------------------------------------------------------------------------
 		albumComments.do (POST)
@@ -110,10 +110,13 @@ public class AlbumController {
 			
 		}
 		
-		return "albumComments";
+		return "album/pages/albumComments";
 	}
 	
-	@PostMapping(path="albumComments.do")
+	@PostMapping(
+		path="albumComments.do",
+		params = {"editCommentId","commentText"}
+	)
 	public String editComment(
 			Integer editCommentId,
 			String commentText,
@@ -139,7 +142,7 @@ public class AlbumController {
 
 		}
 		
-		return "commentThread";
+		return "album/pages/commentThread";
 	}
 	
 	
@@ -172,8 +175,9 @@ public class AlbumController {
 		}
 		
 	
-		return "albumRatings";
+		return "album/pages/albumRatings";
 	}
+	
 	/* ----------------------------------------------------------------------------
 		albumRatings.do (POST)
 	---------------------------------------------------------------------------- */
@@ -221,7 +225,7 @@ public class AlbumController {
 			}
 		}
 		
-		return "albumRatings";
+		return "album/pages/albumRatings";
 	}
 	
 	
@@ -250,7 +254,7 @@ public class AlbumController {
 			}
 		}
 		
-		return "albumRatings";
+		return "album/pages/albumRatings";
 	}
 	
 
@@ -261,21 +265,22 @@ public class AlbumController {
 	public String showCommentThread(Integer commentId, HttpSession session, Model model) {
 		
 		if (commentId != null) {
-			int userId = 1;
-			User user = userDAO.findUserById(userId);
 
 			AlbumComment comment = albumCommentDAO.findAlbumCommentById(commentId);
-			if (comment != null && comment.getUser().equals(user)) {
+			if (comment != null) {
 				model.addAttribute("originalComment",comment);
 				model.addAttribute("album", comment.getAlbum());
 				model.addAttribute("replyingComments",comment.getReplies());
+
+				int userId = 1;
+				User user = userDAO.findUserById(userId);
 //				model.addAttribute("userOwnsComment",comment.getUser().equals(user));
 				model.addAttribute("userOwnsComment",true);
 			}
 			
 		}
 		
-		return "commentThread";
+		return "album/pages/commentThread";
 	}
 	
 	@PostMapping(path="commentThread.do")
@@ -309,11 +314,9 @@ public class AlbumController {
 				model.addAttribute("userOwnsComment",originalComment.getUser().equals(user));
 				model.addAttribute("album", album);		
 				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(album.getId()));
-				
-				return "commentThread";
 			}
 		}
 		
-		return "/";
+		return "album/pages/commentThread";
 	}
 }

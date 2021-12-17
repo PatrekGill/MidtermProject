@@ -116,6 +116,9 @@ td.commentTable-commentText {
 p.commentTable-dateText {
 	font-size: 12px !important;
 }
+a.commentTable-dateText {
+	font-size: 12px !important;
+}
 
 .album-comment-box {
 	width: 100%;
