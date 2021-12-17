@@ -41,13 +41,13 @@ public class AlbumDAOImpl implements AlbumDAO{
 	}
 
 	@Override
-	public Album findAlbumBySongTitle(String songName) {
+	public List<Album> findAlbumBySongTitle(String songName) {
 		String jpql ="SELECT a FROM Album a JOIN Song s ON a = s.album WHERE s.name LIKE :songName";
 		
 		try {
 			return em.createQuery(jpql, Album.class)
 					.setParameter("songName", "%" + songName + "%")
-					.getSingleResult();
+					.getResultList();
 		}catch(Exception e) {
 			System.err.println("No album found from: " + songName);
 			return null;
