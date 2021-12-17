@@ -25,26 +25,26 @@ public class AddAlbumController {
 	@Autowired
 	private ArtistDAO artistDAO;
 	
-	@GetMapping(path ="addAlbum")
-	public String getAddAblumpage(HttpSession session) {
-		return"addAlbum";
-	}
-	@PostMapping(path ="addAlbum")
-	public String createAlbum(Album album,RedirectAttributes redir ) {
-		try {
-		if(albumDAO.addAlbum(album) != null) {
-			redir.addFlashAttribute("success", "Account successfully created!");
-			return "redirect:profile";
-		} else {
-			throw new Exception("Failed to create account");
-		}
-		}catch (Exception e) {
-			redir.addFlashAttribute("error", e.getMessage() + ": " + album.toString());
-			e.printStackTrace();
-		}
-		return"redirect:album";
-	
-	}
+//	@GetMapping(path ="addAlbum")
+//	public String getAddAblumpage(HttpSession session) {
+//		return"addAlbum";
+//	}
+//	@PostMapping(path ="addAlbum")
+//	public String createAlbum(Album album,RedirectAttributes redir ) {
+//		try {
+//		if(albumDAO.addAlbum(album) != null) {
+//			redir.addFlashAttribute("success", "Account successfully created!");
+//			return "redirect:profile";
+//		} else {
+//			throw new Exception("Failed to create account");
+//		}
+//		}catch (Exception e) {
+//			redir.addFlashAttribute("error", e.getMessage() + ": " + album.toString());
+//			e.printStackTrace();
+//		}
+//		return"redirect:album";
+//	
+//	}
 	@GetMapping(path ="addSong")
 	public String getAddSongpage(HttpSession session) {
 		return"addAlbum";

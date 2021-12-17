@@ -31,9 +31,13 @@
 				<td><input type="text" id="imageURL" name="imageURL"></td>
 			</tr>
 			<tr>
-				<td>Email</td>
-				<td><input type="text" id="email" name="email"></td>
+				<td>User Id</td>
+				<td>${user.id }</td>
 			</tr>
+			<%-- <tr>
+				<td>Artist Id</td>
+				<td>${user.artist.id }</td>
+			</tr> --%>
 			<tr>
 				<td><input type="submit" type="Create Album" /></td>
 			</tr>

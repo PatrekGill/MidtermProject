@@ -53,9 +53,9 @@ class AlbumDAOImplTest {
 	@DisplayName("test find album by song title")
 	void test4() {
 		assertNotNull(albumDAO);
-		Album a = albumDAO.findAlbumBySongTitle("Door Number Three");
+		List<Album> a = albumDAO.findAlbumBySongTitle("Door Number Three");
 		assertNotNull(a);
-		assertEquals("A1A", a.getTitle());
+		assertEquals("A1A", a.get(0).getTitle());
 		
 	}
 

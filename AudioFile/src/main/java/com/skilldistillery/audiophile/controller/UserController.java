@@ -140,5 +140,33 @@ public class UserController {
 		session.setAttribute("albumsCreated", albumDAO.findAlbumsByCreatedUsername(user1.getUsername()));
 		return "friendPage";
 	}
+	/*
+	 * 
+	 */
+	@GetMapping(path ="addAlbum")
+	public String getAddAblumpage(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(user == (null)) {
+			
+			return"profile";
+		}
+		return"addAlbum";
+	}
+	@PostMapping(path ="addAlbum")
+	public String createAlbum(Album album,RedirectAttributes redir ) {
+		try {
+		if(albumDAO.addAlbum(album) != null) {
+			redir.addFlashAttribute("success", "Account successfully created!");
+			return "redirect:profile";
+		} else {
+			throw new Exception("Failed to create account");
+		}
+		}catch (Exception e) {
+			redir.addFlashAttribute("error", e.getMessage() + ": " + album.toString());
+			e.printStackTrace();
+		}
+		return"redirect:album";
+	
+	}
 
 }
