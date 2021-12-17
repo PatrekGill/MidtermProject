@@ -132,13 +132,75 @@ public class AlbumController {
 		return "albumRatings";
 	}
 	@PostMapping(path="albumRatings.do")
-	public String deleteRating(Integer albumId, String ratingText, Integer ratingNumber, HttpSession session, Model model) {
+	public String postRating(
+			Integer albumId, 
+			String ratingText, 
+			Integer ratingNumber, 
+			HttpSession session, 
+			Model model
+		) {
+		
+		
+		if (albumId != null && ratingNumber != null) {
+			
+			Album album = albumDAO.findAlbumById(albumId);
+			if (album != null) {
+				model.addAttribute("album", album);
+				 
+				int userId = 1;
+				AlbumRating usersRating = albumRatingDAO.findByAlbumAndUserId(albumId, userId);
+				if (usersRating != null) {
+					// update rating
+					int ratingId = usersRating.getId();
+					albumRatingDAO.updateDescription(ratingId, ratingText);
+					albumRatingDAO.updateRating(ratingId, ratingNumber);
+					
+				} else {
+					// create rating
+					usersRating = new AlbumRating();
+					usersRating.setAlbum(album);
+					usersRating.setDescription(ratingText);
+					usersRating.setRating(ratingNumber);
+					usersRating.setUser(userDAO.findUserById(userId));
+					albumRatingDAO.createAlbumRating(usersRating);
+					
+				}
+				
+				model.addAttribute("usersRating",usersRating);
+				model.addAttribute("userHasRating",true);
+				
+				List<AlbumRating> ratings = albumRatingDAO.sortedByCreatationDate(albumId, false);
+				model.addAttribute("albumRatings",ratings);
+				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(albumId));
+			}
+		}
+		
 		return "albumRatings";
 	}
 
 	
 	@PostMapping(path="deleteRating.do")
 	public String deleteRating(Integer albumId, HttpSession session, Model model) {
+		if (albumId != null) {
+			
+			Album album = albumDAO.findAlbumById(albumId);
+			if (album != null) {
+				model.addAttribute("album", album);
+				 
+				int userId = 1;
+				AlbumRating usersRating = albumRatingDAO.findByAlbumAndUserId(albumId, userId);
+				if (usersRating != null) {
+					if (albumRatingDAO.deleteAlbumRating(usersRating.getId())) {
+						model.addAttribute("userHasRating",false);
+					}
+				}
+				
+				List<AlbumRating> ratings = albumRatingDAO.sortedByCreatationDate(albumId, false);
+				model.addAttribute("albumRatings",ratings);
+				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(albumId));
+			}
+		}
+		
 		return "albumRatings";
 	}
 }
