@@ -2,8 +2,8 @@
 <jsp:include page="bootstrapHead.jsp" />
 
 <c:choose>
-    <c:when test="${empty album}">
-        <h1>Could Not Locate Album, Sorry</h1>
+    <c:when test="${empty comment}">
+        <h1>Could Not Locate Your Comment, Sorry</h1>
     </c:when>
     <c:otherwise>
 
@@ -12,7 +12,7 @@
 
             <jsp:include page="albumHeader.jsp"/>
 
-            <%-- Add Comment --%>
+            <%-- Add Rating --%>
             <%-- <c:if test="${sessionScope.user != null}"> --%>
             <%-- testing code --%>
             <c:if test="${true}">
@@ -20,27 +20,33 @@
                     <div class="table-wrapper table-body">
                         <div class="table-title">
                             <div class="row">
-                                <h2>Leave A Comment</h2>
+                                <h2>Edit Comment</h2>
                             </div>
                         </div>
-                        <form action="albumComments.do" id="addAlbumComment" method="POST">
+                        <form id="commentEditForm" action="editAlbumComment.do" method="POST">
                             <input type="hidden" name="albumId" value="${album.id }">
                             <table class="music-table table-hover album-comment-box">
                                 <tbody>
+
                                     <tr>
-        								<td>
-        									<textarea class="form-control" rows="5" id="comment" name="commentText" placeholder="Add Comment..."></textarea>
-        								</td>
-        							</tr>
+                                        <td>
+                                            <textarea class="form-control" rows="5" name="ratingText" placeholder="Add Comment To Rating...">${usersRating.description}</textarea>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
-                            <button type="submit" class="btn btn-warning table-btn">Post Comment</button>
                         </form>
+                        <%-- Delete, update, or post button --%>
+                        <form action="deleteRating.do" id="deleteRatingForm" method="POST">
+                            <input type="hidden" name="albumId" value="${album.id }">
+                        </form>
+                        <button type="submit" form="commentEditForm" class="btn btn-warning table-btn-major">Update Comment</button>
+                        <button type="submit" form="deleteCommentForm" class="btn btn-danger table-btn-minor">Delete Comment</button>
                     </div>
                 </div>
             </c:if>
 
-
+            
             <div class="table-responsive">
                 <div class="table-wrapper table-body">
                     <div class="table-title">
@@ -100,11 +106,7 @@
                 </div>
             </div>
 
-
-
-
         </div>
-
     </c:otherwise>
 </c:choose>
 

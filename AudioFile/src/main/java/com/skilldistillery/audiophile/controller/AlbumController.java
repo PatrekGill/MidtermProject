@@ -30,6 +30,10 @@ public class AlbumController {
 	@Autowired
 	private AlbumCommentDAOImpl albumCommentDAO;
 	
+
+	/* ----------------------------------------------------------------------------
+		album.do (GET)
+	---------------------------------------------------------------------------- */
 	@GetMapping(path="album.do")
 	public String showAlbumPage(Integer albumId, HttpSession session, Model model) {
 		if (albumId != null) {
@@ -55,6 +59,10 @@ public class AlbumController {
 		return "album";
 	}
 	
+	
+	/* ----------------------------------------------------------------------------
+		albumComments.do (GET)
+	---------------------------------------------------------------------------- */
 	@GetMapping(path="albumComments.do")
 	public String showAlbumComments(Integer albumId, HttpSession session, Model model) {
 		
@@ -74,7 +82,9 @@ public class AlbumController {
 		
 		return "albumComments";
 	}
-	
+	/* ----------------------------------------------------------------------------
+		albumComments.do (POST)
+	---------------------------------------------------------------------------- */
 	@PostMapping(path="albumComments.do")
 	public String postComment(Integer albumId, String commentText, HttpSession session, Model model) {
 		int userId = 1;
@@ -100,9 +110,12 @@ public class AlbumController {
 			
 		}
 		
-		return "redirect:albumComments";
+		return "albumComments";
 	}
 	
+	/* ----------------------------------------------------------------------------
+		albumRatings.do (GET)
+	---------------------------------------------------------------------------- */
 	@GetMapping(path="albumRatings.do")
 	public String showRatingsPage(Integer albumId, HttpSession session, Model model) {
 		
@@ -131,6 +144,9 @@ public class AlbumController {
 	
 		return "albumRatings";
 	}
+	/* ----------------------------------------------------------------------------
+		albumRatings.do (POST)
+	---------------------------------------------------------------------------- */
 	@PostMapping(path="albumRatings.do")
 	public String postRating(
 			Integer albumId, 
@@ -177,8 +193,11 @@ public class AlbumController {
 		
 		return "albumRatings";
 	}
-
 	
+	
+	/* ----------------------------------------------------------------------------
+		deleteRating.do (POST)
+	---------------------------------------------------------------------------- */
 	@PostMapping(path="deleteRating.do")
 	public String deleteRating(Integer albumId, HttpSession session, Model model) {
 		if (albumId != null) {
@@ -202,5 +221,27 @@ public class AlbumController {
 		}
 		
 		return "albumRatings";
+	}
+	
+
+	/* ----------------------------------------------------------------------------
+		editAlbumComment.do (GET)
+	---------------------------------------------------------------------------- */
+	@GetMapping(path="editAlbumComment.do")
+	public String editAlbumComment(Integer commentId, HttpSession session, Model model) {
+		
+		if (commentId != null) {
+			int userId = 1;
+			User user = userDAO.findUserById(userId);
+
+			AlbumComment comment = albumCommentDAO.findAlbumCommentById(commentId);
+			if (comment != null && comment.getUser().equals(user)) {
+				model.addAttribute("comment",comment);
+				model.addAttribute("album", comment.getAlbum());
+			}
+			
+		}
+		
+		return "editAlbumComment";
 	}
 }
