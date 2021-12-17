@@ -48,7 +48,7 @@ public interface AlbumDAO {
 	 * ----------------------------------------------------------------------------
 	 */
 	
-	boolean addAlbum(Album album);
+	Album addAlbum(Album album);
 	boolean updateAlbum(int id, Album album);
 	boolean deleteAlbum(Album album);
 	

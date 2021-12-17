@@ -92,12 +92,10 @@ public class AlbumDAOImpl implements AlbumDAO{
 	}
 	
 	@Override
-	public boolean addAlbum(Album album) {
-		boolean creationSuccess = false;
+	public Album addAlbum(Album album) {
 		em.persist(album);
 		em.flush();
-		creationSuccess = em.contains(album);
-		return creationSuccess;
+		return album;
 	}
 
 	@Override

@@ -23,8 +23,6 @@
 						<p>Email: ${user1.email }</p>
 						<p>Username: ${user1.username }</p>
 					</div>
-				</c:when>
-			</c:choose>
 			<div class="">
 				<c:if test="${not empty albumsCreated}">
 					<div class="albums-by-you">
@@ -38,6 +36,8 @@
 					</div>
 				</c:if>
 			</div>
+				</c:when>
+			</c:choose>
 		</div>
 	</div>
 </div>
