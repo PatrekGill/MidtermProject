@@ -215,6 +215,26 @@ public class ArtistDAOImpl implements ArtistDAO {
 		return successfullyDeleted;
 	}
 
+	@Override
+	public List<Artist> getTopThreeArtist(boolean ascendingOder) {
+//String jpql = "SELECT ar.album.artist FROM AlbumRating ar GROUP BY ar ORDER BY AVG(ar.rating)";
+String jpql1 = "SELECT art FROM Artist art JOIN art.albums alb JOIN alb.albumRatings ar GROUP BY art ORDER BY AVG(ar.rating)";
+		
+		if (ascendingOder) {
+			jpql1 += " ASC ";
+			
+		} else {
+			jpql1 += " DESC ";
+			
+		}
+		
+		List<Artist> artists = em.createQuery(jpql1, Artist.class).getResultList();
+		if(artists == null) {
+			artists = new ArrayList<>();
+		}
+		return artists;
+	}
+
 
 
 }

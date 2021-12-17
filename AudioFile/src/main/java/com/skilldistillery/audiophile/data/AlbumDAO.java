@@ -32,6 +32,7 @@ public interface AlbumDAO {
 	
 	List<Album> sortAlbumsByRating(boolean ascendingOrder);
 	List<Album> sortAlbumsByCreateDate(boolean ascendingOder);
+	List<Album> getTopThreeRatingAlbum(boolean ascendingOder);
 	
 	/*
 	 * ----------------------------------------------------------------------------
