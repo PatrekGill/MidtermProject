@@ -131,6 +131,7 @@
                             <tr>
                                 <th class="commentTable-userImage"></th>
                                 <th class="commentTable-comment"></th>
+                                <th class="commentTable-icons"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -168,9 +169,32 @@
                                                 </c:if>
                                                 <c:if test="${not empty comment.inReplyTo}">
                                                     <a class="commentTable-dateText" href="commentThread.do?commentId=${comment.inReplyTo}">
-                                                        View Reply Thread
+                                                        View Replied To Comment
                                                     </a>
                                                 </c:if>
+                                            </td>
+
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${comment.user.id == sessionScope.user.id}">
+                                                        <form action="commentThread.do" method="GET">
+                                                            <input type="hidden" name="commentId" value="${comment.id }">
+            												<button type="submit" class="btn btn-primary btn-sm comment-icon-button">
+            													<i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="Edit Comment"></i>
+            												</button>
+                                                        </form>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:if test="${sessionScope.user != null}">
+                                                            <form action="commentThread.do" method="GET">
+                												<input type="hidden" name="commentId" value="${comment.id }">
+                												<button type="submit" class="btn btn-primary btn-sm comment-icon-button">
+                													<i class="glyphicon glyphicon-share" data-toggle="tooltip" title="Reply To Comment"></i>
+                												</button>
+                											</form>
+                                                        </c:if>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </td>
                                         </tr>
 
@@ -192,7 +216,7 @@
     </c:otherwise>
 </c:choose>
 
-
+<jsp:include page="../../scripts/tooltipScript.jsp" />
 
 
 <jsp:include page="../../bootstrapFooter.jsp" />

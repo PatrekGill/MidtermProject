@@ -82,7 +82,7 @@ table.music-table td a:hover {
 }
 
 /* ----------------------------------------------------------------------------
-	ratinTable
+	ratingTable
 ---------------------------------------------------------------------------- */
 th.ratingTable-userImage {
 	width: 5%;
@@ -106,6 +106,9 @@ th.commentTable-userImage {
 }
 th.commentTable-comment {
 	width: 95%;
+}
+th.commentTable-icons {
+	width: 5%;
 }
 
 td.commentTable-commentText {
@@ -153,6 +156,17 @@ a.commentTable-dateText {
 	float: right;
 }
 
+.comment-icon-button {
+	font-size: 21px !important;
+	background-color: black;
+	border-color: black;
+	border-radius: 20%;
+}
+.comment-icon-button:hover {
+	background-color: white;
+	border-color: white;
+	color: black;
+}
 
 /* ----------------------------------------------------------------------------
 	albumTable
