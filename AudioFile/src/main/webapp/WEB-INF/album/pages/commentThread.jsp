@@ -83,9 +83,9 @@
             <%-- ------------------------------------------------
                 Reply To Comment Box
             ------------------------------------------------ --%>
-            <%-- <c:if test="${sessionScope.user != null}"> --%>
+            <c:if test="${sessionScope.user != null}">
             <%-- testing code --%>
-            <c:if test="${true}">
+            <%-- <c:if test="${true}"> --%>
                 <div class="table-responsive">
                     <div class="table-wrapper table-body">
                         <div class="table-title">
