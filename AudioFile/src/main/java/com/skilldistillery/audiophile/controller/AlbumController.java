@@ -16,6 +16,7 @@ import com.skilldistillery.audiophile.data.AlbumRatingDAOImpl;
 import com.skilldistillery.audiophile.data.UserDAOImpl;
 import com.skilldistillery.audiophile.entities.Album;
 import com.skilldistillery.audiophile.entities.AlbumComment;
+import com.skilldistillery.audiophile.entities.AlbumRating;
 import com.skilldistillery.audiophile.entities.User;
 
 @Controller
@@ -38,9 +39,14 @@ public class AlbumController {
 				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(albumId));
 				model.addAttribute("album", album);
 				
-				List<AlbumComment> comments = albumCommentDAO.sortAlbumCommentsByCommentDate(albumId, false);
+				List<AlbumComment> comments = albumCommentDAO.sortAlbumCommentsByCommentDate(albumId, false, 10);
 				if (!comments.isEmpty()) {
 					model.addAttribute("albumComments",comments);
+				}
+				
+				List<AlbumRating> ratings = albumRatingDAO.sortedByCreationDate(albumId, false, 10);
+				if (!ratings.isEmpty()) {
+					model.addAttribute("albumRatings",ratings);
 				}
 			}
 			
@@ -58,7 +64,7 @@ public class AlbumController {
 			if (album != null) {
 				model.addAttribute("album", album);
 				
-				List<AlbumComment> comments = albumCommentDAO.sortAlbumCommentsByCommentDate(albumId, true);
+				List<AlbumComment> comments = albumCommentDAO.sortAlbumCommentsByCommentDate(albumId, false);
 				model.addAttribute("albumComments",comments);
 				
 				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(albumId));
@@ -86,7 +92,7 @@ public class AlbumController {
 				albumCommentDAO.createAlbumComment(comment);
 				model.addAttribute("album", album);
 				
-				List<AlbumComment> comments = albumCommentDAO.sortAlbumCommentsByCommentDate(albumId, true);
+				List<AlbumComment> comments = albumCommentDAO.sortAlbumCommentsByCommentDate(albumId, false);
 				model.addAttribute("albumComments",comments);
 				
 				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(albumId));
@@ -94,6 +100,45 @@ public class AlbumController {
 			
 		}
 		
-		return "albumComments";
+		return "redirect:albumComments";
+	}
+	
+	@GetMapping(path="albumRatings.do")
+	public String showRatingsPage(Integer albumId, HttpSession session, Model model) {
+		
+		
+		if (albumId != null) {
+			
+			Album album = albumDAO.findAlbumById(albumId);
+			if (album != null) {
+				model.addAttribute("album", album);
+				
+				int userId = 1;
+				AlbumRating usersRating = albumRatingDAO.findByAlbumAndUserId(albumId, userId);
+				boolean userHasRating = false;
+				if (usersRating != null) {
+					model.addAttribute("usersRating",usersRating);
+					userHasRating = true;
+				}
+				model.addAttribute("userHasRating",userHasRating);
+				
+				List<AlbumRating> ratings = albumRatingDAO.sortedByCreatationDate(albumId, false);
+				model.addAttribute("albumRatings",ratings);
+				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(albumId));
+			}
+		}
+		
+	
+		return "albumRatings";
+	}
+	@PostMapping(path="albumRatings.do")
+	public String deleteRating(Integer albumId, String ratingText, Integer ratingNumber, HttpSession session, Model model) {
+		return "albumRatings";
+	}
+
+	
+	@PostMapping(path="deleteRating.do")
+	public String deleteRating(Integer albumId, HttpSession session, Model model) {
+		return "albumRatings";
 	}
 }

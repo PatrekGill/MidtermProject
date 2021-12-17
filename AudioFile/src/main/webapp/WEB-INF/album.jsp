@@ -11,31 +11,7 @@
 
         <%-- picture, album, artist, and description --%>
         <div class="container-fluid">
-            <div class="row">
-                <div class="container">
-                    <c:if test="${not empty album.imageURL}">
-                        <div class="col-xs-6 col-sm-7 col-md-6 col-lg-5 albumImage-div">
-                                <img class="albumImage-md" src="${album.imageURL}" alt="image of album">
-                        </div>
-                    </c:if>
-                    <div class="col-xs-10 col-sm-6 col-md-4 col-lg-5 albumText">
-                        <h1 class="albumText-title">
-                            <a href="album.do?albumId=${album.id}">${album.title}</a>
-                        </h1>
-
-                        <c:if test="${not empty album.artist}">
-                            <%-- Must be changed to artist page --%>
-                            <a class="albumText-artist" href="artist.do?artistId=${album.artist.id}">${album.artist.name}</a>
-                            <br>
-                        </c:if>
-
-                        <a class="albumText-artist-sm" href="showAlbumRatings.do?artistId=${album.artist.id}">Average Rating: ${averageRating} / 10</a>
-                        <br>
-                        <p>${album.description}</p>
-                    </div>
-                </div>
-
-            </div>
+            <jsp:include page="albumHeader.jsp"/>
 
             <%-- Song table --%>
             <div class="table-responsive">
@@ -129,7 +105,7 @@
                                                     ${comment.commentDate.month}
                                                     ${comment.commentDate.dayOfMonth}
                                                     <br>
-                                                    <c:if test="${comment.updateDateTime != null}">
+                                                    <c:if test="${comment.updateDateTime != null && comment.updateDateTime != comment.commentDate}">
                                                         Edited On:
                                                         ${comment.updateDateTime.year}
                                                         ${comment.updateDateTime.month}
@@ -156,7 +132,81 @@
 
                         <form class="" action="albumComments.do" method="GET">
                             <input type="hidden" name="albumId" value="${album.id}">
-                            <button type="submit" class="btn btn-warning table-btn">Show All</button>
+                            <button type="submit" class="btn btn-warning table-btn">Show All Comments</button>
+                        </form>
+
+                    </c:if>
+                </div>
+            </div>
+
+
+            <%-- 10 Ratings Table --%>
+            <div class="table-responsive">
+                <div class="table-wrapper table-body">
+                    <div class="table-title">
+    					<div class="row">
+    						<h2>Latest Ratings</h2>
+    					</div>
+    				</div>
+                    <table class="music-table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th class="ratingTable-userImage"></th>
+                                <th class="ratingTable-score"></th>
+                                <th class="ratingTable-description"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:choose>
+                                <c:when test="${not empty albumRatings}">
+                                    <c:forEach items="${albumRatings}" var="rating" begin="0" end="9">
+                                        <tr>
+                                            <td>
+                                                <a href="profile.do?userId=${rating.user.id}">
+                                                    <img class="user-image-md" src="${rating.user.imageURL}" alt="Profile Image">
+                                                </a>
+                                            </td>
+                                            <td class="ratingTable-score-text">
+                                                ${rating.rating} / 10
+                                            </td>
+                                            <td class="commentTable-commentText">
+                                                <p class="commentTable-dateText">
+                                                    Posted by: ${rating.user.username}
+                                                    <br>
+                                                    On:
+                                                    ${rating.ratingDate.year}
+                                                    ${rating.ratingDate.month}
+                                                    ${rating.ratingDate.dayOfMonth}
+                                                    <br>
+                                                    <c:if test="${rating.updateDateTime != null && rating.updateDateTime != rating.ratingDate}">
+                                                        Edited On:
+                                                        ${rating.updateDateTime.year}
+                                                        ${rating.updateDateTime.month}
+                                                        ${rating.updateDateTime.dayOfMonth}
+                                                    </c:if>
+                                                </p>
+                                                <p>${rating.description}</p>
+                                            </td>
+                                            <%-- <td>${comment.commentDate}</td> --%>
+                                        </tr>
+
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    <tr>
+                                        No Ratings...
+                                    </tr>
+                                </c:otherwise>
+                            </c:choose>
+                        </tbody>
+
+                    </table>
+                    <c:if test="${not empty albumRatings}">
+
+                        <form class="" action="albumRatings.do" method="GET">
+                            <input type="hidden" name="albumId" value="${album.id}">
+                            <button type="submit" class="btn btn-warning table-btn">Show All Ratings</button>
                         </form>
 
                     </c:if>

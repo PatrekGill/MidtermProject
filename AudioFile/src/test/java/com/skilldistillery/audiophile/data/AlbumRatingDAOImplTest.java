@@ -24,6 +24,13 @@ class AlbumRatingDAOImplTest {
 	}
 	
 	@Test
+	void test_findByAlbumAndUserId() {
+		AlbumRating rating = dao.findByAlbumAndUserId(1,1);
+		assertNotNull(rating);
+		assertEquals(1, rating.getUser().getId());
+	}
+	
+	@Test
 	void test_sortedByRating_just_order() {
 		assertNotNull(dao.sortedByRating(1,true));
 		assertEquals("nice album", dao.sortedByRating(1,true).get(0).getDescription());
@@ -51,15 +58,15 @@ class AlbumRatingDAOImplTest {
 	
 	@Test
 	void test_sortedByCreatationDate_number_entities() {
-		assertNotNull(dao.sortedByCreatationDate(1,true,1));
+		assertNotNull(dao.sortedByCreationDate(1,true,1));
 		assertEquals("nice album", dao.sortedByCreatationDate(1,true).get(0).getDescription());
 		assertEquals(1, dao.sortedByCreatationDate(1,true).size());
 	}
 	
 	@Test
 	void test_sortedByCreatationDate_number_entities_out_of_bounds() {
-		assertNotNull(dao.sortedByCreatationDate(1,true,0));
-		assertNotNull(dao.sortedByCreatationDate(1,true,20));
+		assertNotNull(dao.sortedByCreationDate(1,true,0));
+		assertNotNull(dao.sortedByCreationDate(1,true,20));
 		assertEquals("nice album", dao.sortedByCreatationDate(1,true).get(0).getDescription());
 	}
 	

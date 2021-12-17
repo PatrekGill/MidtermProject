@@ -81,6 +81,21 @@ table.music-table td a:hover {
 	font-weight: bold;
 }
 
+/* ----------------------------------------------------------------------------
+	ratinTable
+---------------------------------------------------------------------------- */
+th.ratingTable-userImage {
+	width: 5%;
+}
+th.ratingTable-score {
+	width: 10%;
+}
+th.ratingTable-description {
+	width: 85%;
+}
+td.ratingTable-score-text {
+	text-align: center !important;
+}
 
 
 /* ----------------------------------------------------------------------------
@@ -92,15 +107,14 @@ th.commentTable-userImage {
 th.commentTable-comment {
 	width: 95%;
 }
-/* th.commentTable-date {
-	width: 15%;
-} */
+
 td.commentTable-commentText {
-	font-size: 17px !important;
+	font-size: 18px !important;
+	font-weight: 600;
 	/* vertical-align: middle !important; */
 }
 p.commentTable-dateText {
-	font-size: 14px !important;
+	font-size: 12px !important;
 }
 
 .album-comment-box {
@@ -118,6 +132,24 @@ p.commentTable-dateText {
 	font-family: Arial;
 	color: black;
 }
+.table-btn-major {
+	height: 45px;
+	font-size: medium;
+	font-weight: bold;
+	font-family: Arial;
+	color: black;
+	width: 85%;
+}
+.table-btn-minor {
+	height: 45px;
+	font-size: medium;
+	font-weight: bold;
+	font-family: Arial;
+	color: black;
+	width: 15%;
+	float: right;
+}
+
 
 /* ----------------------------------------------------------------------------
 	albumTable
