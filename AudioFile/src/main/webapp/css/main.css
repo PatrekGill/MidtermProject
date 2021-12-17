@@ -159,6 +159,12 @@ footer {
 	margin: auto;
 }
 
+.user-image-md {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+
 /* On small screens, set height to 'auto' for sidenav and grid */
 @media screen and (max-width: 767px) {
 	.sidenav {
