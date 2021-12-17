@@ -34,6 +34,7 @@
 							<li class="active"><a href="#">Home</a></li>
 							<li><a href="profile">Profile</a></li>
 							<li><a href="#">Trending</a></li>
+
 							<li><div class="dropdown-padder"></div>
 								<div class="dropdown">
 									<div class="dropdown-padder">
@@ -50,6 +51,7 @@
 										</div>
 									</div>
 								</div></li>
+
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li><form class="form-inline my-2 my-lg-0" action="search"
@@ -91,13 +93,49 @@
 			<div class="container-fluid text-center">
 				<div class="row content">
 					<div class="col-sm-2 sidenav">
+
+						<div id="headingTopAlbums">
+							<p>
+								<button class="btn btn-link" data-toggle="collapse"
+									data-target="#collapseTopAlbums" aria-expanded="false"
+									aria-controls="collapseTopAlbums">Top Albums</button>
+							</p>
+						</div>
+						<div id="collapseTopAlbums" class="collapse"
+							aria-labelledby="headingTopAlbums" data-parent="#accordion">
+							<%--  <c:forEach var="album" items="${topAlbums }"> --%>
+								<li><a href="#">Album 1</a></li>
+								<li><a href="#">Album 2</a></li>
+								<li><a href="#">Album 3</a></li>
+							<%--  </c:forEach> --%>
+
+
+						</div>
 						<p>
-							<a href="#">Top Albums</a>
+							<button class="btn btn-link" data-toggle="collapse"
+								data-target="#collapseTopArtists" aria-expanded="false"
+								aria-controls="collapseTopArtists">Top Artists</button>
 						</p>
+						<div id="collapseTopArtists" class="collapse"
+							aria-labelledby="headingTopArtists" data-parent="#accordion">
+							<%-- <c:forEach var="artist" items="${topArtist }"> --%>
+								<li><a href="#">Artist 1</a></li>
+								<li><a href="#">Artist 2</a></li>
+								<li><a href="#">Artist 3</a></li>
+							<%--  </c:forEach> --%>
+						</div>
 						<p>
-							<a href="#">Top Artists</a>
+							<button class="btn btn-link" data-toggle="collapse"
+								data-target="#collapseTopSongs" aria-expanded="false"
+								aria-controls="collapseTopSongs">Top Songs</button>
 						</p>
-						<p>
-							<a href="#">Top Songs</a>
-						</p>
+						<div id="collapseTopSongs" class="collapse"
+							aria-labelledby="headingTopSongs" data-parent="#accordion">
+							<%--  <c:forEach var="song" items="${topSongs }"> --%>
+							<li><a href="#">Song 1</a></li>
+							<li><a href="#">Song 2</a></li>
+							<li><a href="#">Song 3</a></li>
+							<%-- </c:forEach> --%>
+						</div>
+
 					</div>
