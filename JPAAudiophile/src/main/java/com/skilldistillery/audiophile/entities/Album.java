@@ -46,7 +46,7 @@ public class Album {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "album")
+	@ManyToMany(mappedBy = "albums")
 	private List<Song> songs;
 
 	@OneToMany(mappedBy = "album")
