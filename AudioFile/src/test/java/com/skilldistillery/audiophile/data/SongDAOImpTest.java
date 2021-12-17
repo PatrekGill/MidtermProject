@@ -1,10 +1,17 @@
 package com.skilldistillery.audiophile.data;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import com.skilldistillery.audiophile.entities.Song;
 
 @SpringBootTest
 class SongDAOImpTest {
@@ -39,9 +46,15 @@ class SongDAOImpTest {
 	}
 
 	@Test
+
+	void test_for_find_by_Artist_Name() {
+
+		assertNotNull(DaoImp.findByArtistName("Adele"));
+//		assertEquals("Adele",DaoImp.findByArtistName("Adele").get(1).getArtists().get(1).getName());
+	}
 	void test_findByArtistName() {
 		assertNotNull(DaoImp.findByArtistName("jimmy buffett"));
-		assertNotNull(DaoImp.findByArtistName("jimmy buffett").get(1).getAlbum());
+		assertTrue(DaoImp.findByArtistName("jimmy buffett").size() > 0);
 
 	}
 
@@ -60,8 +73,9 @@ class SongDAOImpTest {
 
 	@Test
 	void test_sortBySongRating() {
-		assertNotNull(DaoImp.sortBySongRating());
-		assertFalse(DaoImp.sortBySongRating().isEmpty());
+		List<Song> s = DaoImp.sortBySongRating(false, 3);
+		assertNotNull(s);
+		assertTrue(DaoImp.sortBySongRating(false, 3).size() > 0);
 	}
 
 	@Test
@@ -70,5 +84,6 @@ class SongDAOImpTest {
 		assertFalse(DaoImp.findByLyricsKeyword("you").isEmpty());
 
 	}
+	
 
 }

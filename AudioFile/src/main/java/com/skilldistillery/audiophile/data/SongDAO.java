@@ -13,7 +13,7 @@ public interface SongDAO {
 	public List<Song> findByAlbumName(String albumName);
 	public List<Song> findByLyricsKeyword(String keyword);
 	public List<Song> sortByCreatDate();
-	public List<Song> sortBySongRating();
+	public List<Song> sortBySongRating(boolean ascendingOder, int numberOf);
 	public List<Song> sortByUpdateTime();
 	
 	//CRUD

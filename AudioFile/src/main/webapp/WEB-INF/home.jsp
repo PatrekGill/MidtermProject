@@ -12,8 +12,6 @@
 					<p>Got</p>
 					<p>Better</p>
 					</div>
+
+
 <jsp:include page="bootstrapFooter.jsp"/>
-</head>
-<body>
-</body>
-</html>

@@ -16,7 +16,8 @@ public interface AlbumDAO {
 	
 	Album findAlbumById(int id);
 	Album findAlbumByTitle(String albumTitle);
-	Album findAlbumBySongTitle(String songName);
+	List<Album> findAlbumsBySongTitle(String songName);
+	List<Album> findAlbumsByTitle(String albumsTitle);
 	List<Album> findAlbumsByArtistName(String artistName);
 	List<Album> findAlbumByCreationDate(LocalDateTime creationDate);
 	List<Album> findAlbumsByGenreName(String genre);
@@ -31,6 +32,15 @@ public interface AlbumDAO {
 	
 	List<Album> sortAlbumsByRating(boolean ascendingOrder);
 	List<Album> sortAlbumsByCreateDate(boolean ascendingOder);
+	List<Album> getTopThreeRatingAlbum(boolean ascendingOder);
+	
+	/*
+	 * ----------------------------------------------------------------------------
+	 * Sort & Search Functions
+	 * ----------------------------------------------------------------------------
+	 */
+	
+	List<Album> findAlbumsByArtistSortByRating(boolean ascendingOrder, String artistName);
 	
 	/*
 	 * ----------------------------------------------------------------------------
@@ -38,7 +48,7 @@ public interface AlbumDAO {
 	 * ----------------------------------------------------------------------------
 	 */
 	
-	boolean addAlbum(Album album);
+	Album addAlbum(Album album);
 	boolean updateAlbum(int id, Album album);
 	boolean deleteAlbum(Album album);
 	

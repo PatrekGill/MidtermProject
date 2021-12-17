@@ -46,16 +46,16 @@ class AlbumDAOImplTest {
 		assertNotNull(albumDAO);
 		Album a = albumDAO.findAlbumByTitle("A1A");
 		assertNotNull(a);
-		assertEquals("jimmy buffett", a.getArtist().getName());
+		assertEquals("Jimmy Buffett", a.getArtist().getName());
 	}
 	
 	@Test
 	@DisplayName("test find album by song title")
 	void test4() {
 		assertNotNull(albumDAO);
-		Album a = albumDAO.findAlbumBySongTitle("Door Number Three");
+		List<Album> a = albumDAO.findAlbumsBySongTitle("Door Number Three");
 		assertNotNull(a);
-		assertEquals("A1A", a.getTitle());
+		assertTrue(a.size() > 0);
 		
 	}
 
@@ -99,11 +99,29 @@ class AlbumDAOImplTest {
 		assertNotNull(a);
 		assertTrue(a.size() > 0);
 	}
+	@Test
+	@DisplayName("Test sort top 3 albums by rating")
+	void test12() {
+		List<Album> a = albumDAO.sortAlbumsByRating(false);
+		assertNotNull(a);
+		assertTrue(a.size() > 0);
+		assertEquals("Kind of Blue",a.get(0).getTitle());
+		assertEquals("2",a.get(1).getTitle());
+		assertEquals("21",a.get(2).getTitle());
+	}
 	
 	@Test
 	@DisplayName("Test sort albums by creation date")
 	void void10(){
 		List<Album> a = albumDAO.sortAlbumsByCreateDate(false);
+		assertNotNull(a);
+		assertTrue(a.size() > 0);
+	}
+	
+	@Test
+	@DisplayName("Test getting albums by artist name and sorting them by rating")
+	void test11() {
+		List<Album> a = albumDAO.findAlbumsByArtistSortByRating(false, "Jimmy Buffett");
 		assertNotNull(a);
 		assertTrue(a.size() > 0);
 	}

@@ -19,7 +19,8 @@ public interface ArtistDAO {
 	public List<Artist> sortByCreateDate();
 
 	public List<Artist> sortByUpdateTime();
-
+	public List<Artist> getTopThreeArtist(boolean ascendingOder);
+	
 	public Artist addNewArtist(Artist artist);
 
 	public boolean updateArtistName(int id, String newName);

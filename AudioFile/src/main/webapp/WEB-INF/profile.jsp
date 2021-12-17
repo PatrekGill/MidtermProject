@@ -4,50 +4,91 @@
 
 
 <jsp:include page="bootstrapHead.jsp" />
-
-
-<c:choose>
-	<c:when test="${ empty user}">
-
+<div class="col-sm-8 text-left">
+	<div class="container-boy">
 		<div>
-			<h1>Profile</h1>
-			<form action="login" method="post">
-				<p>
-					Username: <input class="textbox" name="username" />
-				</p>
-				<p>
-					Password: <input class="textbox" name="password" />
-				</p>
-				<input type="submit" value="Log In">
-			</form>
+			<c:choose>
+				<c:when test="${ empty user}">
+
+					<h1>Login or create Account</h1>
+					<div class="account-design">
+						<form action="login" method="post">
+							<label for="username">Username: </label>&nbsp;<input class="login-textbox"
+								name="username"/><label for="password">&nbsp;Password: </label>&nbsp;<input
+								class="password-textbox" name="password" /><br><br> <input
+								type="submit" value="Log In">
+						</form>
+						<form action="createAccount" method="get">
+							<div class="spacer">
+								<input type="submit" value="Create Account">
+							</div>
+						</form>
+					</div>
+				</c:when>
+				<c:when test="${user != null }">
+
+					<c:if test="${empty update }">
+						<div class="">
+							<h2>Your Account Details</h2>
+							<p>First name: ${user.firstName}</p>
+							<p>Last name: ${user.lastName }</p>
+							<p>Account created on: ${user.creationDateTime }</p>
+							<p>Email: ${user.email }</p>
+							<p>Username: ${user.username }</p>
+							<div class="account-design">
+								<form action="deleteAccount" method="post">
+									<input type="submit" value="Delete Account">
+								</form>
+								<div class="spacer">
+									<form action="updateAccount" method="get">
+										<input type="submit" value="Update Account">
+									</form>
+								</div>
+								<div class="spacer">
+									<form action="friendList" method="get">
+										<input type="submit" value="Friend List">
+									</form>
+								</div>
+							</div>
+						</div>
+					</c:if>
+					<c:if test="${not empty update }">
+						<div>
+							<h2>Change Account Details</h2>
+							<form action="updateAccount" method="post">
+								<ul>
+									<li>First Name: <input value="${user.firstName}"
+										name="firstName"></li>
+									<li>Last Name: <input value="${user.lastName }"
+										name="lastName"></li>
+									<li>Cannot change account create date:
+										${user.creationDateTime }</li>
+									<li>Email: <input value="${user.email }" name="email"></li>
+									<li>Username: ${user.username }</li>
+								</ul>
+								<input type="submit" value="Update Account">
+							</form>
+						</div>
+					</c:if>
+				</c:when>
+
+			</c:choose>
+			<div class="">
+				<c:if test="${not empty albumsCreated}">
+					<div class="albums-by-you">
+						<h2>Your Albums:</h2>
+						<c:forEach items="${albumsCreated}" var="album">
+							<p>
+								<a href="album">${album.title }</a>
+							</p>
+
+						</c:forEach>
+					</div>
+				</c:if>
+			</div>
 		</div>
-	</c:when>
-	<c:when test="${user != null }">
-
-		<div>
-			<h2>Your Account Details</h2>
-			<ul>
-				<li>First name: ${user.firstName}</li>
-				<li>Last name: ${user.lastName }</li>
-				<li>Account created on: ${user.creationDateTime }</li>
-				<li>Email: ${user.email }</li>
-				<li>Username: ${user.username }</li>
-			</ul>
-
-		</div>
-		<c:if test="${not empty albumsCreated}">
-		<table>
-			<c:forEach items="${albumsCreated}" var="album">
-				<tr>
-					<td>${album.title }</td>
-				</tr>
-
-			</c:forEach>
-		</table>
-		</c:if>
-	</c:when>
-	
-</c:choose>
+	</div>
+</div>
 
 
 <jsp:include page="bootstrapFooter.jsp" />

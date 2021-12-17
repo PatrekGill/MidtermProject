@@ -41,13 +41,13 @@ public class AlbumDAOImpl implements AlbumDAO{
 	}
 
 	@Override
-	public Album findAlbumBySongTitle(String songName) {
-		String jpql ="SELECT a FROM Album a JOIN Song s ON a = s.album WHERE s.name LIKE :songName";
+	public List<Album> findAlbumsBySongTitle(String songName) {
+		String jpql ="SELECT a FROM Album a JOIN a.songs s WHERE s.name LIKE :songName";
 		
 		try {
 			return em.createQuery(jpql, Album.class)
 					.setParameter("songName", "%" + songName + "%")
-					.getSingleResult();
+					.getResultList();
 		}catch(Exception e) {
 			System.err.println("No album found from: " + songName);
 			return null;
@@ -92,12 +92,10 @@ public class AlbumDAOImpl implements AlbumDAO{
 	}
 	
 	@Override
-	public boolean addAlbum(Album album) {
-		boolean creationSuccess = false;
+	public Album addAlbum(Album album) {
 		em.persist(album);
 		em.flush();
-		creationSuccess = em.contains(album);
-		return creationSuccess;
+		return album;
 	}
 
 	@Override
@@ -126,7 +124,7 @@ public class AlbumDAOImpl implements AlbumDAO{
 
 	@Override
 	public List<Song> getSongsFromAlbum(Album album) {
-		String jpql = "SELECT s FROM Song s WHERE s.album =:a";
+		String jpql = "SELECT s FROM Song s JOIN s.albums a WHERE a =:a";
 		
 		return em.createQuery(jpql, Song.class)
 				.setParameter("a", album)
@@ -135,7 +133,9 @@ public class AlbumDAOImpl implements AlbumDAO{
 	
 	@Override
 	public List<Album> sortAlbumsByRating(boolean ascendingOrder){
-		String jpql = "SELECT a FROM Album a LEFT JOIN a.albumRatings ar GROUP BY a ORDER BY AVG(ar.rating)";
+		String jpql = "SELECT a FROM Album a"
+				+ " LEFT JOIN a.albumRatings ar"
+				+ " GROUP BY a ORDER BY AVG(ar.rating)";
 		
 		if (ascendingOrder) {
 			jpql += " ASC";
@@ -161,6 +161,55 @@ public class AlbumDAOImpl implements AlbumDAO{
 			
 		} else {
 			jpql += " DESC";
+			
+		}
+		
+		List<Album> albums = em.createQuery(jpql, Album.class).getResultList();
+		if(albums == null) {
+			albums = new ArrayList<>();
+		}
+		return albums;
+	}
+
+	@Override
+	public List<Album> findAlbumsByTitle(String albumsTitle) {
+		String jpql = "SELECT a FROM Album a WHERE a.title LIKE :title";
+		
+		try {
+			return em.createQuery(jpql, Album.class)
+					.setParameter("title", "%" + albumsTitle + "%")
+					.getResultList();
+		}catch(Exception e) {
+			System.err.println("No album found from: " + albumsTitle);
+			return null;
+		}
+	}
+
+	@Override
+	public List<Album> findAlbumsByArtistSortByRating(boolean ascendingOrder, String artistName) {
+		String jpql = "SELECT a FROM Album a"
+				+ " JOIN a.albumRatings ar"
+				+ " WHERE a.artist.name =:artistName"
+				+ " GROUP BY a ORDER BY AVG(ar.rating)";
+		try {
+			return em.createQuery(jpql, Album.class)
+					.setParameter("artistName", artistName)
+					.getResultList();
+		}catch(Exception e) {
+			System.err.println("No albums found from: " + artistName);
+		return null;
+		}
+	}
+
+	@Override
+	public List<Album> getTopThreeRatingAlbum(boolean ascendingOder) {
+String jpql = "SELECT a FROM Album a LEFT JOIN a.albumRatings ar GROUP BY a ORDER BY AVG(ar.rating)";
+		
+		if (ascendingOder) {
+			jpql += " ASC limit 3";
+			
+		} else {
+			jpql += " DESC limit 3";
 			
 		}
 		

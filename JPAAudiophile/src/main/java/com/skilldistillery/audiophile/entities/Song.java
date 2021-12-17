@@ -50,11 +50,12 @@ public class Song {
 	@ManyToMany(mappedBy = "songs")
 	private List<Artist> artists;
 
-	@ManyToOne
+	@ManyToMany
 	@JoinTable(name = "album_song", 
-	         joinColumns = { @JoinColumn(name = "song_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "album_id") })
-	private Album album;
+	         joinColumns =@JoinColumn(name ="song_id") , 
+	         inverseJoinColumns =@JoinColumn(name ="album_id")
+	)
+	private List<Album> albums;
 	
 	@OneToMany(mappedBy="song")
 	private List<SongRating> songRatings;
@@ -190,12 +191,14 @@ public class Song {
 	/* ----------------------------------------------------------------------------
 		get/set Album
 	---------------------------------------------------------------------------- */
-	public Album getAlbum() {
-		return album;
+	public List<Album> getAlbums() {
+		return albums;
 	}
-	public void setAlbum(Album album) {
-		this.album = album;
+	public void setAlbums(List<Album> albums) {
+		this.albums = albums;
 	}
+
+
 	
 	
 	/* ----------------------------------------------------------------------------
@@ -323,7 +326,7 @@ public class Song {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Song [id=").append(id).append(", name=").append(name).append(", durationInSeconds=")
 				.append(durationInSeconds).append(", createDate=").append(createDate).append(", user=").append(user)
-				.append(", album=").append(album).append("]");
+				.append(", album=").append(albums).append("]");
 		return builder.toString();
 	}
 
