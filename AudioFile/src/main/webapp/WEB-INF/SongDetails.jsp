@@ -16,8 +16,10 @@
         <p align="center"><a href="artistProfile?id=${artist.id}">${artist.name}</a></p>
 
 			</c:forEach>
-			<p align="center">Create Date: ${CreateDate}</p>
-			<p align="center">Album: ${Album.title}</p>
+			<c:forEach var="album" items="${Song.albums }">
+			<p align="center">Create Date: ${album.creationDateTime}</p>
+			<p align="center">Album: ${album.title}</p>
+			</c:forEach>
 
 		
 	</c:if>

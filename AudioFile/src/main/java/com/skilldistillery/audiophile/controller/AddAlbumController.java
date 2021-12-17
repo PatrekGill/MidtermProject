@@ -14,10 +14,5 @@ public class AddAlbumController {
 	@Autowired
 	private UserDAO userDAO;
 	
-	@RequestMapping(path = {"/","home"})
-	public String home(Model model) {
-		model.addAttribute("DEBUG",userDAO.findByUsername("admin"));
-		return "home";
-	}
-
+	
 }

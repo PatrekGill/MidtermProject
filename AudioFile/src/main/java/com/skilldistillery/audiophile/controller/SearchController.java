@@ -93,7 +93,6 @@ public class SearchController {
 	public ModelAndView getBySongName(@RequestParam("songName") String songName) {
 		ModelAndView mv = new ModelAndView();
 		List<Song> songs = songDAO.findBySongName(songName);
-		Album album = albumDAO.findAlbumBySongTitle(songName);
 //		Artist artist = artistDAO.findPrimaryArtistByAlbumName(album.getTitle());
 		Song song = songs.get(0);
 		int songId = song.getId();
@@ -123,7 +122,6 @@ public class SearchController {
 			mv.addObject("RateDate", noComment);
 		}
 		mv.addObject("Song", song);
-		mv.addObject("Album", album);
 		mv.addObject("User", userName);
 		mv.addObject("CreateDate", newCreateDate);
 		mv.addObject("DurationSeconds", newDurationSeconds);
@@ -183,7 +181,7 @@ public class SearchController {
 	@RequestMapping(path = "sortBySongRating.do", method = RequestMethod.GET)
 	public ModelAndView sortBySongRating() {
 		ModelAndView mv = new ModelAndView();
-		List<Song> songs = songDAO.sortBySongRating(false);
+		List<Song> songs = songDAO.sortBySongRating(false, 1);
 		mv.addObject("Songs", songs);
 		mv.setViewName("result");
 		return mv;
@@ -222,8 +220,8 @@ public class SearchController {
 	@RequestMapping(path = "searchAlbumBySongName.do", params = "AlbumSongName", method = RequestMethod.GET)
 	public ModelAndView getAlbumBySongTitle(@RequestParam("AlbumSongName") String AlbumSongName) {
 		ModelAndView mv = new ModelAndView();
-		Album album = albumDAO.findAlbumBySongTitle(AlbumSongName);
-		mv.addObject("Album", album);
+//		Album album = albumDAO.findAlbumBySongTitle(AlbumSongName);
+//		mv.addObject("Album", album);
 		mv.setViewName("result");
 		return mv;
 	}
