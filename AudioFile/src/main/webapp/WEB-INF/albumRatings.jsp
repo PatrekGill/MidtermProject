@@ -79,15 +79,7 @@
                                 <button type="submit" form="ratingPostForm" class="btn btn-warning table-btn">Post Rating</button>
                             </c:otherwise>
                         </c:choose>
-                        <%-- <c:choose>
-                            <c:when test="${not empty usersRating}">
 
-                            </c:when>
-                            <c:otherwise>
-
-                            </c:otherwise>
-
-                        </c:choose> --%>
                     </div>
                 </div>
             </c:if>
@@ -138,6 +130,7 @@
                                                         ${rating.updateDateTime.dayOfMonth}
                                                     </c:if>
                                                 </p>
+                                                <br>
                                                 <p>${rating.description}</p>
                                             </td>
                                         </tr>

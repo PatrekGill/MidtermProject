@@ -82,6 +82,7 @@
                                                         ${comment.updateDateTime.dayOfMonth}
                                                     </c:if>
                                                 </p>
+                                                <br>
                                                 <p>${comment.comment}</p>
                                             </td>
                                         </tr>

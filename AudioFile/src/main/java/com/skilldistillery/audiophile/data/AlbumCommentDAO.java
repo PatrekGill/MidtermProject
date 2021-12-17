@@ -11,6 +11,7 @@ public interface AlbumCommentDAO {
 	public AlbumComment findAlbumCommentById(int id);
 	public AlbumComment findAlbumCommentByUserId(int id);
 	public List<AlbumComment> findByComment(String albumComment);
+	public List<AlbumComment> findCommentReplys(int albumCommentId);
 	public List<AlbumComment> sortAlbumCommentsByCommentDate (boolean ascendingOrder, int numberOfRatingsToShow);
 	public List<AlbumComment> sortAlbumCommentsByCommentDate (int albumId, boolean ascendingOrder, int numberOfRatingsToShow);
 	public List<AlbumComment> sortAlbumCommentsByCommentDate (boolean ascendingOrder);

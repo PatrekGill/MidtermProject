@@ -113,6 +113,36 @@ public class AlbumController {
 		return "albumComments";
 	}
 	
+	@PostMapping(path="albumComments.do")
+	public String editComment(
+			Integer editCommentId,
+			String commentText,
+			HttpSession session,
+			Model model
+		) {
+		int userId = 1;
+		User user = userDAO.findUserById(userId);
+		
+		if (editCommentId != null) {
+			AlbumComment comment = albumCommentDAO.findAlbumCommentById(editCommentId);
+			if (comment != null && comment.getUser().equals(user)) {
+				Album album = comment.getAlbum();
+				comment.setComment(commentText);
+				
+				model.addAttribute("originalComment",comment);
+				model.addAttribute("album", album);
+				model.addAttribute("replyingComments",albumCommentDAO.findCommentReplys(editCommentId));
+				model.addAttribute("userOwnsComment",comment.getUser().equals(user));
+				model.addAttribute("album", album);		
+				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(album.getId()));
+			}
+
+		}
+		
+		return "commentThread";
+	}
+	
+	
 	/* ----------------------------------------------------------------------------
 		albumRatings.do (GET)
 	---------------------------------------------------------------------------- */
@@ -225,10 +255,10 @@ public class AlbumController {
 	
 
 	/* ----------------------------------------------------------------------------
-		editAlbumComment.do (GET)
+		commentThread.do (GET)
 	---------------------------------------------------------------------------- */
-	@GetMapping(path="editAlbumComment.do")
-	public String editAlbumComment(Integer commentId, HttpSession session, Model model) {
+	@GetMapping(path="commentThread.do")
+	public String showCommentThread(Integer commentId, HttpSession session, Model model) {
 		
 		if (commentId != null) {
 			int userId = 1;
@@ -236,12 +266,54 @@ public class AlbumController {
 
 			AlbumComment comment = albumCommentDAO.findAlbumCommentById(commentId);
 			if (comment != null && comment.getUser().equals(user)) {
-				model.addAttribute("comment",comment);
+				model.addAttribute("originalComment",comment);
 				model.addAttribute("album", comment.getAlbum());
+				model.addAttribute("replyingComments",comment.getReplies());
+//				model.addAttribute("userOwnsComment",comment.getUser().equals(user));
+				model.addAttribute("userOwnsComment",true);
 			}
 			
 		}
 		
-		return "editAlbumComment";
+		return "commentThread";
+	}
+	
+	@PostMapping(path="commentThread.do")
+	public String postReply(
+			Integer replyToId,
+			String commentText,
+			HttpSession session,
+			Model model
+		) {
+		
+		if (replyToId != null) {
+			int userId = 1;
+			User user = userDAO.findUserById(userId);
+			AlbumComment originalComment = albumCommentDAO.findAlbumCommentById(replyToId);
+			
+			if (originalComment != null && user != null) {
+				Album album = originalComment.getAlbum();
+				
+				if (commentText != null & !commentText.equals("")) {
+					AlbumComment comment = new AlbumComment();
+					comment.setAlbum(album);
+					comment.setComment(commentText);
+					comment.setUser(user);
+					comment.setInReplyTo(replyToId);
+					albumCommentDAO.createAlbumComment(comment);
+				}
+
+				model.addAttribute("originalComment",originalComment);
+				model.addAttribute("album", originalComment.getAlbum());
+				model.addAttribute("replyingComments",albumCommentDAO.findCommentReplys(replyToId));
+				model.addAttribute("userOwnsComment",originalComment.getUser().equals(user));
+				model.addAttribute("album", album);		
+				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(album.getId()));
+				
+				return "commentThread";
+			}
+		}
+		
+		return "/";
 	}
 }

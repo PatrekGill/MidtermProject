@@ -12,22 +12,40 @@
 
             <jsp:include page="albumHeader.jsp"/>
 
-            <%-- Add Rating --%>
-            <%-- <c:if test="${sessionScope.user != null}"> --%>
-            <%-- testing code --%>
-            <c:if test="${true}">
-                <div class="table-responsive">
-                    <div class="table-wrapper table-body">
-                        <div class="table-title">
-                            <div class="row">
-                                <h2>Edit Comment</h2>
-                            </div>
+            <%-- Original Comment --%>
+            <div class="table-responsive">
+                <div class="table-wrapper table-body">
+                    <div class="table-title">
+                        <div class="row">
+                            <c:choose>
+                                <c:when test="${userOwnsComment}">
+                                    <h2>Edit Comment</h2>
+                                </c:when>
+                                <c:otherwise>
+                                    <h2>Original Comment</h2>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
-                        <form id="commentEditForm" action="editAlbumComment.do" method="POST">
-                            <input type="hidden" name="albumId" value="${album.id }">
+                    </div>
+                    <c:choose>
+                        <c:when test="${userOwnsComment}">
+                            <form id="commentEditForm" action="albumComments.do" method="POST">
+                                <input type="hidden" name="editCommentId" value="${originalComment.id }">
+                                <table class="music-table table-hover album-comment-box">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <textarea class="form-control" rows="5" name="ratingText" placeholder="Add Comment To Rating...">${usersRating.description}</textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+
+                        </c:when>
+                        <c:otherwise>
                             <table class="music-table table-hover album-comment-box">
                                 <tbody>
-
                                     <tr>
                                         <td>
                                             <textarea class="form-control" rows="5" name="ratingText" placeholder="Add Comment To Rating...">${usersRating.description}</textarea>
@@ -35,23 +53,54 @@
                                     </tr>
                                 </tbody>
                             </table>
+                        </c:otherwise>
+                    </c:choose>
+
+                    <%-- Delete, update, or post button --%>
+                    <form action="deleteRating.do" id="deleteRatingForm" method="POST">
+                        <input type="hidden" name="albumId" value="${album.id }">
+                    </form>
+                    <button type="submit" form="commentEditForm" class="btn btn-warning table-btn-major">Update Comment</button>
+                    <button type="submit" form="deleteCommentForm" class="btn btn-danger table-btn-minor">Delete Comment</button>
+                </div>
+            </div>
+
+
+            <%-- Reply Box --%>
+            <%-- <c:if test="${sessionScope.user != null}"> --%>
+            <%-- testing code --%>
+            <c:if test="${true}">
+                <div class="table-responsive">
+                    <div class="table-wrapper table-body">
+                        <div class="table-title">
+                            <div class="row">
+                                <h2>Reply To Thread</h2>
+                            </div>
+                        </div>
+                        <form action="commentThread.do" id="postReplyComment" method="POST">
+                            <input type="hidden" name="replyToId" value="${originalComment.id }">
+                            <table class="music-table table-hover album-comment-box">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <textarea class="form-control" rows="5" name="commentText" placeholder="Reply To Comment..."></textarea>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <button type="submit" class="btn btn-warning table-btn">Post Reply</button>
                         </form>
-                        <%-- Delete, update, or post button --%>
-                        <form action="deleteRating.do" id="deleteRatingForm" method="POST">
-                            <input type="hidden" name="albumId" value="${album.id }">
-                        </form>
-                        <button type="submit" form="commentEditForm" class="btn btn-warning table-btn-major">Update Comment</button>
-                        <button type="submit" form="deleteCommentForm" class="btn btn-danger table-btn-minor">Delete Comment</button>
                     </div>
                 </div>
             </c:if>
 
-            
+
+            <%-- Show Replies Table --%>
             <div class="table-responsive">
                 <div class="table-wrapper table-body">
                     <div class="table-title">
     					<div class="row">
-    						<h2>Latest Comments</h2>
+    						<h2>Latest Replies</h2>
     					</div>
     				</div>
                     <table class="music-table table-hover">
@@ -64,8 +113,8 @@
                         </thead>
                         <tbody>
                             <c:choose>
-                                <c:when test="${not empty albumComments}">
-                                    <c:forEach items="${albumComments}" var="comment" begin="0" end="9">
+                                <c:when test="${not empty replyingComments}">
+                                    <c:forEach items="${replyingComments}" var="comment">
                                         <tr>
                                             <td>
                                                 <a href="profile.do?userId=${comment.user.id}">
@@ -88,6 +137,7 @@
                                                         ${comment.updateDateTime.dayOfMonth}
                                                     </c:if>
                                                 </p>
+                                                <br>
                                                 <p>${comment.comment}</p>
                                             </td>
                                         </tr>
@@ -105,6 +155,9 @@
                     </table>
                 </div>
             </div>
+
+
+
 
         </div>
     </c:otherwise>

@@ -1,6 +1,7 @@
 package com.skilldistillery.audiophile.entities;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -54,17 +55,24 @@ class AlbumCommentTest {
 	}
 	
 	@Test
-	void test_AlbumCComment_basic_mappings() {
+	void test_AlbumComment_replies_mapping() {
+		assertNotNull(albumcomment);
+		assertNotNull(albumcomment.getReplies());
+		assertFalse(albumcomment.getReplies().isEmpty());
+	}	
+	
+	@Test
+	void test_AlbumComment_basic_mappings() {
 		assertNotNull(albumcomment);
 		assertEquals("I love it", albumcomment.getComment());
-}	
+	}	
 	@Test
-	void test_AlbumCtCommentDate_basic_mappings() {
+	void test_AlbumCommentDate_basic_mappings() {
 		assertNotNull(albumcomment);
 		assertEquals(2018, albumcomment.getCommentDate().getYear());
 		assertEquals(01, albumcomment.getCommentDate().getMonthValue());
 		assertEquals(01, albumcomment.getCommentDate().getDayOfMonth());
-}
+	}
 	//Final test not implemented due to null value within DB
 //	@Test
 //	void test_AlbumCInReplyTobasic_mappings() {

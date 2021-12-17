@@ -34,6 +34,19 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 				.getResultList();
 	}
 	
+	
+	/* ----------------------------------------------------------------------------
+		findCommentReplys
+	---------------------------------------------------------------------------- */
+	@Override
+	public List<AlbumComment> findCommentReplys(int originalCommentId) {
+		String jpql = "SELECT ac FROM AlbumComment ac WHERE ac.inReplyTo = :n";
+		
+		return em.createQuery(jpql, AlbumComment.class)
+				.setParameter("n",originalCommentId)
+				.getResultList();
+	}
+	
 
 	/* ----------------------------------------------------------------------------
 		findAlbumCommentByUserId

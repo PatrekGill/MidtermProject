@@ -112,6 +112,7 @@
                                                         ${comment.updateDateTime.dayOfMonth}
                                                     </c:if>
                                                 </p>
+                                                <br>
                                                 <p>${comment.comment}</p>
                                             </td>
                                             <%-- <td>${comment.commentDate}</td> --%>
@@ -186,6 +187,7 @@
                                                         ${rating.updateDateTime.dayOfMonth}
                                                     </c:if>
                                                 </p>
+                                                <br>
                                                 <p>${rating.description}</p>
                                             </td>
                                             <%-- <td>${comment.commentDate}</td> --%>

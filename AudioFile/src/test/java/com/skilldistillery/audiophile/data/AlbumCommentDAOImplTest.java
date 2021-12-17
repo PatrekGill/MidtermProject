@@ -75,6 +75,16 @@ class AlbumCommentDAOImplTest {
 	}
 	
 	@Test
+	void test_findCommentReplys() {
+		assertNotNull(acDAO);
+		assertNotNull(acDAO.findCommentReplys(1));
+		assertFalse(acDAO.findCommentReplys(1).isEmpty());
+		
+	}
+	
+	
+	
+	@Test
 	void test_findByAlbumComment_Mappings() {
 		assertNotNull(acDAO);
 		assertTrue(acDAO.findByComment("love").size() > 0);
