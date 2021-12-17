@@ -3,7 +3,8 @@
 <html lang="en">
 <head>
 <title>Bootstrap Example</title>
-<link rel="shortcut icon" type="image/png" href="logosAndGraphics/monkeyVector.png"/>
+<link rel="shortcut icon" type="image/png"
+	href="logosAndGraphics/monkeyVector.png" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
@@ -38,15 +39,16 @@
 							<li><div class="dropdown-padder"></div>
 								<div class="dropdown">
 									<div class="dropdown-padder">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false">
-										Create
-										</button>
+
+										<button class="btn btn-secondary dropdown-toggle"
+											type="button" id="dropdownMenuButton" data-toggle="dropdown"
+											aria-haspopup="true" aria-expanded="false">Create</button>
 										<div class="dropdown-menu"
 											aria-labelledby="dropdownMenuButton">
 											<ul>
-											<li><a class="dropdown-item" href="#">Add an Album</a></li>
-											<li><a class="dropdown-item" href="#">Add an Artist</a></li>
-											<li><a class="dropdown-item" href="#">Add a Song</a></li>
+												<li><a class="dropdown-item" href="#">Add an Album</a></li>
+												<li><a class="dropdown-item" href="#">Add an Artist</a></li>
+												<li><a class="dropdown-item" href="#">Add a Song</a></li>
 											</ul>
 										</div>
 									</div>
@@ -103,11 +105,9 @@
 						</div>
 						<div id="collapseTopAlbums" class="collapse"
 							aria-labelledby="headingTopAlbums" data-parent="#accordion">
-							<%--  <c:forEach var="album" items="${topAlbums }"> --%>
-								<li><a href="#">Album 1</a></li>
-								<li><a href="#">Album 2</a></li>
-								<li><a href="#">Album 3</a></li>
-							<%--  </c:forEach> --%>
+							<c:forEach var="album" items="${topAlbums }">
+							<li><a href="album?id=${album.id }">${album.title }</a></li>
+							</c:forEach>
 
 
 						</div>
@@ -119,9 +119,9 @@
 						<div id="collapseTopArtists" class="collapse"
 							aria-labelledby="headingTopArtists" data-parent="#accordion">
 							<%-- <c:forEach var="artist" items="${topArtist }"> --%>
-								<li><a href="#">Artist 1</a></li>
-								<li><a href="#">Artist 2</a></li>
-								<li><a href="#">Artist 3</a></li>
+							<li><a href="#">Artist 1</a></li>
+							<li><a href="#">Artist 2</a></li>
+							<li><a href="#">Artist 3</a></li>
 							<%--  </c:forEach> --%>
 						</div>
 						<p>
