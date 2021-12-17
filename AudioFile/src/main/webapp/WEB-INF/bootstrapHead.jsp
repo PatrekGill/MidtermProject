@@ -105,8 +105,8 @@
 						</div>
 						<div id="collapseTopAlbums" class="collapse"
 							aria-labelledby="headingTopAlbums" data-parent="#accordion">
-							<c:forEach var="album" items="${topAlbums }">
-							<li><a href="album?id=${album.id }">${album.title }</a></li>
+							<c:forEach var="album" items="${topAlbumsSideBar }">
+								<li><a href="album?id=${album.id }">${album.title }</a></li>
 							</c:forEach>
 
 
@@ -118,11 +118,10 @@
 						</p>
 						<div id="collapseTopArtists" class="collapse"
 							aria-labelledby="headingTopArtists" data-parent="#accordion">
-							<%-- <c:forEach var="artist" items="${topArtist }"> --%>
-							<li><a href="#">Artist 1</a></li>
-							<li><a href="#">Artist 2</a></li>
-							<li><a href="#">Artist 3</a></li>
-							<%--  </c:forEach> --%>
+							<c:forEach var="artist" items="${topArtistsSideBar }">
+								<form action="artistProfile" method="get"></form>
+								<li><a href="artistProfile?id=${artist.id }">${artist.name }</a></li>
+							</c:forEach>
 						</div>
 						<p>
 							<button class="btn btn-link" data-toggle="collapse"
@@ -131,11 +130,10 @@
 						</p>
 						<div id="collapseTopSongs" class="collapse"
 							aria-labelledby="headingTopSongs" data-parent="#accordion">
-							<%--  <c:forEach var="song" items="${topSongs }"> --%>
-							<li><a href="#">Song 1</a></li>
-							<li><a href="#">Song 2</a></li>
-							<li><a href="#">Song 3</a></li>
-							<%-- </c:forEach> --%>
+							<c:forEach var="song" items="${topSongsSideBar }">
+								<form action="searchBySongName.do" method="GET"></form>
+								<li><a href="searchBySongName.do?songName=${song.name }">${song.name }</a></li>
+							</c:forEach>
 						</div>
 
 					</div>
