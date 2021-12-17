@@ -24,7 +24,6 @@
 				<h1>Album Information</h1>
 				<ul>
 					<c:forEach var="album" items="${Albums}">
-
 						<li>${album.title}</li>
 					</c:forEach>
 				</ul>
