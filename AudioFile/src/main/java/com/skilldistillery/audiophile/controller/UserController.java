@@ -30,20 +30,28 @@ public class UserController {
 
 	@PostMapping(path = "login")
 	public String login(HttpSession session, @RequestParam("username") String username,
-			@RequestParam("password") String password) {
-		User user = userDAO.login(username, password);
-		if (user == (null)) {
-			return "profile";
+			@RequestParam("password") String password, RedirectAttributes redir) {
+		try {
+			User user = userDAO.login(username, password);
+			if (user != null) {
+				session.setAttribute("user", user);
+				redir.addFlashAttribute("success", "Successfully logged in! Redirecting you to home page");
+				return "redirect:home";
+			} else {
+				throw new Exception("Incorrect username or password");
+			}
+		} catch (Exception e) {
+			redir.addFlashAttribute("error", e.getMessage());
+			e.printStackTrace();
 		}
-		session.setAttribute("user", user);
-
-		return "redirect:/";
+		return "redirect:profile";
 	}
 
 	@GetMapping(path = "logout")
-	public String logoutUser(HttpSession session) {
+	public String logoutUser(HttpSession session, RedirectAttributes redir) {
 		session.removeAttribute("user");
 		session.removeAttribute("albumsCreated");
+		redir.addFlashAttribute("warning", "Logged out");
 		return "redirect:/";
 
 	}
@@ -51,8 +59,8 @@ public class UserController {
 	@GetMapping(path = "profile")
 	public String getAccountPage(HttpSession session, Album album) {
 		User user = (User) session.getAttribute("user");
-		if(session.getAttribute("update") != null) {
-		session.removeAttribute("update");
+		if (session.getAttribute("update") != null) {
+			session.removeAttribute("update");
 		}
 		if (user == null) {
 			return "profile";
@@ -110,26 +118,27 @@ public class UserController {
 		}
 		return "profile";
 	}
-	
-	@PostMapping(path ="updateAccount")
+
+	@PostMapping(path = "updateAccount")
 	public String postUpdateAccount(User user, HttpSession session, RedirectAttributes redir) {
 		try {
 			User userToUpdate = (User) session.getAttribute("user");
-			if(userDAO.updateUser(userToUpdate.getId(), user)) {
+			if (userDAO.updateUser(userToUpdate.getId(), user)) {
 				session.setAttribute("user", userDAO.findUserById(userToUpdate.getId()));
 				session.removeAttribute("update");
 				redir.addFlashAttribute("success", "Account updated");
 				return "redirect:profile";
-			}else {
+			} else {
 				throw new Exception("cannot delete film.");
 			}
-			
+
 		} catch (Exception e) {
 			redir.addFlashAttribute("error", e.getMessage());
 			e.printStackTrace();
 		}
 		return "redirect:profile";
 	}
+
 	@GetMapping(path = "friendList")
 	public String getFriendPage(HttpSession session, Album album) {
 		User user1 = userDAO.findUserById(2);
@@ -140,5 +149,6 @@ public class UserController {
 		session.setAttribute("albumsCreated", albumDAO.findAlbumsByCreatedUsername(user1.getUsername()));
 		return "friendPage";
 	}
+
 
 }
