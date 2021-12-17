@@ -18,7 +18,7 @@
                 <br>
             </c:if>
 
-            <a class="albumText-artist-sm" href="showAlbumRatings.do?albumId=${album.id}">Average Rating: ${averageRating} / 10</a>
+            <a class="albumText-artist-sm" href="albumRatings.do?albumId=${album.id}">Average Rating: ${averageRating} / 10</a>
             <br>
             <p>${album.description}</p>
         </div>
