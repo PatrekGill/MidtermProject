@@ -48,9 +48,10 @@ public class UserController {
 	}
 
 	@GetMapping(path = "logout")
-	public String logoutUser(HttpSession session) {
+	public String logoutUser(HttpSession session, RedirectAttributes redir) {
 		session.removeAttribute("user");
 		session.removeAttribute("albumsCreated");
+		redir.addFlashAttribute("warning", "Logged out");
 		return "redirect:/";
 
 	}
