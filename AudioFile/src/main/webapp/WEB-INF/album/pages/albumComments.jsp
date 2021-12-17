@@ -93,9 +93,15 @@
 
                                                 <p>${comment.comment}</p>
 
+
                                                 <c:if test="${not empty comment.replies}">
                                                     <a class="commentTable-dateText" href="commentThread.do?commentId=${comment.id}">
                                                         View Replies (${fn:length(comment.replies)})
+                                                    </a>
+                                                </c:if>
+                                                <c:if test="${not empty comment.inReplyTo}">
+                                                    <a class="commentTable-dateText" href="commentThread.do?commentId=${comment.inReplyTo}">
+                                                        View Reply Thread
                                                     </a>
                                                 </c:if>
                                             </td>
