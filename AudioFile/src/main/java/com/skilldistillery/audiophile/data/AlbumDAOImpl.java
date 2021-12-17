@@ -135,7 +135,9 @@ public class AlbumDAOImpl implements AlbumDAO{
 	
 	@Override
 	public List<Album> sortAlbumsByRating(boolean ascendingOrder){
-		String jpql = "SELECT a FROM Album a LEFT JOIN a.albumRatings ar GROUP BY a ORDER BY AVG(ar.rating)";
+		String jpql = "SELECT a FROM Album a"
+				+ " LEFT JOIN a.albumRatings ar"
+				+ " GROUP BY a ORDER BY AVG(ar.rating)";
 		
 		if (ascendingOrder) {
 			jpql += " ASC";
