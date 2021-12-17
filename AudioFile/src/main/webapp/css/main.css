@@ -49,7 +49,11 @@
 	width:100px;
 }
 
-
+.dropdown-shower{
+	padding-top: 10px;
+	height: 100%;
+	margin: auto;
+}
 label {
 	color: white;
 	text-align:right;
@@ -73,6 +77,11 @@ label {
 	color: black;
 }
 
+.dropdown-padder {
+	color: black;
+	padding-top: 4px;
+}
+
 .text-manipulator {
 	margin-top: 50px;
 	font-size: 1000%;
@@ -92,13 +101,14 @@ label {
 	height: 100%;
 }
 
+
 .spacer {
 	margin-top: 10px;
 }
 
 a {
-	color: white;
 	font: Helvetica;
+	color: white;
 }
 
 a:hover {
@@ -115,6 +125,13 @@ body {
 	color: white;
 }
 
+.dropdown-menu{
+	color:black;
+}
+.dropdown-item{
+	color:black;
+	text-align: center;
+}
 .container-boy {
 	text-align: center;
 }
