@@ -43,50 +43,56 @@ public class SearchController {
 
 	public String searchAll(@RequestParam("keyword") String keyword, Model model,
 			@RequestParam("searchAll") String searchAll, RedirectAttributes redir) {
-		if (keyword.trim().length() > 0) {
-			boolean notPopulateWith = false;
-			if (searchAll.equals("All") || (searchAll.equals("Genre") && keyword == "")) {
-				List<Song> songs = songDAO.findBySongName(keyword);
-				List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
-				List<Artist> artists = artistDAO.findByArtistsName(keyword);
-				if (songs.isEmpty() && albums.isEmpty() && artists.isEmpty()) {
-					notPopulateWith = true;
-				}
-				model.addAttribute("Songs", songs);
-				model.addAttribute("Albums", albums);
-				model.addAttribute("Artists", artists);
-			} else if (searchAll.equals("Album")) {
-				List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
-				model.addAttribute("Albums", albums);
-				if (albums.isEmpty()) {
-					notPopulateWith = true;
-				}
-			} else if (searchAll.equals("Artist")) {
-				List<Artist> artists = artistDAO.findByArtistsName(keyword);
-				model.addAttribute("Artists", artists);
-				if (artists.isEmpty()) {
-					notPopulateWith = true;
-				}
+		try {
+			if (keyword.trim().length() > 0) {
+				boolean notPopulateWith = false;
+				if (searchAll.equals("All") || (searchAll.equals("Genre") && keyword == "")) {
+					List<Song> songs = songDAO.findBySongName(keyword);
+					List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
+					List<Artist> artists = artistDAO.findByArtistsName(keyword);
+					if (songs.isEmpty() && albums.isEmpty() && artists.isEmpty()) {
+						notPopulateWith = true;
+					}
+					model.addAttribute("Songs", songs);
+					model.addAttribute("Albums", albums);
+					model.addAttribute("Artists", artists);
+				} else if (searchAll.equals("Album")) {
+					List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
+					model.addAttribute("Albums", albums);
+					if (albums.isEmpty()) {
+						notPopulateWith = true;
+					}
+				} else if (searchAll.equals("Artist")) {
+					List<Artist> artists = artistDAO.findByArtistsName(keyword);
+					model.addAttribute("Artists", artists);
+					if (artists.isEmpty()) {
+						notPopulateWith = true;
+					}
 
-			} else if (searchAll.equals("Song")) {
-				List<Song> songs = songDAO.findBySongName(keyword);
-				model.addAttribute("Songs", songs);
-				if (songs.isEmpty()) {
-					notPopulateWith = true;
+				} else if (searchAll.equals("Song")) {
+					List<Song> songs = songDAO.findBySongName(keyword);
+					model.addAttribute("Songs", songs);
+					if (songs.isEmpty()) {
+						notPopulateWith = true;
+					}
+				} else if (searchAll.equals("Genre") && keyword != "") {
+					List<Album> albums = albumDAO.findAlbumsByGenreName(keyword);
+					model.addAttribute("Albums", albums);
+					if (albums.isEmpty()) {
+						notPopulateWith = true;
+					}
 				}
-			} else if (searchAll.equals("Genre") && keyword != "") {
-				List<Album> albums = albumDAO.findAlbumsByGenreName(keyword);
-				model.addAttribute("Albums", albums);
-				if (albums.isEmpty()) {
-					notPopulateWith = true;
-				}
+				model.addAttribute("NotPopulated", notPopulateWith);
+				return "result";
+
+			} else {
+				throw new Exception("valid entry required in search field");
 			}
-			model.addAttribute("NotPopulated", notPopulateWith);
-			return "redirect:result";
-		}else {
-			redir.addFlashAttribute("erroe", "Please input something to search by.");
-			return "redirect:home";
+		} catch (Exception e) {
+			redir.addFlashAttribute("error", e.getMessage());
+			e.printStackTrace();
 		}
+		return "redirect:home";
 	}
 	/*
 	 * --------------------------- Song details page result
@@ -94,9 +100,11 @@ public class SearchController {
 	 */
 
 	@RequestMapping(path = "searchBySongName.do", params = "songName", method = RequestMethod.GET)
-	public ModelAndView getBySongName(@RequestParam("songName") String songName) {
+	public ModelAndView getBySongName(@RequestParam("songName") String songName, RedirectAttributes redir) {
 		ModelAndView mv = new ModelAndView();
+		try {
 		List<Song> songs = songDAO.findBySongName(songName);
+		if(songs != null) {
 //		Artist artist = artistDAO.findPrimaryArtistByAlbumName(album.getTitle());
 		Song song = songs.get(0);
 		int songId = song.getId();
@@ -131,6 +139,16 @@ public class SearchController {
 		mv.addObject("DurationSeconds", newDurationSeconds);
 		mv.setViewName("SongDetails");
 		return mv;
+		}else {
+			throw new Exception("No song found");
+		}
+		}catch (Exception e) {
+			redir.addFlashAttribute("error", e.getMessage());
+			e.printStackTrace();
+		}
+		mv.setViewName("redirect:home");
+		return mv;
+		
 	}
 	/*
 	 * ------------------------------------------------------------ Below not used ,
@@ -185,7 +203,7 @@ public class SearchController {
 	@RequestMapping(path = "sortBySongRating.do", method = RequestMethod.GET)
 	public ModelAndView sortBySongRating() {
 		ModelAndView mv = new ModelAndView();
-		List<Song> songs = songDAO.sortBySongRating(false,2);
+		List<Song> songs = songDAO.sortBySongRating(false, 2);
 		mv.addObject("Songs", songs);
 		mv.setViewName("result");
 		return mv;

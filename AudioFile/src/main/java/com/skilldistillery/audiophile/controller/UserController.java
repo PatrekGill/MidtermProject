@@ -149,4 +149,5 @@ public class UserController {
 		return "friendPage";
 	}
 
+
 }
