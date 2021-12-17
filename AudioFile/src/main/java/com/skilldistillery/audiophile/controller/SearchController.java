@@ -1,6 +1,5 @@
 package com.skilldistillery.audiophile.controller;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.audiophile.data.AlbumDAO;
 import com.skilldistillery.audiophile.data.ArtistDAO;
@@ -42,50 +42,54 @@ public class SearchController {
 	@GetMapping(path = "search")
 
 	public String searchAll(@RequestParam("keyword") String keyword, Model model,
-			@RequestParam("searchAll") String searchAll) {
-		boolean notPopulateWith = false;
-		if (searchAll.equals("All") || (searchAll.equals("Genre") && keyword == "")) {
-			List<Song> songs = songDAO.findBySongName(keyword);
-			List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
-			List<Artist> artists = artistDAO.findByArtistsName(keyword);
-			if (songs.isEmpty() && albums.isEmpty() && artists.isEmpty()) {
-				notPopulateWith = true;
-			}
-			model.addAttribute("Songs", songs);
-			model.addAttribute("Albums", albums);
-			model.addAttribute("Artists", artists);
-		} else if (searchAll.equals("Album")) {
-			List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
-			model.addAttribute("Albums", albums);
-			if (albums.isEmpty()) {
-				notPopulateWith = true;
-			}
-		} else if (searchAll.equals("Artist")) {
-			List<Artist> artists = artistDAO.findByArtistsName(keyword);
-			model.addAttribute("Artists", artists);
-			if (artists.isEmpty()) {
-				notPopulateWith = true;
-			}
+			@RequestParam("searchAll") String searchAll, RedirectAttributes redir) {
+		if (keyword.trim().length() > 0) {
+			boolean notPopulateWith = false;
+			if (searchAll.equals("All") || (searchAll.equals("Genre") && keyword == "")) {
+				List<Song> songs = songDAO.findBySongName(keyword);
+				List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
+				List<Artist> artists = artistDAO.findByArtistsName(keyword);
+				if (songs.isEmpty() && albums.isEmpty() && artists.isEmpty()) {
+					notPopulateWith = true;
+				}
+				model.addAttribute("Songs", songs);
+				model.addAttribute("Albums", albums);
+				model.addAttribute("Artists", artists);
+			} else if (searchAll.equals("Album")) {
+				List<Album> albums = albumDAO.findAlbumsByTitle(keyword);
+				model.addAttribute("Albums", albums);
+				if (albums.isEmpty()) {
+					notPopulateWith = true;
+				}
+			} else if (searchAll.equals("Artist")) {
+				List<Artist> artists = artistDAO.findByArtistsName(keyword);
+				model.addAttribute("Artists", artists);
+				if (artists.isEmpty()) {
+					notPopulateWith = true;
+				}
 
-		} else if (searchAll.equals("Song")) {
-			List<Song> songs = songDAO.findBySongName(keyword);
-			model.addAttribute("Songs", songs);
-			if (songs.isEmpty()) {
-				notPopulateWith = true;
+			} else if (searchAll.equals("Song")) {
+				List<Song> songs = songDAO.findBySongName(keyword);
+				model.addAttribute("Songs", songs);
+				if (songs.isEmpty()) {
+					notPopulateWith = true;
+				}
+			} else if (searchAll.equals("Genre") && keyword != "") {
+				List<Album> albums = albumDAO.findAlbumsByGenreName(keyword);
+				model.addAttribute("Albums", albums);
+				if (albums.isEmpty()) {
+					notPopulateWith = true;
+				}
 			}
-		} else if (searchAll.equals("Genre") && keyword != "") {
-			List<Album> albums = albumDAO.findAlbumsByGenreName(keyword);
-			model.addAttribute("Albums", albums);
-			if (albums.isEmpty()) {
-				notPopulateWith = true;
-			}
+			model.addAttribute("NotPopulated", notPopulateWith);
+			return "redirect:result";
+		}else {
+			redir.addFlashAttribute("erroe", "Please input something to search by.");
+			return "redirect:home";
 		}
-		model.addAttribute("NotPopulated", notPopulateWith);
-		return "result";
 	}
 	/*
-	 * --------------------------- 
-	 * Song details page result
+	 * --------------------------- Song details page result
 	 * ---------------------------
 	 */
 
