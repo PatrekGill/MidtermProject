@@ -86,7 +86,7 @@ table.music-table {
 }
 
 /* ----------------------------------------------------------------------------
-	results-table
+	songResults-table
 ---------------------------------------------------------------------------- */
 /* table.results-table tr:first-child  {
 
@@ -102,6 +102,42 @@ th.songResults-table-artists {
 }
 th.songResults-table-songName {
 	width: 50%;
+}
+
+/* ----------------------------------------------------------------------------
+	albumResults-table
+---------------------------------------------------------------------------- */
+th.albumResults-table-albumImage {
+	width: 25%;
+}
+th.albumResults-table-albumName {
+	width: 20%;
+}
+th.albumResults-table-artist {
+	width: 20%;
+}
+th.albumResults-table-genres {
+	width: 35%;
+}
+
+/* ----------------------------------------------------------------------------
+	artistResults-table
+---------------------------------------------------------------------------- */
+th.artistResults-table-artistImage {
+	width: 30%;
+}
+th.artistResults-table-artistName {
+	width: 70%;
+}
+
+.artistImage-md {
+	border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 300px;
+    height: 300px;
 }
 
 

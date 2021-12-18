@@ -41,12 +41,9 @@
                 Albums Table
             ------------------------------------------------ --%>
 			<c:if test="${! empty Albums}">
-				<h1>Album Information</h1>
-				<ul>
-					<c:forEach var="album" items="${Albums}">
-						<li>${album.title}</li>
-					</c:forEach>
-				</ul>
+
+				<jsp:include page="search/includes/albumResults.jsp" />
+
 			</c:if>
 
 
@@ -54,14 +51,9 @@
                 Artists Table
             ------------------------------------------------ --%>
 			<c:if test="${! empty Artists}">
-				<h1>Artist Information</h1>
-				<ul>
-					<c:forEach var="artist" items="${Artists}">
-						<form action="artistProfile" method="get"></form>
-						<li><a href="artistProfile?id=${artist.id}">${artist.name}</a></li>
-						<img src="${artist.imageUrl}">
-					</c:forEach>
-				</ul>
+
+				<jsp:include page="search/includes/artistResults.jsp" />
+
 			</c:if>
 
 
