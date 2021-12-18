@@ -62,11 +62,9 @@
 										<input type="submit" value="Update Account" style="color:black">
 									</form>
 								</div>
-								<div class="spacer">
 									<form action="friendList" method="get">
 										<input type="submit" value="Friend List" style="color:black"	>
 									</form>
-								</div>
 							</div>
 						</div>
 						<div class="">
