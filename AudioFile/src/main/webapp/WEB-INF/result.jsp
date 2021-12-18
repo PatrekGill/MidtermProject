@@ -15,7 +15,6 @@
 				<h1>Song Information</h1>
 				<ul>
 					<c:forEach var="song" items="${Songs}">
-						<form action="searchBySongName.do" method="GET"></form>
 						<li><a href="searchBySongName.do?songName=${song.name}">${song.name}</a></li>
 					</c:forEach>
 				</ul>
@@ -24,7 +23,7 @@
 				<h1>Album Information</h1>
 				<ul>
 					<c:forEach var="album" items="${Albums}">
-						<li>${album.title}</li>
+						<li><a href="album.do?albumId=${album.id }">${album.title }</a></li>
 					</c:forEach>
 				</ul>
 			</c:if>
@@ -32,7 +31,6 @@
 				<h1>Artist Information</h1>
 				<ul>
 					<c:forEach var="artist" items="${Artists}">
-						<form action="artistProfile" method="get"></form>
 						<li><a href="artistProfile?id=${artist.id}">${artist.name}</a></li>
 						<img src="${artist.imageUrl}">
 					</c:forEach>

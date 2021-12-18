@@ -212,7 +212,7 @@ public class ArtistDAOImpl implements ArtistDAO {
 	}
 
 	@Override
-	public List<Artist> getTopThreeArtist(boolean ascendingOder) {
+	public List<Artist> sortArtistByTheirAlbumRatingAvg(boolean ascendingOder) {
 		String jpql = "SELECT art FROM Artist art JOIN art.albums alb JOIN alb.albumRatings ar GROUP BY art ORDER BY AVG(ar.rating)";
 
 		if (ascendingOder) {

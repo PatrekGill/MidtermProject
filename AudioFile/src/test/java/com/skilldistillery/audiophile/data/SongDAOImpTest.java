@@ -73,9 +73,9 @@ class SongDAOImpTest {
 
 	@Test
 	void test_sortBySongRating() {
-		List<Song> s = DaoImp.sortBySongRating(false, 3);
+		List<Song> s = DaoImp.sortBySongRatingAndReturnLimitedNumber(false, 3);
 		assertNotNull(s);
-		assertTrue(DaoImp.sortBySongRating(false, 3).size() > 0);
+		assertTrue(DaoImp.sortBySongRatingAndReturnLimitedNumber(false, 3).size() > 0);
 	}
 
 	@Test
@@ -83,6 +83,13 @@ class SongDAOImpTest {
 		assertNotNull(DaoImp.findByLyricsKeyword("you"));
 		assertFalse(DaoImp.findByLyricsKeyword("you").isEmpty());
 
+	}
+	
+	@Test
+	void test_sortSongsByRating() {
+		List<Song> s = DaoImp.sortSongsByRating(false);
+		assertNotNull(s);
+		assertTrue(s.size() > 0);
 	}
 	
 

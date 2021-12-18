@@ -27,7 +27,7 @@
 			</tr>
 			<c:forEach items="${artistsHighestRatedAlbums}" var="album">
 				<tr>
-					<td><a href="album">${album.title }</a></td>
+					<td><a href="album.do?albumId=${album.id }">${album.title }</a></td>
 				</tr>
 			</c:forEach>
 		</table>
@@ -35,7 +35,7 @@
 			<strong>Albums by ${artist.name}</strong>
 			<c:forEach items="${artist.albums }" var="album">
 				<p>
-					<a href="album">${album.title }</a>
+					<a href="album.do?albumId=${album.id }">${album.title }</a>
 				</p>
 			</c:forEach>
 		</div>

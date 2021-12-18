@@ -35,7 +35,7 @@
 								<h2>Albums Created by ${profile.username }</h2>
 								<c:forEach items="${albumsCreatedByUser }" var="album">
 									<p>
-										<a href="album?id=${album.id }">${album.title }</a>
+										<a href="album.do?albumId=${album.id }">${album.title }</a>
 									</p>
 								</c:forEach>
 							</div>
@@ -75,7 +75,7 @@
 									<h2>Your Albums:</h2>
 									<c:forEach items="${albumsCreated}" var="album">
 										<p>
-											<a href="album?id=${album.id }">${album.title }</a>
+											<a href="album.do?albumId=${album.id }">${album.title }</a>
 										</p>
 
 									</c:forEach>

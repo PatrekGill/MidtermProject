@@ -25,7 +25,9 @@
                 Artists Table
 ------------------------------------------------ --%>
 <h1>Trending Artists</h1>
-<c:forEach var"artist" items="${trendingArtists }">
+<c:forEach var="artist" items="${trendingArtists }">
 	<form action="artistProfile" method="GET"></form>
 	<li><a href="artistProfile?id=${artist.id }">${artist.name }</a>
 </c:forEach>
+
+<jsp:include page="bootstrapFooter.jsp"/>
