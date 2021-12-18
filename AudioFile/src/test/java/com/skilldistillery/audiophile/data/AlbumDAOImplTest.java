@@ -53,10 +53,10 @@ class AlbumDAOImplTest {
 	@DisplayName("test find album by song title")
 	void test4() {
 		assertNotNull(albumDAO);
+
 		List<Album> a = albumDAO.findAlbumsBySongTitle("Door Number Three");
 		assertNotNull(a);
 		assertTrue(a.size() > 0);
-		
 	}
 
 	@Test
@@ -125,6 +125,7 @@ class AlbumDAOImplTest {
 		assertNotNull(a);
 		assertTrue(a.size() > 0);
 	}
+	
 	
 
 }

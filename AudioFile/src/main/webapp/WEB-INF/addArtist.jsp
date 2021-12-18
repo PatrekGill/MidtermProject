@@ -4,7 +4,8 @@
 
 
 <jsp:include page="bootstrapHead.jsp" />
-<table id="create-account">
+<div class="col-sm-8 text-left">
+<table class="createAccount" id="create-account">
 	<thead>
 		<tr>
 			<th>Field</th>
@@ -14,28 +15,23 @@
 	<tbody>
 		<form action="addArtist" method="post">
 			<tr>
-				<td>Name</td>
-				<td><input type="text" id="name" name="name" required></td>
+				<th>Name</th>
+				<td><input type="text" id="name" name="name" required style ="color:black"></td>
 			</tr>
 			<tr>
-				<td>Uer_id</td>
-				<td><input type="number" id="user" name="user" ></td>
+				<th>User Id</th>
+				<td><input type ="number" id ="user.id" name ="user.id" value ="${user.id }" style ="color:black"></td>
 			</tr>
 			<tr>
-				<td>Create Date</td>
-				<td><input type="date" id="createDate"
-					name="createDate"  ></td>
+				<th>Image Url</th>
+				<td><input type="text" id="imageURL" name="imageURL" style ="color:black"></td>
 			</tr>
 			<tr>
-				<td>Image Url</td>
-				<td><input type="text" id="imageURL" name="imageURL"></td>
+				<th>Description</th>
+				<td><input type="text" id="description" name="description" style ="color:black"></td>
 			</tr>
 			<tr>
-				<td>Description</td>
-				<td><input type="text" id="description" name="description"></td>
-			</tr>
-			<tr>
-				<td><input type="submit" type="Create Account" /></td>
+				<td><input type="submit" type="Create Artist" style ="color:black" /></td>
 			</tr>
 		</form>
 	</tbody>

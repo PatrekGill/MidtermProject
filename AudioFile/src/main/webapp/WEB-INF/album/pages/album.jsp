@@ -41,7 +41,7 @@
                                     <c:forEach items="${album.songs}" var="song" varStatus="i">
                                         <tr>
                                             <td>${i.count}</td>
-                                            <td> <a href="song.do?songId=${song.id}">${song.name}</a> </td>
+                                            <td> <a href="searchBySongName.do?songName=${song.name}">${song.name}</a> </td>
                                             <td>
                                                 <c:forEach items="${song.artists}" var="artist" varStatus="j">
                                                     <c:choose>
@@ -99,7 +99,7 @@
 
                                         <tr>
                                             <td>
-                                                <a href="profile.do?userId=${comment.user.id}">
+                                                <a href="profile?id=${comment.user.id}">
                                                     <img class="user-image-md" src="${comment.user.imageURL}" alt="Profile Image">
                                                 </a>
                                             </td>
@@ -209,7 +209,7 @@
 
                                         <tr>
                                             <td>
-                                                <a href="profile.do?userId=${rating.user.id}">
+                                                <a href="profile?id=${rating.user.id}">
                                                     <img class="user-image-md" src="${rating.user.imageURL}" alt="Profile Image">
                                                 </a>
                                             </td>

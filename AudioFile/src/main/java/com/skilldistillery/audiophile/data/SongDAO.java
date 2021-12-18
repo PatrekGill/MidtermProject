@@ -13,8 +13,9 @@ public interface SongDAO {
 	public List<Song> findByAlbumName(String albumName);
 	public List<Song> findByLyricsKeyword(String keyword);
 	public List<Song> sortByCreatDate();
-	public List<Song> sortBySongRating(boolean ascendingOder, int numberOf);
+	public List<Song> sortBySongRatingAndReturnLimitedNumber(boolean ascendingOder, int numberOf);
 	public List<Song> sortByUpdateTime();
+	public List<Song> sortSongsByRating(boolean ascendingOrder);
 	
 	//CRUD
 	public Song addNewSong(Song song);

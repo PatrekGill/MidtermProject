@@ -1,5 +1,10 @@
 package com.skilldistillery.audiophile.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.audiophile.data.AlbumDAO;
+import com.skilldistillery.audiophile.data.ArtistDAO;
+import com.skilldistillery.audiophile.data.SongDAO;
 import com.skilldistillery.audiophile.data.UserDAO;
 import com.skilldistillery.audiophile.entities.Album;
+import com.skilldistillery.audiophile.entities.Artist;
+import com.skilldistillery.audiophile.entities.Song;
 import com.skilldistillery.audiophile.entities.User;
 
 @Controller
@@ -24,7 +33,13 @@ public class UserController {
 	@Autowired
 	private AlbumDAO albumDAO;
 
-	@GetMapping(path = "login")
+	@Autowired
+	private SongDAO songDAO;
+
+	@Autowired
+	private ArtistDAO artistDAO;
+
+	@GetMapping(path = {"login", "/profile"})
 	public String getLogin(HttpSession session) {
 		return "profile";
 	}
@@ -59,6 +74,7 @@ public class UserController {
 
 	@GetMapping(path = "myProfile")
 	public String getAccountPage(HttpSession session, Album album) {
+
 		User user = null;
 		user = (User) session.getAttribute("user");
 		if (user != null) {
@@ -79,7 +95,8 @@ public class UserController {
 	@PostMapping(path = "createAccount")
 	public String createAccount(User user, RedirectAttributes redir) {
 		try {
-			if (userDAO.createUser(user) != null) {
+			User createdUser = userDAO.createUser(user);
+			if (createdUser != null) {
 				redir.addFlashAttribute("success", "Account successfully created!");
 				return "redirect:profile";
 			} else {
@@ -150,12 +167,125 @@ public class UserController {
 		return "friendPage";
 	}
 
-	@GetMapping(path = "profile")
+	/*
+	 * --------------------------
+	 * Create Album&Artist&Song
+	 * --------------------------
+	 */
+	@GetMapping(path = "addAlbum")
+	public String getAddAblumpage(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if (user == (null)) {
+
+			return "profile";
+		}
+		return "addAlbum";
+	}
+
+	@PostMapping(path = "addAlbum")
+	public String createAlbum(String title, String description, String releaseDate, String imageURL, String names,
+			RedirectAttributes redir, HttpSession session) {
+		Album album = new Album();
+		User user = (User) session.getAttribute("user");
+		try {
+			album.setTitle(title);
+			album.setDescription(description);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate ld = LocalDate.parse(releaseDate, formatter);
+			LocalDateTime ldt = LocalDateTime.of(ld, LocalDateTime.now().toLocalTime());
+			album.setReleaseDate(ldt);
+			album.setImageURL(imageURL);
+			List<Artist> artist = artistDAO.findByArtistsName(names);
+			for (Artist artist2 : artist) {
+			
+				album.setArtist(artist2);
+			}
+			album.setUser(user);
+			albumDAO.addAlbum(album);
+			if (albumDAO.addAlbum(album) != null) {
+				redir.addFlashAttribute("success", "Album successfully created!");
+				return "redirect:album.do?albumId="+album.getId();
+			} else {
+				throw new Exception("Failed to create album");
+			}
+		} catch (Exception e) {
+			redir.addFlashAttribute("error", e.getMessage() + ": " + album.toString());
+			e.printStackTrace();
+		}
+		return "redirect:/";
+
+	}
+
+	@GetMapping(path = "addSong")
+	public String getAddSongpage(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if (user == (null)) {
+
+			return "profile";
+		}
+		return "addSong";
+	}
+
+	@PostMapping(path = "addSong")
+	public String createSong(String name, String lyrics, int durationInSeconds, RedirectAttributes redir,
+			HttpSession session) {
+		Song song = new Song();
+		User user = (User) session.getAttribute("user");
+		try {
+			song.setName(name);
+			song.setLyrics(lyrics);
+			song.setDurationInSeconds(durationInSeconds);
+			song.setUser(user);
+			songDAO.addNewSong(song);
+
+			if (songDAO.addNewSong(song) != null) {
+				redir.addFlashAttribute("success", "Song successfully created!");
+				return "redirect:searchBySongName.do?songName="+song.getName();
+			} else {
+				throw new Exception("Failed to create song");
+			}
+		} catch (Exception e) {
+			redir.addFlashAttribute("error", e.getMessage() + ": " + song.toString());
+			e.printStackTrace();
+		}
+		return "redirect:/";
+
+	}
+
+	@GetMapping(path = "addArtist")
+	public String getAddArtistpage(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if (user == (null)) {
+
+			return "profile";
+		}
+		return "addArtist";
+	}
+
+	@PostMapping(path = "addArtist")
+	public String createArtist(Artist artist, RedirectAttributes redir,HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		try {
+			if (artistDAO.addNewArtist(artist) != null) {
+				redir.addFlashAttribute("success", "Account successfully created!");
+				return "redirect:artistProfile?id="+artist.getId();
+			} else {
+				throw new Exception("Failed to create account");
+			}
+		} catch (Exception e) {
+			redir.addFlashAttribute("error", e.getMessage() + ": " + artist.toString());
+			e.printStackTrace();
+		}
+		return "redirect:/";
+	}
+	
+	@GetMapping(path = "otherUsersProfile")
 	public String getOtherUsersPage(@RequestParam("id") int id, Model model, Album album) {
 		User user = userDAO.findUserById(id);
-		model.addAttribute("profile", user);
-		model.addAttribute("albumsCreatedByUser", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
+		model.addAttribute("otherUsersProfile", user);
+		model.addAttribute("albumsCreatedByOtherUser", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
 		return "profile";
 	}
 
 }
+	
