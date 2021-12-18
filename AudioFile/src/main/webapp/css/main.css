@@ -5,6 +5,9 @@
 	bottom: 36px;
 }
 
+input{
+	color: #ff0000;
+}
 .mainContent {
 	position: relative;
 }

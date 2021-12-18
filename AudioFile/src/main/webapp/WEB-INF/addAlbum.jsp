@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
 <jsp:include page="bootstrapHead.jsp" />
-<table id="create-account">
+<div class="col-sm-8 text-left">
+<table class="createAccount" id="create-account">
 	<thead>
 		<tr>
 			<th>Field</th>
@@ -14,35 +15,43 @@
 	<tbody>
 		<form action="addAlbum" method="post">
 			<tr>
-				<td>Title</td>
-				<td><input type="text" id="title" name="title" required></td>
+				<th>Title</th>
+				<td><input type="text" id="title" name="title" required
+				style = "color:black"
+				></td>
 			</tr>
 			<tr>
-				<td>Description</td>
-				<td><input type="text" id="description" name="description" ></td>
+				<th>Description</th>
+				<td><input type="text" id="description" name="description" style ="color:black"></td>
 			</tr>
 			<tr>
-				<td>Release Date</td>
-				<td><input type="date" id="releaseDate"
-					name="releaseDate" required></td>
+				<th>Release Date</th>
+				<td><input type="date" id="releaseDate" name="releaseDate"
+					required style ="color:black"></td>
 			</tr>
 			<tr>
-				<td>Image Url</td>
-				<td><input type="text" id="imageURL" name="imageURL"></td>
+				<th>Image Url</th>
+				<td><input type="text" id="imageURL" name="imageURL" style ="color:black"></td>
 			</tr>
+			<div class ="spacer" >
 			<tr>
-				<td>User Id</td>
-				<td>${user.id }</td>
+			<td>
+				<label for="names">Artist Name</label></td>
+				<td>
+				<select name="names" id="names">
+					<option value="Jimmy Buffett">Jimmy Buffett</option>
+					<option value="Mac DeMarco">Mac DeMarco</option>
+					<option value="Adele">Adele</option>
+					<option value="Miles Davis">Miles Davis</option>
+				</select></td>
+				
 			</tr>
-			<%-- <tr>
-				<td>Artist Id</td>
-				<td>${user.artist.id }</td>
-			</tr> --%>
-			<tr>
-				<td><input type="submit" type="Create Album" /></td>
-			</tr>
+			</div>
+		<tr>
+			<td><input type="submit" type="Create Album" style ="color:black"/></td>
+		</tr>
 		</form>
 	</tbody>
 </table>
-
+</div>
 <jsp:include page="bootstrapFooter.jsp" />
