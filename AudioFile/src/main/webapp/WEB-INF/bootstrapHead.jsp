@@ -33,7 +33,7 @@
 					<div class="collapse navbar-collapse" id="myNavbar">
 						<ul class="nav navbar-nav">
 							<li class="active"><a href="#">Home</a></li>
-							<li><a href="profile">Profile</a></li>
+							<li><a href="myProfile">Profile</a></li>
 							<li><a href="#">Trending</a></li>
 
 							<li><div class="dropdown-padder"></div>
