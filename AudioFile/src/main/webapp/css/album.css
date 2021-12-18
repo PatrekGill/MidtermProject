@@ -29,6 +29,15 @@
     width: 200px;
     height: 200px;
 }
+.albumImage-thumb {
+    border-radius: 10%;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 2px;
+    margin-right: 2px;
+    width: 65px;
+    height: 65px;
+}
 
 .albumText {
     padding-top: 0px;

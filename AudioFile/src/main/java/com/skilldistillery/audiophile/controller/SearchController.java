@@ -48,27 +48,24 @@ public class SearchController {
 		try {
 			if (keyword.trim().length() > 0) {
 				
-				
-				if (isAllSearch || searchType.equalsIgnoreCase("Album")) {
-					albums = albumDAO.findAlbumsByTitle(keyword);
-					model.addAttribute("Albums", albums);
-				}
-				
-				if (isAllSearch || searchType.equalsIgnoreCase("Artist")) {
-					artists = artistDAO.findByArtistsName(keyword);
-					model.addAttribute("Artists", artists);
-				}
-				
 				if (!isAllSearch && searchType.equalsIgnoreCase("Genre")) {
 					albums = albumDAO.findAlbumsByGenreName(keyword);
 					model.addAttribute("Albums", albums);
 				}
 				
+
+				if (isAllSearch || searchType.equalsIgnoreCase("Album")) {
+					albums = albumDAO.findAlbumsByTitle(keyword);
+					model.addAttribute("Albums", albums);
+				}
+				if (isAllSearch || searchType.equalsIgnoreCase("Artist")) {
+					artists = artistDAO.findByArtistsName(keyword);
+					model.addAttribute("Artists", artists);
+				}
 				if (isAllSearch || searchType.equalsIgnoreCase("Song")) {
 					songs = songDAO.findBySongName(keyword);
 					model.addAttribute("Songs", songs);
 				}
-				
 				
 				boolean noResults = false;
 				if (albums.isEmpty() && artists.isEmpty() && songs.isEmpty()) {
@@ -81,6 +78,7 @@ public class SearchController {
 				
 			} else {
 				throw new Exception("valid entry required in search field");
+				
 			}
 			
 			
