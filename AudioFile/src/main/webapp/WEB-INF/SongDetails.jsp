@@ -2,6 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="bootstrapHead.jsp" />
+<div class="col-sm-8 text-left">
+<div class="artist-spacer">
 <h1>Song Information</h1>
 <ul>
 	<c:if test="${! empty Song}">
@@ -29,4 +31,6 @@
 		<p align="center">Rating Comments: ${Comments}</p>
 	</c:if>
 </ul>
+</div>
+</div>
 <jsp:include page="bootstrapFooter.jsp" />
