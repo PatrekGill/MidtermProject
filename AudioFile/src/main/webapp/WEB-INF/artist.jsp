@@ -5,40 +5,45 @@
 
 
 <jsp:include page="bootstrapHead.jsp" />
-<div class="col-sm-8 text-left">
-	<div class="artist-text">
-		<div class="artist-spacer">
-			<table>
-				<tr>
-					<td><img src="${artist.imageUrl }" width="100" height="200"></td>
-				</tr>
-				<tr>
-					<td><h1>${artist.name }</h1></td>
-				</tr>
-				<tr>
-					<td>${artist.description }</td>
-				</tr>
-			</table>
-		</div>
-		<br>
-		<table>
-			<tr>
-				<th>Top rated albums</th>
-			</tr>
-			<c:forEach items="${artistsHighestRatedAlbums}" var="album">
-				<tr>
-					<td><a href="album.do?albumId=${album.id }">${album.title }</a></td>
-				</tr>
-			</c:forEach>
-		</table>
-		<div class="">
-			<strong>Albums by ${artist.name}</strong>
-			<c:forEach items="${artist.albums }" var="album">
-				<p>
-					<a href="album.do?albumId=${album.id }">${album.title }</a>
-				</p>
-			</c:forEach>
+<div class="row">
+	<div class="container">
+
+		<c:if test="${not empty artist.imageUrl}">
+			<div class="col-xs-6 col-sm-7 col-md-6 col-lg-5 albumImage-div">
+
+				<img class="albumImage-md" src="${artist.imageUrl}"
+					alt="image of artist">
+			</div>
+		</c:if>
+
+		<div class="col-xs-10 col-sm-6 col-md-4 col-lg-5 albumText">
+			<h1 class="albumText-title">${artist.name }</h1>
+			<br>
+			<p>${artist.description }</p>
 		</div>
 	</div>
 </div>
+
+<div class="table-responsive">
+	<div class="table-wrapper table-body">
+		<div class="table-title">
+			<div class="row">
+				<h2>Albums</h2>
+			</div>
+		</div>
+		<table class="music-table table-hover">
+		<c:forEach items="${artist.albums }" var="album">
+		<tr>
+		<td><a href="album.do?albumId=${album.id }">${album.title }</a></td>
+		</tr>
+		</c:forEach>
+		</table>
+	</div>
+</div>
+
+<!-- need to add another table for albums in average ranking order
+also may need to shrink the table to not take up the whole page 
+ !!!!!!BE SURE TO CHANGE THE CLASS NAME IN CSS AND COPY THIS ONE AND ALTER IT
+      BECAUSE IF YOU CHANGE THIS CLASS IN CSS IT WILL AFFECT THE ALBUM PAGE!!!!!!!
+-->
 <jsp:include page="bootstrapFooter.jsp" />
