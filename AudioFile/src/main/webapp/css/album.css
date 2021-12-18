@@ -16,8 +16,8 @@
     padding: 0.5px;
     margin-left: 10px;
     margin-right: 10px;
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
 }
 
 .albumImage-sm {
@@ -28,6 +28,15 @@
     margin-right: 10px;
     width: 200px;
     height: 200px;
+}
+.albumImage-thumb {
+    border-radius: 10%;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 2px;
+    margin-right: 2px;
+    width: 65px;
+    height: 65px;
 }
 
 .albumText {

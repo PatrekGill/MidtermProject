@@ -67,7 +67,7 @@
 							<li>
 								<div class="select-padder">
 									<select class="form-select form-select-sm"
-										aria-label=".form-select-sm example" name="searchAll">
+										aria-label=".form-select-sm example" name="searchType">
 										<option selected value="All">Search by</option>
 								</div>
 								<option value="All">All</option>
