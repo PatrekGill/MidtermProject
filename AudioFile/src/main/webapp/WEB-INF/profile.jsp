@@ -14,13 +14,13 @@
 					<div class="account-design">
 						<form action="login" method="post">
 							<label for="username">Username: </label>&nbsp;<input
-								class="login-textbox" name="username" /><label for="password">&nbsp;Password:
-							</label>&nbsp;<input class="password-textbox" name="password" /><br>
-							<br> <input type="submit" value="Log In">
+								class="login-textbox" name="username" style="color:black"/><label for="password">&nbsp;Password:
+							</label>&nbsp;<input class="password-textbox" name="password" style="color:black" /><br>
+							<br> <input type="submit" value="Log In" style="color:black">
 						</form>
 						<form action="createAccount" method="get">
 							<div class="spacer">
-								<input type="submit" value="Create Account">
+								<input type="submit" value="Create Account" style="color:black">
 							</div>
 						</form>
 					</div>
@@ -55,16 +55,16 @@
 							<p>Username: ${user.username }</p>
 							<div class="account-design">
 								<form action="deleteAccount" method="post">
-									<input type="submit" value="Delete Account">
+									<input type="submit" value="Delete Account" style="color:black">
 								</form>
 								<div class="spacer">
 									<form action="updateAccount" method="get">
-										<input type="submit" value="Update Account">
+										<input type="submit" value="Update Account" style="color:black">
 									</form>
 								</div>
 								<div class="spacer">
 									<form action="friendList" method="get">
-										<input type="submit" value="Friend List">
+										<input type="submit" value="Friend List" style="color:black"	>
 									</form>
 								</div>
 							</div>
