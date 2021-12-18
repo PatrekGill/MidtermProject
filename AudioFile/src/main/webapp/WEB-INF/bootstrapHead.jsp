@@ -40,8 +40,8 @@
 								<div class="dropdown">
 									<div class="dropdown-padder">
 
-										<button class="btn btn-secondary dropdown-toggle"
-											type="button" id="dropdownMenuButton" data-toggle="dropdown"
+										<button class="btn btn-link"
+											id="dropdownMenuButton" data-toggle="dropdown"
 											aria-haspopup="true" aria-expanded="false">Create</button>
 										<div class="dropdown-menu"
 											aria-labelledby="dropdownMenuButton">
@@ -61,7 +61,7 @@
 									<div class="search-design">
 										<input class="form-control mr-sm-2" type="search"
 											placeholder="search" aria-label="search" name="keyword">
-										<button class="btn btn-outline-success my-2 my-sm-0"
+										<button class="btn btn-link"
 											type="submit">Search</button>
 									</div></li>
 							<li>
