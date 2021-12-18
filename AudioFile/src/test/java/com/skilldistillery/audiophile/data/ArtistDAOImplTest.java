@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.skilldistillery.audiophile.entities.Artist;
 
 @SpringBootTest
-class ArtistDAPOImplTest {
+class ArtistDAOImplTest {
 
 	@Autowired
 	ArtistDAOImpl DAOImp;
@@ -43,8 +43,8 @@ class ArtistDAPOImplTest {
 		assertFalse(DAOImp.sortByUpdateTime().isEmpty());
 	}
 	@Test
-	void test_get_topThree_artist_() {
-		List<Artist> a = DAOImp.getTopThreeArtist(false);
+	void test_sortArtistByTheirAlbumRatingAvg() {
+		List<Artist> a = DAOImp.sortArtistByTheirAlbumRatingAvg(false);
 		assertNotNull(a);
 		assertTrue(a.size()>0);
 		assertEquals("Miles Davis",a.get(0).getName());
@@ -71,5 +71,11 @@ class ArtistDAPOImplTest {
 		assertEquals(DAOImp.findPrimaryArtistByAlbumName("A1A").getName(), "Jimmy Buffett");
 	}
 	
+	@Test
+	void test_sortArtistsAlphabetically() {
+		List<Artist> a = DAOImp.sortArtistsAlphabetically();
+		assertNotNull(a);
+		assertTrue(a.size() > 0);
+	}
 
 }

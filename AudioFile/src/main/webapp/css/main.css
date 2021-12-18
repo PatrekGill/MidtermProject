@@ -1,3 +1,5 @@
+@import "album.css";
+@import "table.css";
 /* Remove the navbar's default margin-bottom and rounded borders */
 .col {
 	position: fixed;
@@ -44,23 +46,34 @@ input{
 	padding-bottom: 10px;
 }
 
-.login-textbox{
-	width:100px;
+.center-table {
+	width: 40%;
+	margin-left: 30%;
+	margin-right: 30%;
 }
 
-.password-textbox{
-	width:100px;
+.artist-spacer {
+	padding-top: 10px;
 }
 
-.dropdown-shower{
+.login-textbox {
+	width: 100px;
+}
+
+.password-textbox {
+	width: 100px;
+}
+
+.dropdown-shower {
 	padding-top: 10px;
 	height: 100%;
 	margin: auto;
 }
+
 label {
 	color: white;
-	text-align:right;
-	display:inline-block;
+	text-align: right;
+	display: inline-block;
 }
 
 .account-design {
@@ -96,6 +109,13 @@ label {
 	height: 100%
 }
 
+create-padder{
+	padding-right: 10px;
+}
+
+.artist-text {
+	font:Helvetica;
+}
 /* Set gray background color and 100% height */
 .sidenav {
 	padding-top: 20px;
@@ -103,7 +123,6 @@ label {
 	background-color: #242424;
 	height: 100%;
 }
-
 
 .spacer {
 	margin-top: 10px;
@@ -128,13 +147,15 @@ body {
 	color: white;
 }
 
-.dropdown-menu{
-	color:black;
+.dropdown-menu {
+	color: black;
 }
-.dropdown-item{
-	color:black;
+
+.dropdown-item {
+	color: black;
 	text-align: center;
 }
+
 .container-boy {
 	text-align: center;
 }
@@ -158,6 +179,12 @@ footer {
 
 .footer-contents {
 	margin: auto;
+}
+
+.user-image-md {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
 }
 
 /* On small screens, set height to 'auto' for sidenav and grid */

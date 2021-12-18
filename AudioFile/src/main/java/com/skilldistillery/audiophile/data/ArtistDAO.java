@@ -19,7 +19,8 @@ public interface ArtistDAO {
 	public List<Artist> sortByCreateDate();
 
 	public List<Artist> sortByUpdateTime();
-	public List<Artist> getTopThreeArtist(boolean ascendingOder);
+	
+	public List<Artist> sortArtistByTheirAlbumRatingAvg(boolean ascendingOder);
 	
 	public Artist addNewArtist(Artist artist);
 
@@ -32,4 +33,6 @@ public interface ArtistDAO {
 	public boolean updateArtist(int id, Artist artist);
 
 	public boolean deleteArtist(int id);
+	
+	public List<Artist> sortArtistsAlphabetically();
 }

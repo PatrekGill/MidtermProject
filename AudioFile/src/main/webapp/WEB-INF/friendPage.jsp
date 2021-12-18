@@ -21,7 +21,7 @@
 						<p>Last name: ${user1.lastName }</p>
 						<p>Account created on: ${user1.creationDateTime }</p>
 						<p>Email: ${user1.email }</p>
-						<p>Username: ${user1.username }</p>
+						<p><a href="profile?id=${user1.id}">${user1.username}</a></p>
 					</div>
 			<div class="">
 				<c:if test="${not empty albumsCreated}">
@@ -29,7 +29,7 @@
 						<h2>Friends Albums:</h2>
 						<c:forEach items="${albumsCreated}" var="album">
 							<p>
-								<a href="album">${album.title }</a>
+								<a href="album.do?albumId=${album.id }">${album.title }</a>
 							</p>
 
 						</c:forEach>

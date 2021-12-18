@@ -33,15 +33,15 @@
 					<div class="collapse navbar-collapse" id="myNavbar">
 						<ul class="nav navbar-nav">
 							<li class="active"><a href="#">Home</a></li>
-							<li><a href="profile">Profile</a></li>
-							<li><a href="#">Trending</a></li>
+							<li><a href="myProfile">Profile</a></li>
+							<li><a href="trending">Trending</a></li>
 
 							<li><div class="dropdown-padder"></div>
 								<div class="dropdown">
 									<div class="dropdown-padder">
 
-										<button class="btn btn-secondary dropdown-toggle"
-											type="button" id="dropdownMenuButton" data-toggle="dropdown"
+										<button class="btn btn-link"
+											id="dropdownMenuButton" data-toggle="dropdown"
 											aria-haspopup="true" aria-expanded="false">Create</button>
 										<div class="dropdown-menu"
 											aria-labelledby="dropdownMenuButton">
@@ -61,7 +61,7 @@
 									<div class="search-design">
 										<input class="form-control mr-sm-2" type="search"
 											placeholder="search" aria-label="search" name="keyword">
-										<button class="btn btn-outline-success my-2 my-sm-0"
+										<button class="btn btn-link"
 											type="submit">Search</button>
 									</div></li>
 							<li>
@@ -106,7 +106,7 @@
 						<div id="collapseTopAlbums" class="collapse"
 							aria-labelledby="headingTopAlbums" data-parent="#accordion">
 							<c:forEach var="album" items="${topAlbumsSideBar }">
-								<li><a href="album?id=${album.id }">${album.title }</a></li>
+								<li><a href="album.do?albumId=${album.id }">${album.title }</a></li>
 							</c:forEach>
 
 
@@ -119,7 +119,6 @@
 						<div id="collapseTopArtists" class="collapse"
 							aria-labelledby="headingTopArtists" data-parent="#accordion">
 							<c:forEach var="artist" items="${topArtistsSideBar }">
-								<form action="artistProfile" method="get"></form>
 								<li><a href="artistProfile?id=${artist.id }">${artist.name }</a></li>
 							</c:forEach>
 						</div>
@@ -131,7 +130,6 @@
 						<div id="collapseTopSongs" class="collapse"
 							aria-labelledby="headingTopSongs" data-parent="#accordion">
 							<c:forEach var="song" items="${topSongsSideBar }">
-								<form action="searchBySongName.do" method="GET"></form>
 								<li><a href="searchBySongName.do?songName=${song.name }">${song.name }</a></li>
 							</c:forEach>
 						</div>

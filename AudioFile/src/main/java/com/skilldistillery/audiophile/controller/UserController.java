@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,34 +46,44 @@ public class UserController {
 
 	@PostMapping(path = "login")
 	public String login(HttpSession session, @RequestParam("username") String username,
-			@RequestParam("password") String password) {
-		User user = userDAO.login(username, password);
-		if (user == (null)) {
-			return "profile";
+			@RequestParam("password") String password, RedirectAttributes redir) {
+		try {
+			User user = userDAO.login(username, password);
+			if (user != null) {
+				session.setAttribute("user", user);
+				redir.addFlashAttribute("success", "Successfully logged in! Redirecting you to home page");
+				return "redirect:home";
+			} else {
+				throw new Exception("Incorrect username or password");
+			}
+		} catch (Exception e) {
+			redir.addFlashAttribute("error", e.getMessage());
+			e.printStackTrace();
 		}
-		session.setAttribute("user", user);
-
-		return "redirect:/";
+		return "redirect:profile";
 	}
 
 	@GetMapping(path = "logout")
-	public String logoutUser(HttpSession session) {
+	public String logoutUser(HttpSession session, RedirectAttributes redir) {
 		session.removeAttribute("user");
 		session.removeAttribute("albumsCreated");
+		redir.addFlashAttribute("warning", "Logged out");
 		return "redirect:/";
 
 	}
 
-	@GetMapping(path = "profile")
+	@GetMapping(path = "myProfile")
 	public String getAccountPage(HttpSession session, Album album) {
-		User user = (User) session.getAttribute("user");
-		if (session.getAttribute("update") != null) {
-			session.removeAttribute("update");
-		}
-		if (user == null) {
+
+		User user = null;
+		user = (User) session.getAttribute("user");
+		if (user != null) {
+			if (session.getAttribute("update") != null) {
+				session.removeAttribute("update");
+			}
+			session.setAttribute("albumsCreated", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
 			return "profile";
 		}
-		session.setAttribute("albumsCreated", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
 		return "profile";
 	}
 
@@ -148,12 +159,10 @@ public class UserController {
 
 	@GetMapping(path = "friendList")
 	public String getFriendPage(HttpSession session, Album album) {
-		User user1 = userDAO.findUserById(2);
-		session.setAttribute("user1", user1);
-		if (user1 == null) {
-			return "friendPage";
-		}
-		session.setAttribute("albumsCreated", albumDAO.findAlbumsByCreatedUsername(user1.getUsername()));
+		User user = userDAO.findUserById(2);
+		session.setAttribute("user1", user);
+
+		session.setAttribute("albumsCreated", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
 		return "friendPage";
 	}
 
@@ -194,7 +203,7 @@ public class UserController {
 			albumDAO.addAlbum(album);
 			if (albumDAO.addAlbum(album) != null) {
 				redir.addFlashAttribute("success", "Album successfully created!");
-				return "redirect:profile";
+				return "redirect:profile?id="+user.getId();
 			} else {
 				throw new Exception("Failed to create account");
 			}
@@ -230,7 +239,7 @@ public class UserController {
 
 			if (songDAO.addNewSong(song) != null) {
 				redir.addFlashAttribute("success", "Song successfully created!");
-				return "redirect:profile";
+				return "redirect:profile?id="+user.getId();
 			} else {
 				throw new Exception("Failed to create account");
 			}
@@ -253,11 +262,12 @@ public class UserController {
 	}
 
 	@PostMapping(path = "addArtist")
-	public String createArtist(Artist artist, RedirectAttributes redir) {
+	public String createArtist(Artist artist, RedirectAttributes redir,HttpSession session) {
+		User user = (User) session.getAttribute("user");
 		try {
 			if (artistDAO.addNewArtist(artist) != null) {
 				redir.addFlashAttribute("success", "Account successfully created!");
-				return "redirect:profile";
+				return "redirect:profile?id="+user.getId();
 			} else {
 				throw new Exception("Failed to create account");
 			}
@@ -266,7 +276,14 @@ public class UserController {
 			e.printStackTrace();
 		}
 		return "redirect:artist";
-
+	}
+	@GetMapping(path = "profile")
+	public String getOtherUsersPage(@RequestParam("id") int id, Model model, Album album) {
+		User user = userDAO.findUserById(id);
+		model.addAttribute("profile", user);
+		model.addAttribute("albumsCreatedByUser", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
+		return "profile";
 	}
 
 }
+	

@@ -39,13 +39,13 @@ public class HomeController {
 		} else {
 			session.setAttribute("topAlbumsSideBar", topAlbums);
 		}
-		List<Artist> topArtists = artistDAO.getTopThreeArtist(false);
+		List<Artist> topArtists = artistDAO.sortArtistByTheirAlbumRatingAvg(false);
 		if (topArtists.size() > 3) {
 			session.setAttribute("topArtistsSideBar", topArtists.subList(0, 3));
 		} else {
 			session.setAttribute("topArtistsSideBar", topArtists);
 		}
-		List<Song> topSongs = songDAO.sortBySongRating(false, 3);
+		List<Song> topSongs = songDAO.sortBySongRatingAndReturnLimitedNumber(false, 3);
 		session.setAttribute("topSongsSideBar", topSongs);
 		return "home";
 	}

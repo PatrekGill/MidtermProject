@@ -13,10 +13,10 @@
 					<h1>Login or create Account</h1>
 					<div class="account-design">
 						<form action="login" method="post">
-							<label for="username">Username: </label>&nbsp;<input class="login-textbox"
-								name="username"/><label for="password">&nbsp;Password: </label>&nbsp;<input
-								class="password-textbox" name="password" /><br><br> <input
-								type="submit" value="Log In">
+							<label for="username">Username: </label>&nbsp;<input
+								class="login-textbox" name="username" /><label for="password">&nbsp;Password:
+							</label>&nbsp;<input class="password-textbox" name="password" /><br>
+							<br> <input type="submit" value="Log In">
 						</form>
 						<form action="createAccount" method="get">
 							<div class="spacer">
@@ -24,6 +24,24 @@
 							</div>
 						</form>
 					</div>
+				</c:when>
+				<c:when test="${not empty profile }">
+					<div class="">
+						<h2>${profile.username }'sProfile</h2>
+						<p>First name: ${profile.firstName}</p>
+						<p>Account created on: ${user.creationDateTime }</p>
+						<c:if test="${not empty albumsCreatedByUser }">
+							<div class="albums-created">
+								<h2>Albums Created by ${profile.username }</h2>
+								<c:forEach items="${albumsCreatedByUser }" var="album">
+									<p>
+										<a href="album.do?albumId=${album.id }">${album.title }</a>
+									</p>
+								</c:forEach>
+							</div>
+						</c:if>
+					</div>
+
 				</c:when>
 				<c:when test="${user != null }">
 
@@ -51,7 +69,20 @@
 								</div>
 							</div>
 						</div>
+						<div class="">
+							<c:if test="${not empty albumsCreated}">
+								<div class="albums-created">
+									<h2>Your Albums:</h2>
+									<c:forEach items="${albumsCreated}" var="album">
+										<p>
+											<a href="album.do?albumId=${album.id }">${album.title }</a>
+										</p>
+
+									</c:forEach>
+								</div>
+							</c:if>
 					</c:if>
+
 					<c:if test="${not empty update }">
 						<div>
 							<h2>Change Account Details</h2>
@@ -70,24 +101,13 @@
 							</form>
 						</div>
 					</c:if>
+
 				</c:when>
 
 			</c:choose>
-			<div class="">
-				<c:if test="${not empty albumsCreated}">
-					<div class="albums-by-you">
-						<h2>Your Albums:</h2>
-						<c:forEach items="${albumsCreated}" var="album">
-							<p>
-								<a href="album">${album.title }</a>
-							</p>
-
-						</c:forEach>
-					</div>
-				</c:if>
-			</div>
 		</div>
 	</div>
+</div>
 </div>
 
 

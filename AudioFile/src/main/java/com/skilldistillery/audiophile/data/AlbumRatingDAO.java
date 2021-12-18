@@ -6,6 +6,7 @@ import com.skilldistillery.audiophile.entities.AlbumRating;
 
 public interface AlbumRatingDAO {
 	AlbumRating findById(int id);
+	AlbumRating findByAlbumAndUserId(int albumId, int userId);
 	
 	boolean updateRating(int id, int newRating);
 	boolean updateDescription(int id, String newRating);
@@ -17,5 +18,7 @@ public interface AlbumRatingDAO {
 	List<AlbumRating> sortedByRating(int albumId, boolean ascendingOrder, int numberOfEntriesToShow);
 	
 	List<AlbumRating> sortedByCreatationDate(int albumId, boolean ascendingOrder);
-	List<AlbumRating> sortedByCreatationDate(int albumId, boolean ascendingOrder, int numberOfEntriesToShow);
+	List<AlbumRating> sortedByCreationDate(int albumId, boolean ascendingOrder, int numberOfEntriesToShow);
+
+	Double getAverageAlbumRating(int albumId);
 }
