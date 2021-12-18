@@ -25,15 +25,15 @@
 						</form>
 					</div>
 				</c:when>
-				<c:when test="${not empty profile }">
+				<c:when test="${not empty otherUsersProfile }">
 					<div class="">
-						<h2>${profile.username }'sProfile</h2>
-						<p>First name: ${profile.firstName}</p>
-						<p>Account created on: ${user.creationDateTime }</p>
-						<c:if test="${not empty albumsCreatedByUser }">
+						<h2>${otherUsersProfile.username }'s Profile</h2>
+						<p>First name: ${otherUsersProfile.firstName}</p>
+						<p>Account created on: ${otherUsersProfile.creationDateTime }</p>
+						<c:if test="${not empty albumsCreatedByOtherUser }">
 							<div class="albums-created">
-								<h2>Albums Created by ${profile.username }</h2>
-								<c:forEach items="${albumsCreatedByUser }" var="album">
+								<h2>Albums Created by ${otherUsersProfile.username }</h2>
+								<c:forEach items="${albumsCreatedByOtherUser }" var="album">
 									<p>
 										<a href="album.do?albumId=${album.id }">${album.title }</a>
 									</p>
@@ -107,7 +107,6 @@
 			</c:choose>
 		</div>
 	</div>
-</div>
 </div>
 
 

@@ -39,7 +39,7 @@ public class UserController {
 	@Autowired
 	private ArtistDAO artistDAO;
 
-	@GetMapping(path = "login")
+	@GetMapping(path = {"login", "/profile"})
 	public String getLogin(HttpSession session) {
 		return "profile";
 	}
@@ -95,7 +95,8 @@ public class UserController {
 	@PostMapping(path = "createAccount")
 	public String createAccount(User user, RedirectAttributes redir) {
 		try {
-			if (userDAO.createUser(user) != null) {
+			User createdUser = userDAO.createUser(user);
+			if (createdUser != null) {
 				redir.addFlashAttribute("success", "Account successfully created!");
 				return "redirect:profile";
 			} else {
@@ -203,15 +204,15 @@ public class UserController {
 			albumDAO.addAlbum(album);
 			if (albumDAO.addAlbum(album) != null) {
 				redir.addFlashAttribute("success", "Album successfully created!");
-				return "redirect:profile?id="+user.getId();
+				return "redirect:album.do?albumId="+album.getId();
 			} else {
-				throw new Exception("Failed to create account");
+				throw new Exception("Failed to create album");
 			}
 		} catch (Exception e) {
 			redir.addFlashAttribute("error", e.getMessage() + ": " + album.toString());
 			e.printStackTrace();
 		}
-		return "redirect:album";
+		return "redirect:/";
 
 	}
 
@@ -239,15 +240,15 @@ public class UserController {
 
 			if (songDAO.addNewSong(song) != null) {
 				redir.addFlashAttribute("success", "Song successfully created!");
-				return "redirect:profile?id="+user.getId();
+				return "redirect:searchBySongName.do?songName="+song.getName();
 			} else {
-				throw new Exception("Failed to create account");
+				throw new Exception("Failed to create song");
 			}
 		} catch (Exception e) {
 			redir.addFlashAttribute("error", e.getMessage() + ": " + song.toString());
 			e.printStackTrace();
 		}
-		return "redirect:song";
+		return "redirect:/";
 
 	}
 
@@ -267,7 +268,7 @@ public class UserController {
 		try {
 			if (artistDAO.addNewArtist(artist) != null) {
 				redir.addFlashAttribute("success", "Account successfully created!");
-				return "redirect:profile?id="+user.getId();
+				return "redirect:artistProfile?id="+artist.getId();
 			} else {
 				throw new Exception("Failed to create account");
 			}
@@ -275,13 +276,14 @@ public class UserController {
 			redir.addFlashAttribute("error", e.getMessage() + ": " + artist.toString());
 			e.printStackTrace();
 		}
-		return "redirect:artist";
+		return "redirect:/";
 	}
-	@GetMapping(path = "profile")
+	
+	@GetMapping(path = "otherUsersProfile")
 	public String getOtherUsersPage(@RequestParam("id") int id, Model model, Album album) {
 		User user = userDAO.findUserById(id);
-		model.addAttribute("profile", user);
-		model.addAttribute("albumsCreatedByUser", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
+		model.addAttribute("otherUsersProfile", user);
+		model.addAttribute("albumsCreatedByOtherUser", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
 		return "profile";
 	}
 
