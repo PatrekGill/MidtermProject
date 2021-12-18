@@ -30,6 +30,27 @@ public class AlbumRatingDAOImpl implements AlbumRatingDAO {
 
 	
 	/* ----------------------------------------------------------------------------
+		findByAlbumAndUserId
+	---------------------------------------------------------------------------- */
+	@Override
+	public AlbumRating findByAlbumAndUserId(int albumId, int userId) {
+		String jpql = "SELECT ar FROM AlbumRating ar WHERE ar.album.id = :albumId AND ar.user.id = :userId";
+		
+		AlbumRating rating = null;
+		try {
+			rating = em.createQuery(jpql, AlbumRating.class)
+					.setParameter("albumId", albumId)
+					.setParameter("userId", userId)
+					.getSingleResult();
+		} catch (Exception e) {
+			System.out.println("Could not find rating for album: " + albumId + " from user id: " + userId);
+		}
+		
+		return rating;
+	}
+
+	
+	/* ----------------------------------------------------------------------------
 		sortedByRating
 	---------------------------------------------------------------------------- */
 	@Override
@@ -52,6 +73,27 @@ public class AlbumRatingDAOImpl implements AlbumRatingDAO {
 		}
 		
 		return albumRatings;
+	}
+
+	@Override
+	public Double getAverageAlbumRating(int albumId) {
+		String jpql = "SELECT AVG(ar.rating) FROM AlbumRating ar WHERE ar.album.id = :id";
+		
+		Double avgerageRating = null;
+		try {
+			avgerageRating = em.createQuery(jpql, Double.class)
+					.setParameter("id", albumId)
+					.getSingleResult();
+		} catch (Exception e) {
+			System.err.println("Could not get average for album id: " + albumId);
+			avgerageRating = 0.0;
+		}
+		
+		if (avgerageRating == null) {
+			avgerageRating = 0.0;
+		}
+		
+		return avgerageRating;
 	}
 	
 	@Override
@@ -113,7 +155,7 @@ public class AlbumRatingDAOImpl implements AlbumRatingDAO {
 	}
 
 	@Override
-	public List<AlbumRating> sortedByCreatationDate(int albumId, boolean ascendingOrder, int numberOfEntriesToShow) {
+	public List<AlbumRating> sortedByCreationDate(int albumId, boolean ascendingOrder, int numberOfEntriesToShow) {
 		String jpql = "SELECT ar FROM AlbumRating ar WHERE ar.album.id = :id ORDER BY ar.ratingDate";
 		
 		if (ascendingOrder) {

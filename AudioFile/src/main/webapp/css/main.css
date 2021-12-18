@@ -1,3 +1,5 @@
+@import "album.css";
+@import "table.css";
 /* Remove the navbar's default margin-bottom and rounded borders */
 .col {
 	position: fixed;
@@ -174,6 +176,12 @@ footer {
 
 .footer-contents {
 	margin: auto;
+}
+
+.user-image-md {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
 }
 
 /* On small screens, set height to 'auto' for sidenav and grid */

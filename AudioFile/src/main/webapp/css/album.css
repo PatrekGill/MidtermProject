@@ -1,0 +1,76 @@
+.albumImage {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 0.5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 500px;
+    height: 500px;
+}
+
+.albumImage-md {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 0.5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 400px;
+    height: 400px;
+}
+
+.albumImage-sm {
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 200px;
+    height: 200px;
+}
+
+.albumText {
+    padding-top: 0px;
+    margin-top: 20px;
+    background : rgba(0,0,0,0.75);
+    text-align: Left;
+}
+.albumText-title {
+    font-size: 45px;
+    margin-top: 10px;
+    font-family: Impact, fantasy;
+    font-variant: small-caps;
+    font-stretch: ultra-expanded;
+}
+.albumText-artist {
+    font-size: 25px;
+    font-weight: bold;
+    font-family: Arial;
+    margin-bottom: 5px;
+    color: white;
+}
+.albumText-artist-sm {
+    font-size: 17px;
+    font-weight: bold;
+    font-family: Arial;
+    margin-bottom: 5px;
+    color: white;
+}
+.albumText p {
+    font-weight: 400;
+    font-family: Arial;
+}
+a.albumText-artist:hover {
+    text-decoration: none;
+    color: #B8860B;
+}
+a.albumText-artist-sm:hover {
+    text-decoration: none;
+    color: #B8860B;
+}
+
+
+.albumImage-div {
+    padding-top: 20px;
+}
