@@ -33,8 +33,7 @@ public class ArtistDAOImpl implements ArtistDAO {
 	@Override
 	public List<Artist> findByArtistsName(String name) {
 		String jpql = "SELECT a FROM Artist a where a.name LIKE :artName";
-		List<Artist> artists = em.createQuery(jpql, Artist.class)
-				.setParameter("artName", "%" + name + "%")
+		List<Artist> artists = em.createQuery(jpql, Artist.class).setParameter("artName", "%" + name + "%")
 				.getResultList();
 		return artists;
 	}
@@ -69,15 +68,14 @@ public class ArtistDAOImpl implements ArtistDAO {
 	@Override
 	public List<Artist> findArtistsBySongName(String songName) {
 		String jpql = "SELECT s.artists FROM Song s where s.name LIKE :name";
-		
+
 		List<Artist> artists = new ArrayList<>();
-		
-		List<Object> objs = em.createQuery(jpql, Object.class)
-				.setParameter("name", "%" + songName + "%")
+
+		List<Object> objs = em.createQuery(jpql, Object.class).setParameter("name", "%" + songName + "%")
 				.getResultList();
-		
+
 		objs.forEach(obj -> artists.add((Artist) obj));
-		
+
 		return artists;
 	}
 
@@ -100,17 +98,15 @@ public class ArtistDAOImpl implements ArtistDAO {
 	@Override
 	public Artist findPrimaryArtistByAlbumName(String albumName) {
 		String jpql = "SELECT a.artist FROM Album a where a.title LIKE :name";
-		
+
 		Artist artist;
 		try {
-			artist = em.createQuery(jpql, Artist.class)
-					.setParameter("name", "%" + albumName + "%")
-					.getSingleResult();
+			artist = em.createQuery(jpql, Artist.class).setParameter("name", "%" + albumName + "%").getSingleResult();
 		} catch (Exception e) {
 			System.err.println("findArtistByAlbumName encountered problemt");
 			artist = null;
 		}
-		
+
 		return artist;
 
 	}
@@ -124,7 +120,7 @@ public class ArtistDAOImpl implements ArtistDAO {
 	public Artist addNewArtist(Artist artist) {
 		em.persist(artist);
 		em.flush();
-		
+
 		return artist;
 	}
 
@@ -185,16 +181,16 @@ public class ArtistDAOImpl implements ArtistDAO {
 	@Override
 	public boolean updateArtist(int id, Artist artist) {
 		Artist updateArtist = em.find(Artist.class, id);
-		
+
 		boolean updated = false;
 		if (updateArtist != null && artist != null) {
 			updateArtistName(id, artist.getName());
 			updateArtistImage(id, artist.getImageUrl());
 			updateArtistDescription(id, artist.getDescription());
-			
+
 			updated = true;
 		}
-		
+
 		return updated;
 	}
 
@@ -211,29 +207,35 @@ public class ArtistDAOImpl implements ArtistDAO {
 			em.remove(artist);
 			successfullyDeleted = !em.contains(artist);
 		}
-		
+
 		return successfullyDeleted;
 	}
 
 	@Override
 	public List<Artist> getTopThreeArtist(boolean ascendingOder) {
-String jpql = "SELECT art FROM Artist art JOIN art.albums alb JOIN alb.albumRatings ar GROUP BY art ORDER BY AVG(ar.rating)";
-		
+		String jpql = "SELECT art FROM Artist art JOIN art.albums alb JOIN alb.albumRatings ar GROUP BY art ORDER BY AVG(ar.rating)";
+
 		if (ascendingOder) {
 			jpql += " ASC ";
-			
+
 		} else {
 			jpql += " DESC ";
-			
+
 		}
-		
+
 		List<Artist> artists = em.createQuery(jpql, Artist.class).getResultList();
-		if(artists == null) {
+		if (artists == null) {
 			artists = new ArrayList<>();
 		}
 		return artists;
 	}
 
+	@Override
+	public List<Artist> sortArtistsAlphabetically() {
+		String jpql = "SELECT a FROM Artist a ORDER BY a.name";
 
+		List<Artist> artistsInAlphabetical = em.createQuery(jpql, Artist.class).getResultList();
+		return artistsInAlphabetical;
+	}
 
 }

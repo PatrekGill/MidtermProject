@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.skilldistillery.audiophile.entities.Artist;
 
 @SpringBootTest
-class ArtistDAPOImplTest {
+class ArtistDAOImplTest {
 
 	@Autowired
 	ArtistDAOImpl DAOImp;
@@ -71,5 +71,11 @@ class ArtistDAPOImplTest {
 		assertEquals(DAOImp.findPrimaryArtistByAlbumName("A1A").getName(), "Jimmy Buffett");
 	}
 	
+	@Test
+	void test_sortArtistsAlphabetically() {
+		List<Artist> a = DAOImp.sortArtistsAlphabetically();
+		assertNotNull(a);
+		assertTrue(a.size() > 0);
+	}
 
 }

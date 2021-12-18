@@ -32,4 +32,6 @@ public interface ArtistDAO {
 	public boolean updateArtist(int id, Artist artist);
 
 	public boolean deleteArtist(int id);
+	
+	public List<Artist> sortArtistsAlphabetically();
 }
