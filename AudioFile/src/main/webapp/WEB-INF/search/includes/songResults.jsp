@@ -46,10 +46,10 @@
                                 <c:forEach items="${song.artists}" var="artist" varStatus="j">
                                     <c:choose>
                                         <c:when test="${j.index == 0}">
-                                            <a class="albumTable-artistText" href="artistProfile.do?id=${artist.id}">${artist.name}</a>
+                                            <a class="albumTable-artistText" href="artistProfile?id=${artist.id}">${artist.name}</a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a class="albumTable-artistText" href="artistProfile.do?id=${artist.id}">,${artist.name}</a>
+                                            <a class="albumTable-artistText" href="artistProfile?id=${artist.id}">,${artist.name}</a>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
