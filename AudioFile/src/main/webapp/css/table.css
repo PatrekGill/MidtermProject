@@ -158,8 +158,7 @@ a.commentTable-dateText {
 
 .comment-icon-button {
 	font-size: 21px !important;
-	background-color: black;
-	border-color: black;
+	color: black;
 	border-radius: 20%;
 }
 .comment-icon-button:hover {
