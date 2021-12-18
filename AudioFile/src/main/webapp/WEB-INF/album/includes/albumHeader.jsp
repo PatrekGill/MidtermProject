@@ -15,7 +15,6 @@
             </h1>
 
             <c:if test="${not empty album.artist}">
-                <%-- Must be changed to artist page --%>
                 <a class="albumText-artist" href="artistProfile?id=${album.artist.id}">${album.artist.name}</a>
                 <br>
             </c:if>
