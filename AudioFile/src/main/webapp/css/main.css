@@ -104,6 +104,10 @@ label {
 	height: 100%
 }
 
+create-padder{
+	padding-right: 10px;
+}
+
 .artist-text {
 	font:Helvetica;
 }
