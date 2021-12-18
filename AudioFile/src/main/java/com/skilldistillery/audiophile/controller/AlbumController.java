@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.audiophile.data.AlbumCommentDAOImpl;
 import com.skilldistillery.audiophile.data.AlbumDAOImpl;
@@ -270,7 +271,7 @@ public class AlbumController {
 		commentThread.do (GET)
 	---------------------------------------------------------------------------- */
 	@GetMapping(path="commentThread.do")
-	public String showCommentThread(Integer commentId, HttpSession session, Model model) {
+	public String showCommentThread(Integer commentId, HttpSession session, Model model, RedirectAttributes redirect) {
 		
 		if (commentId != null) {
 
@@ -279,7 +280,7 @@ public class AlbumController {
 				model.addAttribute("originalComment",comment);
 				model.addAttribute("album", comment.getAlbum());
 				model.addAttribute("replyingComments",comment.getReplies());
-
+				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(comment.getAlbum().getId()));
 				model.addAttribute("userOwnsComment",isSessionUser(session,comment.getUser()));
 			}
 			
@@ -339,6 +340,6 @@ public class AlbumController {
 	
 	private boolean isSessionUser(HttpSession session, User user) {
 		User sessionUser = getSessionUser(session);
-		return (user != null && sessionUser.equals(user));
+		return (user != null && sessionUser != null && sessionUser.equals(user));
 	}
 }

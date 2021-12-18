@@ -40,7 +40,7 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 	---------------------------------------------------------------------------- */
 	@Override
 	public List<AlbumComment> findCommentReplys(int originalCommentId) {
-		String jpql = "SELECT ac FROM AlbumComment ac WHERE ac.inReplyTo = :n";
+		String jpql = "SELECT ac FROM AlbumComment ac WHERE ac.inReplyTo = :n ORDER BY ac.commentDate DESC";
 		
 		return em.createQuery(jpql, AlbumComment.class)
 				.setParameter("n",originalCommentId)
