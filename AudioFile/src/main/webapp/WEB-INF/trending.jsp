@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <jsp:include page="bootstrapHead.jsp" />
-
+<div class="col-sm-8 text-left">
  <%-- ------------------------------------------------
                 Albums Table
 ------------------------------------------------ --%>
@@ -29,5 +29,5 @@
 	<form action="artistProfile" method="GET"></form>
 	<li><a href="artistProfile?id=${artist.id }">${artist.name }</a>
 </c:forEach>
-
+</div>
 <jsp:include page="bootstrapFooter.jsp"/>
