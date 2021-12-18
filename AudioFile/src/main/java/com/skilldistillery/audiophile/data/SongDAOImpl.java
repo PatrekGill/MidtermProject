@@ -35,9 +35,7 @@ public class SongDAOImpl implements SongDAO {
 	@Override
 	public List<Song> findBySongName(String name) {
 		String jpql = "SELECT s FROM Song s where s.name LIKE :songName";
-		List<Song> songs = em.createQuery(jpql, Song.class)
-				.setParameter("songName", "%" + name + "%")
-				.getResultList();
+		List<Song> songs = em.createQuery(jpql, Song.class).setParameter("songName", "%" + name + "%").getResultList();
 		return songs;
 	}
 
@@ -61,8 +59,7 @@ public class SongDAOImpl implements SongDAO {
 	public List<Song> findByArtistName(String artistName) {
 		String jpql = "SELECT a.songs FROM Artist a where a.name LIKE :artName";
 		List<Song> songs = new ArrayList<>();
-		List<Object> objs = em.createQuery(jpql, Object.class)
-				.setParameter("artName", "%" + artistName + "%")
+		List<Object> objs = em.createQuery(jpql, Object.class).setParameter("artName", "%" + artistName + "%")
 				.getResultList();
 		objs.forEach(obj -> songs.add((Song) obj));
 		return songs;
@@ -76,8 +73,7 @@ public class SongDAOImpl implements SongDAO {
 	public List<Song> findByAlbumName(String albumName) {
 		String jpql = "SELECT a.songs FROM Album a where a.title LIKE :albName";
 		List<Song> songs = new ArrayList<>();
-		List<Object> objs = em.createQuery(jpql, Object.class)
-				.setParameter("albName", "%" + albumName + "%")
+		List<Object> objs = em.createQuery(jpql, Object.class).setParameter("albName", "%" + albumName + "%")
 				.getResultList();
 		objs.forEach(obj -> songs.add((Song) obj));
 		return songs;
@@ -91,7 +87,7 @@ public class SongDAOImpl implements SongDAO {
 	public Song addNewSong(Song song) {
 		em.persist(song);
 		em.flush();
-		
+
 		return song;
 	}
 
@@ -101,14 +97,14 @@ public class SongDAOImpl implements SongDAO {
 	 */
 	@Override
 	public boolean updateSongName(int id, String newName) {
-		
+
 		boolean updated = false;
 		if (newName != null) {
 			Song updateSongName = em.find(Song.class, id);
 			updateSongName.setName(newName);
 			updated = true;
 		}
-		
+
 		return updated;
 	}
 
@@ -118,14 +114,14 @@ public class SongDAOImpl implements SongDAO {
 	 */
 	@Override
 	public boolean updateSongLyrics(int id, String newLyrics) {
-		
+
 		boolean updated = false;
 		if (newLyrics != null) {
 			Song updateSongLyrics = em.find(Song.class, id);
 			updateSongLyrics.setLyrics(newLyrics);
 			updated = true;
 		}
-		
+
 		return updated;
 	}
 
@@ -169,13 +165,13 @@ public class SongDAOImpl implements SongDAO {
 	@Override
 	public boolean deleteNewAddedSong(int id) {
 		boolean successfullyDelete = false;
-		
+
 		Song song = em.find(Song.class, id);
 		if (song != null) {
 			em.remove(song);
 			successfullyDelete = !em.contains(song);
 		}
-		
+
 		return successfullyDelete;
 	}
 
@@ -196,25 +192,23 @@ public class SongDAOImpl implements SongDAO {
 	 * ----------------------------
 	 */
 	@Override
-	public List<Song> sortBySongRating(boolean ascendingOder, int numberOf) {
+	public List<Song> sortBySongRatingAndReturnLimitedNumber(boolean ascendingOrder, int numberOf) {
 		List<Song> songs = null;
-		String jpql = "SELECT DISTINCT s, AVG(sr.rating) FROM Song s"
-				+ " LEFT JOIN s.songRatings sr"
+		String jpql = "SELECT DISTINCT s, AVG(sr.rating) FROM Song s" + " LEFT JOIN s.songRatings sr"
 				+ " GROUP BY s.id ORDER BY AVG(sr.rating)";
-		if (ascendingOder) {
+		if (ascendingOrder) {
 			jpql += " ASC";
-			
+
 		} else {
 			jpql += " DESC";
-			
+
 		}
 		List<Object[]> topSongsRated = em.createQuery(jpql, Object[].class).getResultList();
 		songs = new ArrayList<>();
-		for(int i = 0; i < numberOf & i < topSongsRated.size(); i++) {
-			songs.add((Song)topSongsRated.get(i)[0]);
+		for (int i = 0; i < numberOf & i < topSongsRated.size(); i++) {
+			songs.add((Song) topSongsRated.get(i)[0]);
 		}
 
-		
 		return songs;
 
 	}
@@ -225,23 +219,48 @@ public class SongDAOImpl implements SongDAO {
 	 */
 	@Override
 	public List<Song> sortByUpdateTime() {
-		
+
 		String jpql = "SELECT s FROM Song s order by s.updatedAt";
 		List<Song> songs = em.createQuery(jpql, Song.class).getResultList();
 
 		return songs;
 	}
-	
+
 	/*-----------------------------
 	 * Find  Song By Lyrics Keyword
 	 * ----------------------------
 	 */
 	@Override
 	public List<Song> findByLyricsKeyword(String keyword) {
-		// TODO Auto-generated method stub
 		String jpql = "SELECT s FROM Song s where s.lyrics like :keywords";
 		List<Song> songs = em.createQuery(jpql, Song.class).setParameter("keywords", "%" + keyword + "%")
 				.getResultList();
+		return songs;
+	}
+
+	/*-----------------------------
+	  Sort all songs by rating
+	 ----------------------------
+	 */
+	@Override
+	public List<Song> sortSongsByRating(boolean ascendingOrder) {
+		List<Song> songs = null;
+		String jpql = "SELECT DISTINCT s, AVG(sr.rating) FROM Song s" + " LEFT JOIN s.songRatings sr"
+				+ " GROUP BY s.id ORDER BY AVG(sr.rating)";
+		if (ascendingOrder) {
+			jpql += " ASC";
+
+		} else {
+			jpql += " DESC";
+
+		}
+		List<Object[]> topSongsRated = em.createQuery(jpql, Object[].class).getResultList();
+		songs = new ArrayList<>();
+		for (int i = 0; i < topSongsRated.size(); i++) {
+			songs.add((Song) topSongsRated.get(i)[0]);
+		}
+
+		
 		return songs;
 	}
 

@@ -27,7 +27,9 @@ public class TrendingController {
 		
 		@GetMapping(path="trending")
 		public String showTrendingPage(Model model) {
-			model.addAttribute("tredningAlbums", albumDAO.sortAlbumsByRating(false));
+			model.addAttribute("trendingAlbums", albumDAO.sortAlbumsByRating(false));
+			model.addAttribute("trendingSongs", songDAO.sortSongsByRating(false));
+			model.addAttribute("trendingArtists", artistDAO.sortArtistByTheirAlbumRatingAvg(false));
 			return "trending";
 		}
 	

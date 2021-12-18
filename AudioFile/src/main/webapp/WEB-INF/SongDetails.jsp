@@ -18,7 +18,7 @@
 			</c:forEach>
 			<c:forEach var="album" items="${Song.albums }">
 			<p align="center">Create Date: ${album.creationDateTime}</p>
-			<p align="center">Album: ${album.title}</p>
+			<p><a href="album.do?albumId=${album.id }">${album.title }</a></p>
 			</c:forEach>
 
 		

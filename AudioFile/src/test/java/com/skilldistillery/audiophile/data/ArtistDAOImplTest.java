@@ -43,8 +43,8 @@ class ArtistDAOImplTest {
 		assertFalse(DAOImp.sortByUpdateTime().isEmpty());
 	}
 	@Test
-	void test_get_topThree_artist_() {
-		List<Artist> a = DAOImp.getTopThreeArtist(false);
+	void test_sortArtistByTheirAlbumRatingAvg() {
+		List<Artist> a = DAOImp.sortArtistByTheirAlbumRatingAvg(false);
 		assertNotNull(a);
 		assertTrue(a.size()>0);
 		assertEquals("Miles Davis",a.get(0).getName());
