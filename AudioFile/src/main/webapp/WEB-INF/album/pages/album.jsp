@@ -46,10 +46,10 @@
                                                 <c:forEach items="${song.artists}" var="artist" varStatus="j">
                                                     <c:choose>
                                                         <c:when test="${j.index == 0}">
-                                                            <a class="albumTable-artistText" href="artist.do?artistId=${artist.id}">${artist.name}</a>
+                                                            <a class="albumTable-artistText" href="artistProfile.do?id=${artist.id}">${artist.name}</a>
                                                         </c:when>
                                                         <c:otherwise>
-                                    						<a class="albumTable-artistText" href="artist.do?artistId=${artist.id}">,${artist.name}</a>
+                                    						<a class="albumTable-artistText" href="artistProfile.do?id=${artist.id}">,${artist.name}</a>
                                     					</c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>
@@ -111,33 +111,38 @@
                                                     ${comment.commentDate.year}
                                                     ${comment.commentDate.month}
                                                     ${comment.commentDate.dayOfMonth}
-                                                    <br>
+
                                                     <c:if test="${comment.updateDateTime != null && comment.updateDateTime != comment.commentDate}">
-                                                        Edited On:
+                                                        (Edited On:
                                                         ${comment.updateDateTime.year}
                                                         ${comment.updateDateTime.month}
-                                                        ${comment.updateDateTime.dayOfMonth}
+                                                        ${comment.updateDateTime.dayOfMonth})
                                                     </c:if>
                                                 </p>
                                                 <p>${comment.comment}</p>
 
-                                                <c:if test="${not empty comment.replies}">
-                                                    <a class="commentTable-dateText" href="commentThread.do?commentId=${comment.id}">
-                                                        View Replies (${fn:length(comment.replies)})
-                                                    </a>
-                                                </c:if>
-                                                <c:if test="${not empty comment.inReplyTo}">
-                                                    <a class="commentTable-dateText" href="commentThread.do?commentId=${comment.inReplyTo}">
-                                                        View Replied To Comment
-                                                    </a>
-                                                </c:if>
+                                                <p>
+                                                    <c:if test="${not empty comment.replies}">
+                                                        <a class="commentTable-dateText" href="commentThread.do?commentId=${comment.id}">
+                                                            View Replies (${fn:length(comment.replies)})
+                                                        </a>
+                                                        <br>
+                                                    </c:if>
+
+                                                    <c:if test="${not empty comment.inReplyTo}">
+                                                        <a class="commentTable-dateText" href="commentThread.do?commentId=${comment.inReplyTo}">
+                                                            View Replied To Comment
+                                                        </a>
+                                                    </c:if>
+                                                </p>
+
                                             </td>
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${comment.user.id == sessionScope.user.id}">
                                                         <form action="commentThread.do" method="GET">
                                                             <input type="hidden" name="commentId" value="${comment.id }">
-            												<button type="submit" class="btn btn-primary btn-sm comment-icon-button">
+            												<button type="submit" class="btn btn-warning btn-sm comment-icon-button">
             													<i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="Edit Comment"></i>
             												</button>
                                                         </form>
@@ -146,7 +151,7 @@
                                                         <c:if test="${sessionScope.user != null}">
                                                             <form action="commentThread.do" method="GET">
                 												<input type="hidden" name="commentId" value="${comment.id }">
-                												<button type="submit" class="btn btn-primary btn-sm comment-icon-button">
+                												<button type="submit" class="btn btn-warning btn-sm comment-icon-button">
                 													<i class="glyphicon glyphicon-share" data-toggle="tooltip" title="Reply To Comment"></i>
                 												</button>
                 											</form>
@@ -219,12 +224,11 @@
                                                     ${rating.ratingDate.year}
                                                     ${rating.ratingDate.month}
                                                     ${rating.ratingDate.dayOfMonth}
-                                                    <br>
                                                     <c:if test="${rating.updateDateTime != null && rating.updateDateTime != rating.ratingDate}">
-                                                        Edited On:
+                                                        (Edited On:
                                                         ${rating.updateDateTime.year}
                                                         ${rating.updateDateTime.month}
-                                                        ${rating.updateDateTime.dayOfMonth}
+                                                        ${rating.updateDateTime.dayOfMonth}))
                                                     </c:if>
                                                 </p>
                                                 <p>${rating.description}</p>

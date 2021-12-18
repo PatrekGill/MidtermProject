@@ -56,7 +56,7 @@
                             </form>
                             <%-- seperated this button so the two delete and update can be side by side --%>
                             <button type="submit" form="commentEditForm" class="btn btn-warning table-btn-major">Update Comment</button>
-                            <button type="submit" form="deleteCommentForm" class="btn btn-danger table-btn-minor">Delete Comment</button>
+                            <button type="submit" form="deleteCommentForm" class="btn btn-danger table-btn-minor">Delete</button>
 
                         </c:when>
                         <c:otherwise>
@@ -152,12 +152,12 @@
                                                     ${comment.commentDate.year}
                                                     ${comment.commentDate.month}
                                                     ${comment.commentDate.dayOfMonth}
-                                                    <br>
+
                                                     <c:if test="${comment.updateDateTime != null && comment.updateDateTime != comment.commentDate}">
-                                                        Edited On:
+                                                        (Edited On:
                                                         ${comment.updateDateTime.year}
                                                         ${comment.updateDateTime.month}
-                                                        ${comment.updateDateTime.dayOfMonth}
+                                                        ${comment.updateDateTime.dayOfMonth})
                                                     </c:if>
                                                 </p>
                                                 <p>${comment.comment}</p>
@@ -166,11 +166,7 @@
                                                     <a class="commentTable-dateText" href="commentThread.do?commentId=${comment.id}">
                                                         View Replies (${fn:length(comment.replies)})
                                                     </a>
-                                                </c:if>
-                                                <c:if test="${not empty comment.inReplyTo}">
-                                                    <a class="commentTable-dateText" href="commentThread.do?commentId=${comment.inReplyTo}">
-                                                        View Replied To Comment
-                                                    </a>
+                                                    <br>
                                                 </c:if>
                                             </td>
 
@@ -179,7 +175,7 @@
                                                     <c:when test="${comment.user.id == sessionScope.user.id}">
                                                         <form action="commentThread.do" method="GET">
                                                             <input type="hidden" name="commentId" value="${comment.id }">
-            												<button type="submit" class="btn btn-primary btn-sm comment-icon-button">
+            												<button type="submit" class="btn btn-warning btn-sm comment-icon-button">
             													<i class="glyphicon glyphicon-edit" data-toggle="tooltip" title="Edit Comment"></i>
             												</button>
                                                         </form>
@@ -188,7 +184,7 @@
                                                         <c:if test="${sessionScope.user != null}">
                                                             <form action="commentThread.do" method="GET">
                 												<input type="hidden" name="commentId" value="${comment.id }">
-                												<button type="submit" class="btn btn-primary btn-sm comment-icon-button">
+                												<button type="submit" class="btn btn-warning btn-sm comment-icon-button">
                 													<i class="glyphicon glyphicon-share" data-toggle="tooltip" title="Reply To Comment"></i>
                 												</button>
                 											</form>

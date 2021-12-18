@@ -132,12 +132,11 @@
                                                     ${rating.ratingDate.year}
                                                     ${rating.ratingDate.month}
                                                     ${rating.ratingDate.dayOfMonth}
-                                                    <br>
                                                     <c:if test="${rating.updateDateTime != null && rating.updateDateTime != rating.ratingDate}">
-                                                        Edited On:
+                                                        (Edited On:
                                                         ${rating.updateDateTime.year}
                                                         ${rating.updateDateTime.month}
-                                                        ${rating.updateDateTime.dayOfMonth}
+                                                        ${rating.updateDateTime.dayOfMonth})
                                                     </c:if>
                                                 </p>
                                                 <p>${rating.description}</p>
