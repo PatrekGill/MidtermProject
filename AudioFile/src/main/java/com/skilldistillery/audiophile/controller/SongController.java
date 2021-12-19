@@ -1,0 +1,119 @@
+package com.skilldistillery.audiophile.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.skilldistillery.audiophile.data.AlbumDAO;
+import com.skilldistillery.audiophile.data.ArtistDAO;
+import com.skilldistillery.audiophile.data.SongDAO;
+import com.skilldistillery.audiophile.data.UserDAO;
+import com.skilldistillery.audiophile.entities.Album;
+import com.skilldistillery.audiophile.entities.Artist;
+import com.skilldistillery.audiophile.entities.Song;
+import com.skilldistillery.audiophile.entities.User;
+
+@Controller
+public class SongController {
+
+	@Autowired
+	private AlbumDAO albumDAO;
+
+	@Autowired
+	private SongDAO songDAO;
+
+	@Autowired
+	private ArtistDAO artistDAO;
+	
+	
+	@GetMapping(path = "editSong")
+	public String getEditSongPage(Integer songId, HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			return "profile";
+		}
+		
+		// if editing song (not creating a new one) save and id to identify what artists are currently selected for that song
+		if (songId != null) {
+			Song song = songDAO.findById(songId);
+			if (song != null) {
+				model.addAttribute(song);				
+			}
+		}
+		
+		List<Artist> allArtists = artistDAO.sortArtistsAlphabetically();
+		model.addAttribute("artists",allArtists);
+		
+		List<Album> allAlbums = albumDAO.sortAlbumsByTitle(true);
+		model.addAttribute("albums",allAlbums);
+		
+		return "editSong";
+	}
+
+	
+	
+	@PostMapping(path = "editSong")
+	public String editSong(
+			Integer songId, Integer[] artistIds, Integer[] albumIds, 
+			String name, String lyrics,	int durationInSeconds, 
+			RedirectAttributes redir, HttpSession session
+		) {
+		
+		Song song = new Song();
+		User user = (User) session.getAttribute("user");
+		try {
+			song.setName(name);
+			song.setLyrics(lyrics);
+			song.setDurationInSeconds(durationInSeconds);
+			song.setUser(user);
+			
+			for (Integer artistId : artistIds) {
+				song.addArtist(artistDAO.findById(artistId));
+			}
+			
+			for (Integer albumId : albumIds) {
+				song.addAlbum(albumDAO.findAlbumById(albumId));
+			}
+			
+			boolean succeeded = false;
+			boolean updatingSong = songId != null;
+			if (updatingSong) {
+				succeeded = songDAO.updateSong(songId,song);
+				
+			} else {
+				succeeded = songDAO.addNewSong(song) != null;
+			}
+			
+
+			if (succeeded) {
+				redir.addFlashAttribute("success", "Song successfully created!");
+				return "redirect:searchBySongName.do?songName="+song.getName();
+				
+			} else {
+				String message;
+				if (updatingSong) {
+					message = "Failed to update song: " + songId;
+				} else {
+					message = "Failed to create new song";
+				}
+				
+				throw new Exception(message);
+			}
+			
+		} catch (Exception e) {
+			redir.addFlashAttribute("error", e.getMessage() + ": " + song.toString());
+			e.printStackTrace();
+		}
+		
+		
+		return "redirect:/";
+
+	}
+}
