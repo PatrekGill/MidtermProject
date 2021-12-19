@@ -19,6 +19,7 @@ import com.skilldistillery.audiophile.entities.Album;
 import com.skilldistillery.audiophile.entities.AlbumComment;
 import com.skilldistillery.audiophile.entities.AlbumRating;
 import com.skilldistillery.audiophile.entities.User;
+import com.skilldistillery.audiophile.misc.SessionUserChecker;
 
 @Controller
 public class AlbumController {
@@ -31,12 +32,20 @@ public class AlbumController {
 	@Autowired
 	private AlbumCommentDAOImpl albumCommentDAO;
 	
+	private SessionUserChecker checker = new SessionUserChecker();
+	
 
 	/* ----------------------------------------------------------------------------
 		album.do (GET)
 	---------------------------------------------------------------------------- */
 	@GetMapping(path="album.do")
-	public String showAlbumPage(Integer albumId, HttpSession session, Model model) {
+	public String showAlbumPage(
+			Integer albumId, 
+			HttpSession session, 
+			Model model,
+			RedirectAttributes redir
+		) {
+		
 		if (albumId != null) {
 			Album album = albumDAO.findAlbumById(albumId);
 			if (album != null) {
@@ -53,110 +62,35 @@ public class AlbumController {
 				if (!ratings.isEmpty()) {
 					model.addAttribute("albumRatings",ratings);
 				}
+				
+				return "album/pages/album";
 			}
-			
 		}
 		
-		return "album/pages/album";
+		redir.addFlashAttribute("error","This album does not seem to exist");
+		return "redirect:/";
 	}
 	
-	
-	/* ----------------------------------------------------------------------------
-		albumComments.do (GET)
-	---------------------------------------------------------------------------- */
-	@GetMapping(path="albumComments.do")
-	public String showAlbumComments(Integer albumId, HttpSession session, Model model) {
-		
-		if (albumId != null) {
-			
-			Album album = albumDAO.findAlbumById(albumId);
-			if (album != null) {
-				model.addAttribute("album", album);
-				
-				List<AlbumComment> comments = albumCommentDAO.sortAlbumCommentsByCommentDate(albumId, false);
-				model.addAttribute("albumComments",comments);
-				
-				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(albumId));
-			}
-			
-		}
-		
-		return "album/pages/albumComments";
-	}
-	/* ----------------------------------------------------------------------------
-		albumComments.do (POST)
-	---------------------------------------------------------------------------- */
-	@PostMapping(path="albumComments.do")
-	public String postComment(Integer albumId, String commentText, HttpSession session, Model model) {
-		
-		if (albumId != null) {
-			
-			User user = getSessionUser(session);
-			Album album = albumDAO.findAlbumById(albumId);
-			if (album != null && user != null) {
-				AlbumComment comment = new AlbumComment();
-				comment.setAlbum(album);
-				comment.setComment(commentText);
-				comment.setUser(user);
-				
-				albumCommentDAO.createAlbumComment(comment);
-				model.addAttribute("album", album);
-				
-				List<AlbumComment> comments = albumCommentDAO.sortAlbumCommentsByCommentDate(albumId, false);
-				model.addAttribute("albumComments",comments);
-				
-				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(albumId));
-			}
-			
-		}
-		
-		return "album/pages/albumComments";
-	}
-	
-	@PostMapping(
-		path="albumComments.do",
-		params = {"editCommentId","commentText"}
-	)
-	public String editComment(
-			Integer editCommentId,
-			String commentText,
-			HttpSession session,
-			Model model
-		) {
-		User user = getSessionUser(session);
-		
-		if (editCommentId != null) {
-			AlbumComment comment = albumCommentDAO.findAlbumCommentById(editCommentId);
-			if (comment != null && comment.getUser().equals(user)) {
-				Album album = comment.getAlbum();
-				comment.setComment(commentText);
-				
-				model.addAttribute("originalComment",comment);
-				model.addAttribute("album", album);
-				model.addAttribute("replyingComments",albumCommentDAO.findCommentReplys(editCommentId));
-				model.addAttribute("userOwnsComment",comment.getUser().equals(user));
-				model.addAttribute("album", album);		
-				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(album.getId()));
-			}
-
-		}
-		
-		return "album/pages/commentThread";
-	}
 	
 	
 	/* ----------------------------------------------------------------------------
 		albumRatings.do (GET)
 	---------------------------------------------------------------------------- */
 	@GetMapping(path="albumRatings.do")
-	public String showRatingsPage(Integer albumId, HttpSession session, Model model) {
+	public String showRatingsPage(
+			Integer albumId, 
+			HttpSession session, 
+			Model model,
+			RedirectAttributes redir
+		) {
+		
 		if (albumId != null) {
 			
 			Album album = albumDAO.findAlbumById(albumId);
 			if (album != null) {
 				model.addAttribute("album", album);
 				
-				User user = getSessionUser(session);
+				User user = checker.getSessionUser(session);
 				boolean userHasRating = false;
 				if (user != null) {
 					AlbumRating usersRating = albumRatingDAO.findByAlbumAndUserId(albumId, user.getId());
@@ -172,11 +106,13 @@ public class AlbumController {
 				List<AlbumRating> ratings = albumRatingDAO.sortedByCreatationDate(albumId, false);
 				model.addAttribute("albumRatings",ratings);
 				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(albumId));
+
+				return "album/pages/albumRatings";
 			}
 		}
 		
-	
-		return "album/pages/albumRatings";
+		redir.addFlashAttribute("error","This album does not seem to exist");
+		return "redirect:/";
 	}
 	
 	/* ----------------------------------------------------------------------------
@@ -188,7 +124,8 @@ public class AlbumController {
 			String ratingText, 
 			Integer ratingNumber, 
 			HttpSession session, 
-			Model model
+			Model model,
+			RedirectAttributes redir
 		) {
 		
 		
@@ -198,7 +135,7 @@ public class AlbumController {
 			if (album != null) {
 				model.addAttribute("album", album);
 				 
-				User user = getSessionUser(session);
+				User user = checker.getSessionUser(session);
 				if (user != null) {
 					int userId = user.getId();
 					AlbumRating usersRating = albumRatingDAO.findByAlbumAndUserId(albumId, userId);
@@ -228,10 +165,16 @@ public class AlbumController {
 				List<AlbumRating> ratings = albumRatingDAO.sortedByCreatationDate(albumId, false);
 				model.addAttribute("albumRatings",ratings);
 				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(albumId));
+				
+				redir.addFlashAttribute("success","Posted Your Rating!");
+				redir.addAttribute("albumId",albumId);
+				
+				return "redirect:albumRatings.do";
 			}
 		}
 		
-		return "album/pages/albumRatings";
+		redir.addFlashAttribute("error","Could not post this rating");
+		return "redirect:/";
 	}
 	
 	
@@ -239,107 +182,50 @@ public class AlbumController {
 		deleteRating.do (POST)
 	---------------------------------------------------------------------------- */
 	@PostMapping(path="deleteRating.do")
-	public String deleteRating(Integer albumId, HttpSession session, Model model) {
+	public String deleteRating(
+			Integer albumId, 
+			HttpSession session, 
+			Model model,
+			RedirectAttributes redir
+		) {
+		
 		if (albumId != null) {
 			
 			Album album = albumDAO.findAlbumById(albumId);
 			if (album != null) {
 				model.addAttribute("album", album);
 				 
-				User user = getSessionUser(session);
+				User user = checker.getSessionUser(session);
+				boolean deleted = false;
 				if (user != null) {
 					AlbumRating usersRating = albumRatingDAO.findByAlbumAndUserId(albumId, user.getId());
 					if (usersRating != null) {
-						if (albumRatingDAO.deleteAlbumRating(usersRating.getId())) {
+						// delete here
+						deleted = albumRatingDAO.deleteAlbumRating(usersRating.getId());
+						if (deleted) {
 							model.addAttribute("userHasRating",false);
+							redir.addFlashAttribute("success","Deleted your rating");
 						}
 					}
-					
 				}
 				
 				List<AlbumRating> ratings = albumRatingDAO.sortedByCreatationDate(albumId, false);
 				model.addAttribute("albumRatings",ratings);
 				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(albumId));
-			}
-		}
-		
-		return "album/pages/albumRatings";
-	}
-	
-
-	/* ----------------------------------------------------------------------------
-		commentThread.do (GET)
-	---------------------------------------------------------------------------- */
-	@GetMapping(path="commentThread.do")
-	public String showCommentThread(Integer commentId, HttpSession session, Model model, RedirectAttributes redirect) {
-		
-		if (commentId != null) {
-
-			AlbumComment comment = albumCommentDAO.findAlbumCommentById(commentId);
-			if (comment != null) {
-				model.addAttribute("originalComment",comment);
-				model.addAttribute("album", comment.getAlbum());
-				model.addAttribute("replyingComments",comment.getReplies());
-				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(comment.getAlbum().getId()));
-				model.addAttribute("userOwnsComment",isSessionUser(session,comment.getUser()));
-			}
-			
-		}
-		
-		return "album/pages/commentThread";
-	}
-	
-	@PostMapping(path="commentThread.do")
-	public String postReply(
-			Integer replyToId,
-			String commentText,
-			HttpSession session,
-			Model model
-		) {
-		
-		if (replyToId != null) {
-			
-			AlbumComment originalComment = albumCommentDAO.findAlbumCommentById(replyToId);
-			User user = getSessionUser(session);
-			if (originalComment != null && user != null) {
-				Album album = originalComment.getAlbum();
 				
-				if (commentText != null & !commentText.equals("")) {
-					AlbumComment comment = new AlbumComment();
-					comment.setAlbum(album);
-					comment.setComment(commentText);
-					comment.setUser(user);
-					comment.setInReplyTo(replyToId);
-					albumCommentDAO.createAlbumComment(comment);
+				if (!deleted) {
+					redir.addFlashAttribute("error","Could not delete that rating");
 				}
-
-				model.addAttribute("originalComment",originalComment);
-				model.addAttribute("album", originalComment.getAlbum());
-				model.addAttribute("replyingComments",albumCommentDAO.findCommentReplys(replyToId));
-				model.addAttribute("userOwnsComment",isSessionUser(session,originalComment.getUser()));
-				model.addAttribute("album", album);		
-				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(album.getId()));
+				
+				redir.addAttribute("albumId",albumId);
+				return "redirect:albumRatings.do";
 			}
 		}
 		
-		return "album/pages/commentThread";
+		redir.addFlashAttribute("error","Could not delete this rating");
+		return "redirect:/";
 	}
 	
-	private User getSessionUser(HttpSession session) {
-		session.getAttribute("user");
-		User user;
-		try {
-			user = (User)session.getAttribute("user");
-		} catch (Exception e) {
-			System.out.println("Did not find session user");
-			user = null;
-		}
-		
-		return user;
-	}
+
 	
-	private boolean isSessionUser(HttpSession session, User user) {
-		User sessionUser = getSessionUser(session);
-		return (user != null && sessionUser != null && sessionUser.equals(user));
-	}
 }
