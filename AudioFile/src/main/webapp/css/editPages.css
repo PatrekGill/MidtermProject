@@ -1,0 +1,17 @@
+.editing-table {
+    /* width: 100%; */
+    min-width: 100px;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.editing-table-selectBox {
+    width: 100%;
+    color: black;
+}
+
+.editing-table-textarea textarea {
+	/* width: 100%; */
+    resize: vertical;
+}

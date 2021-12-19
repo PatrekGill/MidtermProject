@@ -1,5 +1,6 @@
 @import "album.css";
 @import "table.css";
+@import "editPages.css";
 /* Remove the navbar's default margin-bottom and rounded borders */
 .col {
 	position: fixed;
