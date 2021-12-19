@@ -56,20 +56,33 @@
 									<span class="input-group-addon">
 										<i class="glyphicon glyphicon-time"></i>
 									</span>
-									<input type="number" name="duration" min="0" max="9999" step="1" value="0" class="form-control" placeholder="Duration in seconds..."/>
+									<input type="number" name="durationInSeconds" min="0" max="9999" step="1" value="0" class="form-control" placeholder="Duration in seconds..."/>
 								</div>
 							</td>
 						</tr>
 
 						<tr>
 							<td>
+                                <label for="artists">Artists</label>
+								<div class="input-group container-fluid">
 
-								<select class="editing-table-selectBox" multiple>
-                                    <option value="1" data-mdb-icon="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-1.jpg">
-                                        One
-                                    </option>
+                                    <c:forEach items="${artists }" var="artist">
+                                        <div>
+                                            <c:choose>
+                                                <c:when test="${not empty song}">
+                                                    <input type="checkbox" checked id="${artist}" name="artistIds" value="${artist.id}">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <input type="checkbox" id="${artist}" name="artistIds" value="${artist.id}">
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <label for="${artist}">${artist.name}</label>
+                                        </div>
 
-								</select>
+
+                                    </c:forEach>
+
+								</div>
 
 							</td>
 						</tr>
@@ -78,10 +91,7 @@
 							<td>
 
 								<div>
-									<button type="submit" class="btn btn-success">
-										<i class="glyphicon glyphicon-plus-sign" style="font-size:22px; vertical-align: middle;"></i>
-										<span style="font-size:15px; vertical-align: middle;">Add Song</span>
-									</button>
+									<button type="submit" class="btn btn-warning table-btn">Add Song</button>
 								</div>
 
 							</td>
@@ -94,38 +104,4 @@
 </div>
 
 
-
-
-
-
-
-<%-- <div class="col-sm-8 text-left">
-<table class="createAccount" id="create-account">
-	<thead>
-		<tr>
-			<th>Field</th>
-			<th>Value</th>
-		</tr>
-	</thead>
-	<tbody>
-		<form action="addSong" method="post">
-			<tr>
-				<th>Name</th>
-				<td><input type="text" id="name" name="name" required style ="color:black"></td>
-			</tr>
-			<tr>
-				<th>Lyrics</th>
-				<td><input type="text" id="lyrics" name="lyrics" style ="color:black"></td>
-			</tr>
-			<tr>
-				<th>Duration Seconds</th>
-				<td><input type="number" id="durationInSeconds" name="durationInSeconds" style ="color:black"></td>
-			</tr>
-			<tr>
-				<td><input type="submit" type="Create Song" style ="color:black" /></td>
-			</tr>
-		</form>
-	</tbody>
-</table>
-</div> --%>
 <jsp:include page="bootstrapFooter.jsp" />

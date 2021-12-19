@@ -217,18 +217,20 @@ public class UserController {
 	}
 
 	@GetMapping(path = "addSong")
-	public String getAddSongpage(HttpSession session) {
+	public String getAddSongpage(HttpSession session, Model model) {
 		User user = (User) session.getAttribute("user");
 		if (user == (null)) {
 
 			return "profile";
 		}
+		
+		model.addAttribute("artists",artistDAO.sortArtistsAlphabetically());
 		return "addSong";
 	}
 
 	@PostMapping(path = "addSong")
-	public String createSong(String name, String lyrics, int durationInSeconds, RedirectAttributes redir,
-			HttpSession session) {
+	public String createSong(int[] artistIds, String name, String lyrics, 
+			int durationInSeconds, RedirectAttributes redir, HttpSession session) {
 		Song song = new Song();
 		User user = (User) session.getAttribute("user");
 		try {
@@ -236,6 +238,9 @@ public class UserController {
 			song.setLyrics(lyrics);
 			song.setDurationInSeconds(durationInSeconds);
 			song.setUser(user);
+			for (Integer artistId : artistIds) {
+				song.addArtist(artistDAO.findById(artistId));
+			}
 			songDAO.addNewSong(song);
 
 			if (songDAO.addNewSong(song) != null) {

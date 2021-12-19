@@ -4,14 +4,29 @@
     max-width: 1600px;
     margin-left: auto;
     margin-right: auto;
+    /* overflow: auto; */
 }
 
 .editing-table-selectBox {
     width: 100%;
-    color: black;
+    /* color: black; */
+    background-color: rgba(0,0,0,0.75);
+    border: rgba(0,0,0,0.75);
 }
 
 .editing-table-textarea textarea {
 	/* width: 100%; */
     resize: vertical;
 }
+
+/* .editing-table-dropdown {
+    width: 100%;
+}
+.editing-table-dropdown select {
+    width: 100%;
+    max-height: 100px;
+}
+.editing-table-dropdown label {
+    color: black;
+
+} */
