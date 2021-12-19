@@ -59,18 +59,18 @@ class SongRatingDAOImplTest {
 	@Test
 	void test_sortSongRatingsByCreationDate_number_of_users() {
 		assertNotNull(srDAO);
-		assertNotNull(srDAO.sortSongRatingsByRatingDate(true,1));
-		assertEquals(3, srDAO.sortSongRatingsByRatingDate(true,1).get(0).getRating());
-		assertEquals(1, srDAO.sortSongRatingsByRatingDate(true,1).size());
+		assertNotNull(srDAO.sortSongRatingsByRatingDateAndLimitOutput(true,1));
+		assertEquals(3, srDAO.sortSongRatingsByRatingDateAndLimitOutput(true,1).get(0).getRating());
+		assertEquals(1, srDAO.sortSongRatingsByRatingDateAndLimitOutput(true,1).size());
 		
 	}
 	
 	@Test
 	void test_sortSongRatingsByCreationDate_out_of_bounds() {
 		assertNotNull(srDAO);
-		assertNotNull(srDAO.sortSongRatingsByRatingDate(true,0));
-		assertNotNull(srDAO.sortSongRatingsByRatingDate(true,20));
-		assertEquals(3, srDAO.sortSongRatingsByRatingDate(true,20).get(0).getRating());
+		assertNotNull(srDAO.sortSongRatingsByRatingDateAndLimitOutput(true,0));
+		assertNotNull(srDAO.sortSongRatingsByRatingDateAndLimitOutput(true,20));
+		assertEquals(3, srDAO.sortSongRatingsByRatingDateAndLimitOutput(true,20).get(0).getRating());
 		
 	}
 	
@@ -79,6 +79,7 @@ class SongRatingDAOImplTest {
 		assertNotNull(srDAO);
 		assertTrue(srDAO.sortedByRating(1, true).size() > 0);
 	}
+
 	
 
 //	@Test

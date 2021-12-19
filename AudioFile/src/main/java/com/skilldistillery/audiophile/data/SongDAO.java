@@ -17,6 +17,7 @@ public interface SongDAO {
 	public List<Song> sortByUpdateTime();
 	public List<Song> sortSongsByRating(boolean ascendingOrder);
 	
+	
 	//CRUD
 	public Song addNewSong(Song song);
 	public boolean updateSongName(int id, String newName);
