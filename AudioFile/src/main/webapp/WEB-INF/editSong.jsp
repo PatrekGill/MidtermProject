@@ -124,7 +124,7 @@
                                                     <input type="checkbox" id="${album}" name="albumIds" value="${album.id}">
                                                 </c:otherwise>
                                             </c:choose>
-                                            <label for="${album}">${album.name}</label>
+                                            <label for="${album}">${album.title}</label>
                                         </div>
                                     </c:forEach>
 
@@ -137,7 +137,7 @@
 							<td>
 
 								<div>
-                                    
+
                                     <c:choose>
                                         <c:when test="${not empty song}">
                                             <button type="submit" class="btn btn-warning table-btn">Update Song</button>

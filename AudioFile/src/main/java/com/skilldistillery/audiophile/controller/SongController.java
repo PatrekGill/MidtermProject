@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.skilldistillery.audiophile.data.AlbumDAO;
-import com.skilldistillery.audiophile.data.ArtistDAO;
-import com.skilldistillery.audiophile.data.SongDAO;
-import com.skilldistillery.audiophile.data.UserDAO;
+import com.skilldistillery.audiophile.data.AlbumDAOImpl;
+import com.skilldistillery.audiophile.data.ArtistDAOImpl;
+import com.skilldistillery.audiophile.data.SongDAOImpl;
 import com.skilldistillery.audiophile.entities.Album;
 import com.skilldistillery.audiophile.entities.Artist;
 import com.skilldistillery.audiophile.entities.Song;
@@ -24,13 +23,13 @@ import com.skilldistillery.audiophile.entities.User;
 public class SongController {
 
 	@Autowired
-	private AlbumDAO albumDAO;
+	private AlbumDAOImpl albumDAO;
 
 	@Autowired
-	private SongDAO songDAO;
+	private SongDAOImpl songDAO;
 
 	@Autowired
-	private ArtistDAO artistDAO;
+	private ArtistDAOImpl artistDAO;
 	
 	
 	@GetMapping(path = "editSong")
