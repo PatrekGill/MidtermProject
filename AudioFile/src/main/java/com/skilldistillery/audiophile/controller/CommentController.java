@@ -27,7 +27,8 @@ public class CommentController {
 	private AlbumRatingDAOImpl albumRatingDAO;
 	@Autowired
 	private AlbumCommentDAOImpl albumCommentDAO;
-	private SessionUserChecker checker;
+	
+	private SessionUserChecker checker = new SessionUserChecker();
 	
 	/* ----------------------------------------------------------------------------
 		albumComments.do (GET)
@@ -165,7 +166,7 @@ public class CommentController {
 				model.addAttribute("averageRating",albumRatingDAO.getAverageAlbumRating(comment.getAlbum().getId()));
 				model.addAttribute("userOwnsComment",checker.isSessionUser(session,comment.getUser()));
 				
-				return "album/pages/albumComments";
+				return "album/pages/commentThread";
 			}
 			
 		}
