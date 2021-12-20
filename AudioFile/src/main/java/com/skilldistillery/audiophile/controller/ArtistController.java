@@ -206,7 +206,7 @@ public class ArtistController {
 			}
 			
 		} catch (Exception e) {
-			redir.addFlashAttribute("error", "A failure happend while editing the song");
+			redir.addFlashAttribute("error", "A failure happend while editing the artist");
 			e.printStackTrace();
 		}
 	

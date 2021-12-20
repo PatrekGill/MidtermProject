@@ -150,23 +150,22 @@
                         ------------------------------------------------ --%>
 						<tr class="editing-table-checkboxes-hover">
 							<td>
-                                <label for="albums">Albums: (Without Artists)</label>
+                                <label for="albums">Albums:</label>
 								<div class="editing-table-checkboxes">
 
                                     <c:forEach items="${albums }" var="album">
                                         <div>
-                                            <%-- Don't allow people to be assigned to albums that already have artists --%>
-                                            <c:if test="${empty album.artist}">
-                                                <c:choose>
-                                                    <c:when test="${editing && fncust:contains( artist.albums, album)}">
-                                                        <input type="checkbox" checked name="albumIds" value="${album.id}">
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <input type="checkbox" name="albumIds" value="${album.id}">
-                                                    </c:otherwise>
-                                                </c:choose>
-                                                <label for="${album}">${album.title}</label>
-                                            </c:if>
+
+                                            <c:choose>
+                                                <c:when test="${editing && fncust:contains( artist.albums, album)}">
+                                                    <input type="checkbox" checked name="albumIds" value="${album.id}">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <input type="checkbox" name="albumIds" value="${album.id}">
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <label for="${album}">${album.title}</label>
+
                                         </div>
                                     </c:forEach>
 

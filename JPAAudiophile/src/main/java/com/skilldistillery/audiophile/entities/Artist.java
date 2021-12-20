@@ -127,6 +127,10 @@ public class Artist {
 ---------------------------------------------------------------------------- */
 
 	public List<Song> getSongs() {
+		if (songs == null) {
+			songs = new ArrayList<>();
+		}
+		
 		return songs;
 	}
 
@@ -181,6 +185,10 @@ public class Artist {
 ---------------------------------------------------------------------------- */
 
 	public List<Album> getAlbums() {
+		if (albums == null) {
+			albums = new ArrayList<>();
+		}
+		
 		return albums;
 	}
 
