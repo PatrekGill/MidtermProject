@@ -10,7 +10,7 @@ public interface SongRatingDAO {
 	List<SongRating> findByUsername (String username);
 	public SongRating findSongRatingById(int id);
 	public List<SongRating> findSongRatingsByUserId(int id);
-	public SongRating findSongRatingByUserIdSongId(int userid ,int songid);
+	public SongRating findSongRatingByUserIdSongId(int userId ,int songId);
 	
 	boolean updateRating(int id, int newRating);
 	boolean updateDescription(int id, String newRating);
