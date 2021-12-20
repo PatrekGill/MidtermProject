@@ -24,11 +24,10 @@
 			<c:forEach items="${artists }" var="artist">
 				<a class="albumText-artist" href="artistProfile?id=${artist.id}">${artist.name}</a>
 			</c:forEach>
-			<br>
-			<a class="albumText-artist-sm"
+			<br> <a class="albumText-artist-sm"
 				href="songRatings.do?songId=${Song.id}">Average Rating:
 				${averageRating} / 10</a>
-				<p>Lyrics:</p>
+			<p>Lyrics:</p>
 			<p>${Song.lyrics }</p>
 		</div>
 	</div>
@@ -39,10 +38,12 @@
 		Edit Button
 	------------------------------------------------ --%>
 	<div class="edit-entity-button">
-		<c:if test="${not empty sessionScope.user && Song.user == sessionScope.user}">
+		<c:if
+			test="${not empty sessionScope.user && Song.user == sessionScope.user}">
 			<form action="editSong" method="GET">
 				<input type="hidden" name="songId" value="${Song.id}">
-				<button type="submit" class="btn btn-warning table-btn">Edit Song</button>
+				<button type="submit" class="btn btn-warning table-btn">Edit
+					Song</button>
 			</form>
 		</c:if>
 	</div>
@@ -59,8 +60,9 @@
 			<tbody>
 				<c:forEach var="album" items="${albums }">
 					<tr>
-						<td><a href="album.do?albumId=${album.id}"><img class="albumImage-sm" src="${album.imageURL }"
-							alt="image of album"></a></td>
+						<td><a href="album.do?albumId=${album.id}"><img
+								class="albumImage-sm" src="${album.imageURL }"
+								alt="image of album"></a></td>
 						<td><a href="album.do?albumId=${album.id}">${album.title }</a></td>
 					</tr>
 				</c:forEach>
@@ -118,6 +120,7 @@
 
 						</c:forEach>
 
+
 					</c:when>
 					<c:otherwise>
 						<tr>
@@ -130,7 +133,6 @@
 								</h4>
 							</c:if>
 						</tr>
-						</form>
 						<c:if test="${sessionScope.user != null }">
 							<form id="ratingPostForm" action="songRatings.do" method="POST">
 								<input type="hidden" name="songId" value="${Song.id }">
@@ -190,7 +192,21 @@
 						</c:if>
 					</c:otherwise>
 				</c:choose>
+
 			</tbody>
+		</table>
+		<c:if test="${not empty songRatings }">
+			<form class="" action="songRatings.do" method="GET">
+				<input type="hidden" name="songId" value="${Song.id}">
+				<button type="submit" class="btn btn-warning table-btn">Show
+					All Ratings</button>
+			</form>
+			</c:if>
+	
+
+	</div>
+</div>
+
 
 
 <jsp:include page="../scripts/tooltipScript.jsp" />
