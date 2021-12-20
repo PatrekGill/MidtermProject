@@ -175,10 +175,10 @@
                                         <div>
                                             <c:choose>
                                                 <c:when test="${editng && fncust:contains( album.songs, song)}">
-                                                    <input class="editing-table-checkbox-song" type="checkbox" checked id="${song}" name="songIds" value="${song.id}">
+                                                    <input class="editing-table-checkbox-song" type="checkbox" checked name="songIds" value="${song.id}">
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <input class="editing-table-checkbox-song" type="checkbox" id="${song}" name="songIds" value="${song.id}">
+                                                    <input class="editing-table-checkbox-song" type="checkbox" name="songIds" value="${song.id}">
                                                 </c:otherwise>
                                             </c:choose>
                                             <label for="${song}">
@@ -219,10 +219,10 @@
                                         <div>
                                             <c:choose>
                                                 <c:when test="${editing && fncust:contains( album.genres, genre)}">
-                                                    <input type="checkbox" checked id="${genre}" name="genreIds" value="${genre.id}">
+                                                    <input type="checkbox" checked name="genreIds" value="${genre.id}">
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <input type="checkbox" id="${genre}" name="genreIds" value="${genre.id}">
+                                                    <input type="checkbox" name="genreIds" value="${genre.id}">
                                                 </c:otherwise>
                                             </c:choose>
                                             <label for="${genre}">${genre.name}</label>

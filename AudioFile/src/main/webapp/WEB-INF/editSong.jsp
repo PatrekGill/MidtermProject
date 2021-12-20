@@ -120,10 +120,10 @@
                                         <div>
                                             <c:choose>
                                                 <c:when test="${editing && fncust:contains( song.artists, artist)}">
-                                                    <input type="checkbox" checked id="${artist}" name="artistIds" value="${artist.id}">
+                                                    <input type="checkbox" checked name="artistIds" value="${artist.id}">
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <input type="checkbox" id="${artist}" name="artistIds" value="${artist.id}">
+                                                    <input type="checkbox" name="artistIds" value="${artist.id}">
                                                 </c:otherwise>
                                             </c:choose>
                                             <label for="${artist}">${artist.name}</label>
@@ -147,10 +147,10 @@
                                         <div>
                                             <c:choose>
                                                 <c:when test="${editing && fncust:contains( song.albums, album)}">
-                                                    <input type="checkbox" checked id="${album}" name="albumIds" value="${album.id}">
+                                                    <input type="checkbox" checked name="albumIds" value="${album.id}">
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <input type="checkbox" id="${album}" name="albumIds" value="${album.id}">
+                                                    <input type="checkbox" name="albumIds" value="${album.id}">
                                                 </c:otherwise>
                                             </c:choose>
                                             <label for="${album}">${album.title}</label>
