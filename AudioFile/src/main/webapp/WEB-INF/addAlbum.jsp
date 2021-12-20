@@ -16,14 +16,26 @@
 
             <div class="table-title">
 				<div class="row">
-					<div class="">
-						<h2>
-							Add <b>Album</b>
-						</h2>
+					<div>
+						<c:choose>
+							<c:when test="${editing}">
+								<h2>
+									Edit <b>Album</b>
+								</h2>
+							</c:when>
+							<c:otherwise>
+								<h2>
+									Add <b>Album</b>
+								</h2>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>
 
+			<%-- ------------------------------------------------
+				Song duration field
+			------------------------------------------------ --%>
 			<form action="editAlbum" method="POST">
 				<table class="music-table table-hover">
 					<tbody>
@@ -35,7 +47,7 @@
 										<i class="glyphicon glyphicon-pencil"></i>
 									</span>
                                     <c:choose>
-                                        <c:when test="${not empty album}">
+                                        <c:when test="${editing}">
                                             <input type="text" value="${album.title}" class="form-control" name="title" placeholder="Title" value=""/>
                                         </c:when>
                                         <c:otherwise>
@@ -55,7 +67,7 @@
 										<i class="glyphicon glyphicon-pencil"></i>
 									</span>
                                     <c:choose>
-                                        <c:when test="${not empty album}">
+                                        <c:when test="${editing}">
                                             <textarea class="form-control" name="description" placeholder="Description...">${album.description}</textarea>
                                         </c:when>
                                         <c:otherwise>
@@ -63,25 +75,6 @@
                                         </c:otherwise>
                                     </c:choose>
 
-								</div>
-							</td>
-						</tr>
-
-						<tr>
-							<td>
-								<label for="duration">Duration (seconds)</label>
-								<div class="input-group">
-									<span class="input-group-addon">
-										<i class="glyphicon glyphicon-time"></i>
-									</span>
-                                    <c:choose>
-                                        <c:when test="${not empty album}">
-                                            <input type="number" value="${song.durationInSeconds}" name="durationInSeconds" min="0" max="9999" step="1" value="0" class="form-control" placeholder="Duration in seconds..."/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="number" value="${song.durationInSeconds}" name="durationInSeconds" min="0" max="9999" step="1" value="0" class="form-control" placeholder="Duration in seconds..."/>
-                                        </c:otherwise>
-                                    </c:choose>
 								</div>
 							</td>
 						</tr>
@@ -112,20 +105,45 @@
 
 						<tr>
 							<td>
-                                <label for="albums">Albums:</label>
+                                <label for="songs">Songs:</label>
 								<div class="editing-table-checkboxes">
 
-                                    <c:forEach items="${albums }" var="album">
+                                    <c:forEach items="${songs }" var="song">
                                         <div>
                                             <c:choose>
-                                                <c:when test="${not empty album && fncust:contains( song.albums, album)}">
-                                                    <input type="checkbox" checked id="${album}" name="albumIds" value="${album.id}">
+                                                <c:when test="${not empty song && fncust:contains( album.songs, song)}">
+                                                    <input type="checkbox" checked id="${song}" name="songIds" value="${song.id}">
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <input type="checkbox" id="${album}" name="albumIds" value="${album.id}">
+                                                    <input type="checkbox" id="${song}" name="songIds" value="${song.id}">
                                                 </c:otherwise>
                                             </c:choose>
-                                            <label for="${album}">${album.title}</label>
+                                            <label for="${song}">${song.name}</label>
+                                        </div>
+                                    </c:forEach>
+
+								</div>
+
+							</td>
+						</tr>
+
+
+						<tr>
+							<td>
+                                <label for="songs">Songs:</label>
+								<div class="editing-table-checkboxes">
+
+                                    <c:forEach items="${songs }" var="song">
+                                        <div>
+                                            <c:choose>
+                                                <c:when test="${not empty song && fncust:contains( album.songs, song)}">
+                                                    <input type="checkbox" checked id="${song}" name="songIds" value="${song.id}">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <input type="checkbox" id="${song}" name="songIds" value="${song.id}">
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <label for="${song}">${song.name}</label>
                                         </div>
                                     </c:forEach>
 
@@ -140,11 +158,11 @@
 								<div>
 
                                     <c:choose>
-                                        <c:when test="${not empty album}">
-                                            <button type="submit" class="btn btn-warning table-btn">Update Song</button>
+                                        <c:when test="${editing}">
+                                            <button type="submit" class="btn btn-warning table-btn">Update Album</button>
                                         </c:when>
                                         <c:otherwise>
-                                            <button type="submit" class="btn btn-warning table-btn">Add Song</button>
+                                            <button type="submit" class="btn btn-warning table-btn">Add Album</button>
                                         </c:otherwise>
                                     </c:choose>
 

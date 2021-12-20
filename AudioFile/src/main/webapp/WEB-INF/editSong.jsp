@@ -15,10 +15,19 @@
 
             <div class="table-title">
 				<div class="row">
-					<div class="">
-						<h2>
-							Add <b>Song</b>
-						</h2>
+                    <div>
+						<c:choose>
+							<c:when test="${editing}">
+								<h2>
+									Edit <b>Song</b>
+								</h2>
+							</c:when>
+							<c:otherwise>
+								<h2>
+									Add <b>Song</b>
+								</h2>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>
@@ -26,6 +35,10 @@
 			<form action="editSong" method="POST">
 				<table class="music-table table-hover">
 					<tbody>
+
+                        <%-- ------------------------------------------------
+                            Song name field
+                        ------------------------------------------------ --%>
 						<tr>
 							<td>
 								<label for="name">Name:</label>
@@ -34,7 +47,7 @@
 										<i class="glyphicon glyphicon-pencil"></i>
 									</span>
                                     <c:choose>
-                                        <c:when test="${not empty song}">
+                                        <c:when test="${editing}">
                                             <input type="text" value="${song.name}" class="form-control" name="name" placeholder="Name" value=""/>
                                         </c:when>
                                         <c:otherwise>
@@ -46,6 +59,9 @@
 							</td>
 						</tr>
 
+                        <%-- ------------------------------------------------
+                            Song lyrics field
+                        ------------------------------------------------ --%>
 						<tr>
 							<td>
 								<label for="lyrics">Lyrics:</label>
@@ -54,7 +70,7 @@
 										<i class="glyphicon glyphicon-pencil"></i>
 									</span>
                                     <c:choose>
-                                        <c:when test="${not empty song}">
+                                        <c:when test="${editing}">
                                             <textarea class="form-control" name="lyrics" placeholder="Lyrics...">${song.lyrics}</textarea>
                                         </c:when>
                                         <c:otherwise>
@@ -66,6 +82,9 @@
 							</td>
 						</tr>
 
+                        <%-- ------------------------------------------------
+                            Song duration field
+                        ------------------------------------------------ --%>
 						<tr>
 							<td>
 								<label for="duration">Duration (seconds)</label>
@@ -74,7 +93,7 @@
 										<i class="glyphicon glyphicon-time"></i>
 									</span>
                                     <c:choose>
-                                        <c:when test="${not empty song}">
+                                        <c:when test="${editing}">
                                             <input type="number" value="${song.durationInSeconds}" name="durationInSeconds" min="0" max="9999" step="1" value="0" class="form-control" placeholder="Duration in seconds..."/>
                                         </c:when>
                                         <c:otherwise>
@@ -85,6 +104,9 @@
 							</td>
 						</tr>
 
+                        <%-- ------------------------------------------------
+                            Song Artists list
+                        ------------------------------------------------ --%>
 						<tr>
 							<td>
                                 <label for="artists">Artists:</label>
@@ -109,6 +131,9 @@
 							</td>
 						</tr>
 
+                        <%-- ------------------------------------------------
+                            Song Albums list
+                        ------------------------------------------------ --%>
 						<tr>
 							<td>
                                 <label for="albums">Albums:</label>
@@ -133,13 +158,16 @@
 							</td>
 						</tr>
 
+                        <%-- ------------------------------------------------
+                            Update/Add Button
+                        ------------------------------------------------ --%>
 						<tr>
 							<td>
 
 								<div>
 
                                     <c:choose>
-                                        <c:when test="${not empty song}">
+                                        <c:when test="${editing}">
                                             <button type="submit" class="btn btn-warning table-btn">Update Song</button>
                                         </c:when>
                                         <c:otherwise>
@@ -157,18 +185,6 @@
 		</div>
 	</div>
 </div>
-
-
-<script type="text/javascript">
-    window.onLoad = onPageLoad();
-
-    function onPageLoad() {
-        var elements = document.getElementsByClassName("checkboxCheck");
-        for (var i = 0; i < elements.length; i++) {
-
-        }
-    }
-</script>
 
 
 <jsp:include page="bootstrapFooter.jsp" />

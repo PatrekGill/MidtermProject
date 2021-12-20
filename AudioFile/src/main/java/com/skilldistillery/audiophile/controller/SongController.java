@@ -50,7 +50,8 @@ public class SongController {
 			Song song = songDAO.findById(songId);
 			if (song != null) {
 				if (song.getUser().equals(user)) {
-					model.addAttribute(song);				
+					model.addAttribute(song);
+					model.addAttribute("editing",true);
 					
 				} else {
 					redir.addFlashAttribute("warning", "Only the creating user can edit the details of this item");

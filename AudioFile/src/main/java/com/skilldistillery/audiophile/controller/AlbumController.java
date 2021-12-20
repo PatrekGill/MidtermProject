@@ -15,13 +15,14 @@ import com.skilldistillery.audiophile.data.AlbumCommentDAOImpl;
 import com.skilldistillery.audiophile.data.AlbumDAOImpl;
 import com.skilldistillery.audiophile.data.AlbumRatingDAOImpl;
 import com.skilldistillery.audiophile.data.ArtistDAOImpl;
-import com.skilldistillery.audiophile.data.SongDAO;
+import com.skilldistillery.audiophile.data.GenreDAOImpl;
 import com.skilldistillery.audiophile.data.SongDAOImpl;
 import com.skilldistillery.audiophile.data.UserDAOImpl;
 import com.skilldistillery.audiophile.entities.Album;
 import com.skilldistillery.audiophile.entities.AlbumComment;
 import com.skilldistillery.audiophile.entities.AlbumRating;
 import com.skilldistillery.audiophile.entities.Artist;
+import com.skilldistillery.audiophile.entities.Genre;
 import com.skilldistillery.audiophile.entities.Song;
 import com.skilldistillery.audiophile.entities.User;
 import com.skilldistillery.audiophile.misc.SessionUserChecker;
@@ -40,6 +41,8 @@ public class AlbumController {
 	private AlbumRatingDAOImpl albumRatingDAO;
 	@Autowired
 	private AlbumCommentDAOImpl albumCommentDAO;
+	@Autowired
+	private GenreDAOImpl genreDAO;
 	
 	private SessionUserChecker checker = new SessionUserChecker();
 	
@@ -258,6 +261,7 @@ public class AlbumController {
 			if (album != null) {
 				if (album.getUser().equals(user)) {
 					model.addAttribute("album", album);				
+					model.addAttribute("editing",true);
 					
 				} else {
 					redir.addFlashAttribute("warning", "Only the creating user can edit the details of this item");
@@ -270,8 +274,11 @@ public class AlbumController {
 		List<Artist> allArtists = artistDAO.sortArtistsAlphabetically();
 		model.addAttribute("artists",allArtists);
 		
-		List<Song> allSongs = songDAO.sortByName(false);
+		List<Song> allSongs = songDAO.sortByName(true);
 		model.addAttribute("songs",allSongs);
+		
+		List<Genre> allGenres = genreDAO.sortByName(true);
+		model.addAttribute("genres",allGenres);
 		
 		return "editAlbum";
 	}
