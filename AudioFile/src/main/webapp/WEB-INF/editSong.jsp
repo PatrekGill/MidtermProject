@@ -32,7 +32,8 @@
 
                     <c:if test="${not empty Song}">
                         <div class="">
-    						<a href="?albumId=${Song.id}" class="btn btn-primary">
+                            <%-- FIX ME --%>
+    						<a href="getSongId.do?songId=${Song.id}" class="btn btn-primary">
     							<i class="glyphicon glyphicon-circle-arrow-left"></i>
     							<span>Back To Song</span>
     						</a>

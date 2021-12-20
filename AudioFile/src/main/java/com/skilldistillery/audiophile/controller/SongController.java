@@ -9,27 +9,151 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.skilldistillery.audiophile.data.AlbumDAOImpl;
 import com.skilldistillery.audiophile.data.ArtistDAOImpl;
 import com.skilldistillery.audiophile.data.SongDAOImpl;
+import com.skilldistillery.audiophile.data.SongRatingDAOImpl;
+import com.skilldistillery.audiophile.data.UserDAOImpl;
 import com.skilldistillery.audiophile.entities.Album;
 import com.skilldistillery.audiophile.entities.Artist;
 import com.skilldistillery.audiophile.entities.Song;
+import com.skilldistillery.audiophile.entities.SongRating;
 import com.skilldistillery.audiophile.entities.User;
+import com.skilldistillery.audiophile.misc.SessionUserChecker;
 
 @Controller
 public class SongController {
 
 	@Autowired
-	private AlbumDAOImpl albumDAO;
-
+	private UserDAOImpl userDAO;
 	@Autowired
 	private SongDAOImpl songDAO;
-
+	@Autowired
+	private SongRatingDAOImpl songRatingDAO;
+	@Autowired
+	private AlbumDAOImpl albumDAO;
 	@Autowired
 	private ArtistDAOImpl artistDAO;
+	private SessionUserChecker checker = new SessionUserChecker();
+
+	/*
+	 * --------------------------- 
+	 * get song detail page
+	 * ---------------------------
+	 */
+
+	@GetMapping(path = "getSongId.do")
+	public String getBySongId(@RequestParam("songId") int songId, Model model) {
+		Song song = null;
+		try {
+			song = songDAO.findById(songId);
+			 long durationSeconds = song.getDurationInSeconds();
+				String newDurationSeconds;
+				long MM = durationSeconds / 60;
+				long SS = durationSeconds % 60;
+				newDurationSeconds = String.format("%02d:%02d", MM, SS);
+			model.addAttribute("Song", song);
+			model.addAttribute("DurationSeconds",newDurationSeconds);
+			model.addAttribute("albums", albumDAO.findAlbumsBySongTitle(song.getName()));
+			model.addAttribute("artists", artistDAO.findArtistsBySongName(song.getName()));
+			System.out.println(songRatingDAO.getAverageSongRating(songId));
+			model.addAttribute("averageRating", songRatingDAO.getAverageSongRating(songId));
+			List<SongRating> ratings = songRatingDAO.sortRatingByCreationDateFindBySongId(songId, false);
+			model.addAttribute("songRatings", ratings);
+		} catch (Exception e) {
+			System.out.println("Did not find session user");
+			song = null;
+		}
+		return "song/SongDetails";
+	}
+
+	/*
+	 * ----------------------------------------------------------------------------
+	 * songRatings.do (GET)
+	 * ----------------------------------------------------------------------------
+	 */
+	@GetMapping(path = "songRatings.do")
+	public String showRatingsPage(Integer songId, HttpSession session, Model model) {
+		if (songId != null) {
+
+			Song song = songDAO.findById(songId);
+			if (song != null) {
+				model.addAttribute("song", song);
+
+				User user = (User) session.getAttribute("user");
+				boolean userHasRating = false;
+				if (user != null) {
+					SongRating usersRating = songRatingDAO.findSongRatingByUserIdSongId(songId, user.getId());
+					if (usersRating != null) {
+						model.addAttribute("usersRating", usersRating);
+						userHasRating = true;
+					}
+
+				}
+
+				model.addAttribute("userHasRating", userHasRating);
+
+				List<SongRating> ratings = songRatingDAO.sortRatingByCreationDateFindBySongId(songId, false);
+				model.addAttribute("songRatings", ratings);
+				model.addAttribute("averageRating", songRatingDAO.getAverageSongRating(songId));
+			}
+		}
+		return "song/songDetails";
+	}
+
+	/*
+	 * ----------------------------------------------------------------------------
+	 * songRatings.do (POST)
+	 * ----------------------------------------------------------------------------
+	 */
+	@PostMapping(path = "songRatings.do")
+	public String postRating(Integer songId, String ratingText, Integer ratingNumber, HttpSession session,
+			Model model) {
+
+		if (songId != null && ratingNumber != null) {
+
+			Song song = songDAO.findById(songId);
+			if (song != null) {
+				model.addAttribute("song", song);
+
+				User user = checker.getSessionUser(session);
+				if (user != null) {
+					int userId = user.getId();
+					SongRating usersRating = songRatingDAO.findSongRatingByUserIdSongId(userId, songId);
+
+					if (usersRating != null) {
+						// update rating
+						int ratingId = usersRating.getId();
+						songRatingDAO.updateDescription(ratingId, ratingText);
+						songRatingDAO.updateRating(ratingId, ratingNumber);
+
+					} else {
+						// create rating
+						usersRating = new SongRating();
+						usersRating.setSong(song);
+						usersRating.setDescription(ratingText);
+						usersRating.setRating(ratingNumber);
+						usersRating.setUser(userDAO.findUserById(userId));
+						songRatingDAO.createSongRating(usersRating);
+
+					}
+
+					model.addAttribute("usersRating", usersRating);
+					model.addAttribute("userHasRating", true);
+
+				}
+
+				List<SongRating> ratings = songRatingDAO.sortRatingByCreationDateFindBySongId(songId, false);
+				model.addAttribute("songRatings", ratings);
+				model.addAttribute("averageRating", songRatingDAO.getAverageSongRating(songId));
+			}
+		}
+
+		return "song/songRatings";
+	}
 	
 	
 	@GetMapping(path = "editSong")
@@ -57,8 +181,8 @@ public class SongController {
 					
 				} else {
 					redir.addFlashAttribute("warning", "Only the creating user can edit the details of this item");
-					redir.addAttribute("songName",song.getName());
-					return "redirect:searchBySongName.do";
+					redir.addAttribute("songId",songId);
+					return "redirect:getSongId.do";
 				}
 				
 				model.addAttribute("editing",editing);
@@ -118,9 +242,8 @@ public class SongController {
 
 			if (succeeded) {
 				redir.addFlashAttribute("success", message);
-				redir.addAttribute("songName",song.getName());
-//				redir.addAttribute("songName",songId);
-				return "redirect:searchBySongName.do";
+				redir.addAttribute("songId",songId);
+				return "redirect:getSongId.do";
 				
 			} else {
 				if (updating) {
