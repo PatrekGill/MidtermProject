@@ -39,12 +39,23 @@ public class SongRatingDAOImpl implements SongRatingDAO {
 		}
 	}
 
+	
 	@Override
-	public SongRating findSongRatingByUserIdSongId(int userid, int songid) {
+	public SongRating findSongRatingByUserIdSongId(int userId, int songId) {
 		String jpql = "SELECT sr FROM SongRating sr WHERE sr.user.id =:uid and sr.song.id =:sid";
-
-		return em.createQuery(jpql, SongRating.class).setParameter("uid", userid).setParameter("sid", songid)
-				.getSingleResult();
+		
+		SongRating rating = null;
+		try {
+			rating = em.createQuery(jpql, SongRating.class)
+					.setParameter("uid", userId)
+					.setParameter("sid", songId)
+					.getSingleResult();
+		}catch (Exception e) {
+			System.out.println("Could not find rating for song: " + songId + " from user id: " + userId);
+		}
+		
+		return rating;
+		
 
 	}
 
