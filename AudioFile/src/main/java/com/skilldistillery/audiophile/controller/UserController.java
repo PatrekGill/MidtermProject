@@ -251,6 +251,7 @@ public class UserController {
 		return "redirect:/";
 	}
 	
+
 	@GetMapping(path = "addArtist")
 	public String getAddArtistpage(HttpSession session) {
 		User user = (User) session.getAttribute("user");

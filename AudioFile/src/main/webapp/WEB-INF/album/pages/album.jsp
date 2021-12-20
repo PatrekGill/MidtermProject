@@ -17,8 +17,22 @@
             <jsp:include page="../includes/albumHeader.jsp"/>
 
             <%-- ------------------------------------------------
+                Edit Button
+            ------------------------------------------------ --%>
+            <div class="edit-entity-button">
+                <c:if test="${not empty sessionScope.user && album.user == sessionScope.user}">
+                    <form action="editAlbum" method="GET">
+                        <input type="hidden" name="albumId" value="${album.id}">
+                        <button type="submit" class="btn btn-warning table-btn">Edit Album</button>
+                    </form>
+                </c:if>
+            </div>
+
+
+            <%-- ------------------------------------------------
                 Songs Table
             ------------------------------------------------ --%>
+
             <div class="table-responsive">
                 <div class="table-wrapper table-body">
                     <div class="table-title">
@@ -41,7 +55,7 @@
                                     <c:forEach items="${album.songs}" var="song" varStatus="i">
                                         <tr>
                                             <td>${i.count}</td>
-                                            <td> <a href="searchBySongName.do?songName=${song.name}">${song.name}</a> </td>
+                                            <td> <a href="getSongId.do?songId=${song.id}">${song.name}</a> </td>
                                             <td>
                                                 <c:forEach items="${song.artists}" var="artist" varStatus="j">
                                                     <c:choose>
@@ -49,7 +63,7 @@
                                                             <a class="albumTable-artistText" href="artistProfile?id=${artist.id}">${artist.name}</a>
                                                         </c:when>
                                                         <c:otherwise>
-                                    						<a class="albumTable-artistText" href="artistProfile?id=${artist.id}">,${artist.name}</a>
+                                    						<a class="albumTable-artistText" href="artistProfile?id=${artist.id}">, ${artist.name}</a>
                                     					</c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>

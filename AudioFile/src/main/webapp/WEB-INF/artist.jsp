@@ -24,6 +24,20 @@
 	</div>
 </div>
 
+<div class="container-fluid">
+	<%-- ------------------------------------------------
+		Edit Button
+	------------------------------------------------ --%>
+	<div class="edit-entity-button">
+		<c:if test="${not empty sessionScope.user && artist.user == sessionScope.user}">
+			<form action="editArtist" method="GET">
+				<input type="hidden" name="artistId" value="${artist.id}">
+				<button type="submit" class="btn btn-warning table-btn">Edit Artist</button>
+			</form>
+		</c:if>
+	</div>
+</div>
+
 <div class="table-responsive">
 	<div class="table-wrapper table-body">
 		<div class="table-title">
@@ -42,7 +56,7 @@
 </div>
 
 <!-- need to add another table for albums in average ranking order
-also may need to shrink the table to not take up the whole page 
+also may need to shrink the table to not take up the whole page
  !!!!!!BE SURE TO CHANGE THE CLASS NAME IN CSS AND COPY THIS ONE AND ALTER IT
       BECAUSE IF YOU CHANGE THIS CLASS IN CSS IT WILL AFFECT THE ALBUM PAGE!!!!!!!
 -->
