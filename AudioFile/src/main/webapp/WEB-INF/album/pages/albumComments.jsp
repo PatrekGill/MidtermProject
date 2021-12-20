@@ -78,7 +78,7 @@
 									<c:forEach items="${albumComments}" var="comment">
 
 										<tr>
-											<td><a href="profile.do?userId=${comment.user.id}">
+											<td><a href="profile?userId=${comment.user.id}">
 													<img class="user-image-md" src="${comment.user.imageURL}"
 													alt="Profile Image">
 											</a></td>

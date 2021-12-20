@@ -120,7 +120,7 @@
 								<c:when test="${not empty songRatings}">
 									<c:forEach items="${songRatings}" var="rating">
 										<tr>
-											<td><a href="profile.do?userId=${rating.user.id}"> <img
+											<td><a href="profile?userId=${rating.user.id}"> <img
 													class="user-image-md" src="${rating.user.imageURL}"
 													alt="Profile Image">
 											</a></td>
