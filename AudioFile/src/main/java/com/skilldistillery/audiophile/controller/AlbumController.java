@@ -14,10 +14,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.skilldistillery.audiophile.data.AlbumCommentDAOImpl;
 import com.skilldistillery.audiophile.data.AlbumDAOImpl;
 import com.skilldistillery.audiophile.data.AlbumRatingDAOImpl;
+import com.skilldistillery.audiophile.data.ArtistDAOImpl;
+import com.skilldistillery.audiophile.data.SongDAO;
+import com.skilldistillery.audiophile.data.SongDAOImpl;
 import com.skilldistillery.audiophile.data.UserDAOImpl;
 import com.skilldistillery.audiophile.entities.Album;
 import com.skilldistillery.audiophile.entities.AlbumComment;
 import com.skilldistillery.audiophile.entities.AlbumRating;
+import com.skilldistillery.audiophile.entities.Artist;
+import com.skilldistillery.audiophile.entities.Song;
 import com.skilldistillery.audiophile.entities.User;
 import com.skilldistillery.audiophile.misc.SessionUserChecker;
 
@@ -27,6 +32,10 @@ public class AlbumController {
 	private UserDAOImpl userDAO;
 	@Autowired
 	private AlbumDAOImpl albumDAO;
+	@Autowired
+	private ArtistDAOImpl artistDAO;
+	@Autowired
+	private SongDAOImpl songDAO;
 	@Autowired
 	private AlbumRatingDAOImpl albumRatingDAO;
 	@Autowired
@@ -226,6 +235,46 @@ public class AlbumController {
 		return "redirect:/";
 	}
 	
+
+	/* ----------------------------------------------------------------------------
+		editAlbum.do (GET)
+	---------------------------------------------------------------------------- */
+	@GetMapping(path="editAlbum.do")
+	public String getEditAlbumPage(
+			Integer albumId,
+			HttpSession session,
+			Model model,
+			RedirectAttributes redir
+		) {
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			return "profile";
+		}
+		
+		
+		// if editing song (not creating a new one) save and id to identify what artists are currently selected for that song
+		if (albumId != null) {
+			Album album = albumDAO.findAlbumById(albumId);
+			if (album != null) {
+				if (album.getUser().equals(user)) {
+					model.addAttribute("album", album);				
+					
+				} else {
+					redir.addFlashAttribute("warning", "Only the creating user can edit the details of this item");
+					redir.addAttribute("albumId",albumId);
+					return "redirect:album.do";
+				}
+			}
+		}
+		
+		List<Artist> allArtists = artistDAO.sortArtistsAlphabetically();
+		model.addAttribute("artists",allArtists);
+		
+		List<Song> allSongs = songDAO.sortByName(false);
+		model.addAttribute("songs",allSongs);
+		
+		return "editAlbum";
+	}
 
 	
 }

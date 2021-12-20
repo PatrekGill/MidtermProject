@@ -27,16 +27,17 @@ public class ArtistController {
 	public String getAccountPage(Model model, @RequestParam("id") int id, RedirectAttributes redir) {
 		try {
 			Artist artist = artistDAO.findById(id);
-			if(artist != null) {
-			model.addAttribute("artist", artist);
-			List<Album> artistsHighestRatedAlbums = albumDAO.findAlbumsByArtistSortByRating(false, artist.getName());
-			if (artistsHighestRatedAlbums.size() > 3) {
-				model.addAttribute("artistsHighestRatedAlbums", artistsHighestRatedAlbums.subList(0, 3));
+			if (artist != null) {
+				model.addAttribute("artist", artist);
+				List<Album> artistsHighestRatedAlbums = albumDAO.findAlbumsByArtistSortByRating(false,
+						artist.getName());
+				if (artistsHighestRatedAlbums.size() > 3) {
+					model.addAttribute("artistsHighestRatedAlbums", artistsHighestRatedAlbums.subList(0, 3));
+				} else {
+					model.addAttribute("artistsHighestRatedAlbums", artistsHighestRatedAlbums);
+				}
+				return "artist";
 			} else {
-				model.addAttribute("artistsHighestRatedAlbums", artistsHighestRatedAlbums);
-			}
-			return "artist";
-			}else {
 				throw new Exception("No artist found with id: " + id);
 			}
 		} catch (Exception e) {

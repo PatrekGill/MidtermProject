@@ -23,7 +23,7 @@
 				</div>
 			</div>
 
-			<form action="editSong" id="filmDetails" method="POST">
+			<form action="editSong" method="POST">
 				<table class="music-table table-hover">
 					<tbody>
 						<tr>

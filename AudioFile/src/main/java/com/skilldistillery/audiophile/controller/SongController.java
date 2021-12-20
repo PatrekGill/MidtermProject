@@ -33,17 +33,30 @@ public class SongController {
 	
 	
 	@GetMapping(path = "editSong")
-	public String getEditSongPage(Integer songId, HttpSession session, Model model) {
+	public String getEditSongPage(
+			Integer songId,
+			HttpSession session,
+			Model model,
+			RedirectAttributes redir
+		) {
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
 			return "profile";
 		}
 		
+		
 		// if editing song (not creating a new one) save and id to identify what artists are currently selected for that song
 		if (songId != null) {
 			Song song = songDAO.findById(songId);
 			if (song != null) {
-				model.addAttribute(song);				
+				if (song.getUser().equals(user)) {
+					model.addAttribute(song);				
+					
+				} else {
+					redir.addFlashAttribute("warning", "Only the creating user can edit the details of this item");
+					redir.addAttribute("songName",song.getName());
+					return "redirect:searchBySongName.do";
+				}
 			}
 		}
 		
@@ -93,7 +106,8 @@ public class SongController {
 
 			if (succeeded) {
 				redir.addFlashAttribute("success", "Song successfully created!");
-				return "redirect:searchBySongName.do?songName="+song.getName();
+				redir.addAttribute("songName",song.getName());
+				return "redirect:searchBySongName.do";
 				
 			} else {
 				String message;
