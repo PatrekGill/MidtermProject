@@ -102,7 +102,7 @@ public class SongController {
 				model.addAttribute("averageRating", songRatingDAO.getAverageSongRating(songId));
 			}
 		}
-		return "song/songDetails";
+		return "song/songRatings";
 	}
 
 	/*
