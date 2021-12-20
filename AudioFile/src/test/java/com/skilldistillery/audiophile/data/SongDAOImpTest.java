@@ -92,5 +92,13 @@ class SongDAOImpTest {
 		assertTrue(s.size() > 0);
 	}
 	
+	@Test
+	void test_sortByName() {
+		List<Song> songs = DaoImp.sortByName(true);
+		assertNotNull(songs);
+		assertTrue(songs.size() > 0);
+//		assertEquals(songs.get(0).getName(),"A Pirate Looks at Forty");
+	}
+	
 
 }

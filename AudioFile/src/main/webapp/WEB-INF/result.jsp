@@ -11,18 +11,7 @@
 <title>Song</title> --%>
 <jsp:include page="bootstrapHead.jsp" />
 
-<div class="row">
-	<div class="container text-left text-manipulator">
-	    <p>
-			Music Just
-		</p>
-		<p style="padding-top: 10px">
-			Got Better
-		</p>
-	</div>
-</div>
-
-
+	<jsp:include page="musicBetterHeader.jsp" />
 
 	<c:choose>
 		<c:when test="${!  NotPopulated  }">
