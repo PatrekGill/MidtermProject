@@ -18,7 +18,7 @@
 <h1>Trending Songs</h1>
 <c:forEach var="song" items="${trendingSongs }">
 	<form action="searchBySongName.do" method="GET"></form>
-	<li><a href="searchBySongName.do?songName=${song.name }">${song.name }</a></li>
+	<li><a href="getSongId.do?songId=${song.id }">${song.name}</a></li>
 </c:forEach>
 <br>
  <%-- ------------------------------------------------
