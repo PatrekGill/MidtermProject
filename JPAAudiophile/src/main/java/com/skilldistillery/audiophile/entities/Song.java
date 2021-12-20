@@ -189,13 +189,48 @@ public class Song {
 	
 	
 	/* ----------------------------------------------------------------------------
-		get/set Album
+		Album List Methods
 	---------------------------------------------------------------------------- */
 	public List<Album> getAlbums() {
+		if (albums == null) {
+			albums = new ArrayList<Album>();
+		}
+		
 		return albums;
 	}
 	public void setAlbums(List<Album> albums) {
 		this.albums = albums;
+	}
+	
+	public boolean addAlbum(Album album) {
+		if (albums == null) {
+			albums = new ArrayList<>();
+		}
+		
+		boolean addedToList = false;
+		if (album != null) {
+			if (!albums.contains(album)) {
+				addedToList = albums.add(album);
+			}
+
+			if (!album.getSongs().contains(this)) {
+				album.getSongs().add(this);
+			}
+		}
+		
+		return addedToList;
+	}
+	public boolean removeAlbum(Album album) {
+		boolean removed = false;
+		if (albums != null && albums.contains(album)) {
+			removed = albums.remove(album);
+		}
+		
+		if (album.getSongs().contains(this)) {
+			album.removeSong(this);
+		}
+		
+		return removed;
 	}
 
 

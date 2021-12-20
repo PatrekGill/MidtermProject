@@ -1,5 +1,7 @@
 package com.skilldistillery.audiophile.data;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
@@ -33,5 +35,20 @@ public class GenreDAOImpl implements GenreDAO {
 			return null;
 		}
 	}
+	
+	@Override
+	public List<Genre> sortByName(boolean ascendingOrder) {
+		String jpql = "SELECT gen FROM Genre gen ORDER BY gen.name";
+		
+		if (ascendingOrder) {
+			jpql += " ASC";
 
+		} else {
+			jpql += " DESC";
+
+		}
+		
+		return em.createQuery(jpql, Genre.class)
+				.getResultList();
+	}
 }

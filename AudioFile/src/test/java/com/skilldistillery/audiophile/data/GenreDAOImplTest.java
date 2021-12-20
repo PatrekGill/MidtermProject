@@ -2,6 +2,9 @@ package com.skilldistillery.audiophile.data;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,5 +35,13 @@ class GenreDAOImplTest {
 		assertNotNull(g);
 		assertEquals(g.getId(), 1);
 	}
+	
 
+	@Test
+	void test_sortByName() {
+		List<Genre> genres = genreDAO.sortByName(true);
+		assertNotNull(genres);
+		assertTrue(genres.size() > 0);
+//		assertEquals(genres.get(0).getName(),"country");
+	}
 }

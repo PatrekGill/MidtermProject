@@ -1,0 +1,54 @@
+.editing-table {
+    /* width: 100%; */
+    min-width: 100px;
+    max-width: 1600px;
+    margin-left: auto;
+    margin-right: auto;
+    /* overflow: auto; */
+}
+
+.editing-table-selectBox {
+    width: 100%;
+    /* color: black; */
+    background-color: rgba(0,0,0,0.75);
+    border: rgba(0,0,0,0.75);
+}
+
+.editing-table-textarea textarea {
+	/* width: 100%; */
+    resize: vertical;
+}
+
+.editing-table-checkboxes {
+    width: 100%;
+    height: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.editing-table-checkbox-song {
+    vertical-align: super;
+}
+
+.editing-table-checkboxes label:hover {
+    background-color: #B8860B;
+}
+
+.editing-table-songBy-text {
+    font-size: 12px;
+}
+
+tr.editing-table-checkboxes-hover:hover {
+	background: none !important;
+}
+/* .editing-table-dropdown {
+    width: 100%;
+}
+.editing-table-dropdown select {
+    width: 100%;
+    max-height: 100px;
+}
+.editing-table-dropdown label {
+    color: black;
+
+} */

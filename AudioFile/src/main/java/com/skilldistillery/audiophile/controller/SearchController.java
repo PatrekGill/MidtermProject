@@ -81,12 +81,11 @@ public class SearchController {
 				
 			}
 			
-			
-			
 		} catch (Exception e) {
 			redir.addFlashAttribute("error", e.getMessage());
 			e.printStackTrace();
 		}
+		
 		return "redirect:home";
 	}
 	
