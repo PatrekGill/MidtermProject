@@ -54,7 +54,7 @@
                                             <input type="text" value="${artist.name}" class="form-control" name="name" placeholder="Name"/>
                                         </c:when>
                                         <c:otherwise>
-                                            <input type="text" class="form-control" name="name" placeholder="Title"/>
+                                            <input type="text" class="form-control" name="name" placeholder="Name"/>
                                         </c:otherwise>
                                     </c:choose>
 
