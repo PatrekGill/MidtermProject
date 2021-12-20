@@ -166,7 +166,7 @@
 						<%-- ------------------------------------------------
 							Album Songs List
 						------------------------------------------------ --%>
-						<tr>
+						<tr class="editing-table-checkboxes-hover">
 							<td>
                                 <label for="songs">Songs:</label>
 								<div class="editing-table-checkboxes">
@@ -174,14 +174,31 @@
                                     <c:forEach items="${songs }" var="song">
                                         <div>
                                             <c:choose>
-                                                <c:when test="${not empty song && fncust:contains( album.songs, song)}">
-                                                    <input type="checkbox" checked id="${song}" name="songIds" value="${song.id}">
+                                                <c:when test="${editng && fncust:contains( album.songs, song)}">
+                                                    <input class="editing-table-checkbox-song" type="checkbox" checked id="${song}" name="songIds" value="${song.id}">
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <input type="checkbox" id="${song}" name="songIds" value="${song.id}">
+                                                    <input class="editing-table-checkbox-song" type="checkbox" id="${song}" name="songIds" value="${song.id}">
                                                 </c:otherwise>
                                             </c:choose>
-                                            <label for="${song}">${song.name}</label>
+                                            <label for="${song}">
+												${song.name}
+												<c:if test="${not empty song.artists}">
+													<p class="editing-table-songBy-text">
+														By
+														<c:forEach items="${song.artists }" var="artist" varStatus="i">
+															<c:choose>
+		                                                        <c:when test="${i.index == 0}">
+		                                                            ${artist.name}
+		                                                        </c:when>
+		                                                        <c:otherwise>
+		                                    						, ${artist.name}
+		                                    					</c:otherwise>
+		                                                    </c:choose>
+														</c:forEach>
+													</p>
+												</c:if>
+											</label>
                                         </div>
                                     </c:forEach>
 
@@ -193,7 +210,7 @@
 						<%-- ------------------------------------------------
 							Album Genres List
 						------------------------------------------------ --%>
-						<tr>
+						<tr class="editing-table-checkboxes-hover">
 							<td>
                                 <label for="genres">Genres:</label>
 								<div class="editing-table-checkboxes">

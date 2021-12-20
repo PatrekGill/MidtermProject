@@ -111,7 +111,7 @@
                         <%-- ------------------------------------------------
                             Song Artists list
                         ------------------------------------------------ --%>
-						<tr>
+						<tr class="editing-table-checkboxes-hover">
 							<td>
                                 <label for="artists">Artists:</label>
 								<div class="editing-table-checkboxes">
@@ -119,7 +119,7 @@
                                     <c:forEach items="${artists }" var="artist">
                                         <div>
                                             <c:choose>
-                                                <c:when test="${not empty song && fncust:contains( song.artists, artist)}">
+                                                <c:when test="${editing && fncust:contains( song.artists, artist)}">
                                                     <input type="checkbox" checked id="${artist}" name="artistIds" value="${artist.id}">
                                                 </c:when>
                                                 <c:otherwise>
@@ -138,7 +138,7 @@
                         <%-- ------------------------------------------------
                             Song Albums list
                         ------------------------------------------------ --%>
-						<tr>
+						<tr class="editing-table-checkboxes-hover">
 							<td>
                                 <label for="albums">Albums:</label>
 								<div class="editing-table-checkboxes">
@@ -146,7 +146,7 @@
                                     <c:forEach items="${albums }" var="album">
                                         <div>
                                             <c:choose>
-                                                <c:when test="${not empty song && fncust:contains( song.albums, album)}">
+                                                <c:when test="${editing && fncust:contains( song.albums, album)}">
                                                     <input type="checkbox" checked id="${album}" name="albumIds" value="${album.id}">
                                                 </c:when>
                                                 <c:otherwise>

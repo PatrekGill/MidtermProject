@@ -26,10 +26,21 @@
     overflow-y: auto;
 }
 
-.editing-table-checkboxes label:hover {
-    background-color: rgba(0,0,0,0.75)
+.editing-table-checkbox-song {
+    vertical-align: super;
 }
 
+.editing-table-checkboxes label:hover {
+    background-color: #B8860B;
+}
+
+.editing-table-songBy-text {
+    font-size: 12px;
+}
+
+tr.editing-table-checkboxes-hover:hover {
+	background: none !important;
+}
 /* .editing-table-dropdown {
     width: 100%;
 }
