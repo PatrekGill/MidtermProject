@@ -216,6 +216,41 @@ public class UserController {
 
 	}
 
+	@GetMapping(path = "addSong")
+	public String getAddSongpage(HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if (user == (null)) {
+
+			return "profile";
+		}
+		return "addSong";
+	}
+
+	@PostMapping(path = "addSong")
+	public String createSong(String name, String lyrics, int durationInSeconds, RedirectAttributes redir,
+			HttpSession session) {
+		Song song = new Song();
+		User user = (User) session.getAttribute("user");
+		try {
+			song.setName(name);
+			song.setLyrics(lyrics);
+			song.setDurationInSeconds(durationInSeconds);
+			song.setUser(user);
+			songDAO.addNewSong(song);
+
+			if (songDAO.addNewSong(song) != null) {
+				redir.addFlashAttribute("success", "Song successfully created!");
+				return "redirect:searchBySongName.do?songName="+song.getName();
+			} else {
+				throw new Exception("Failed to create song");
+			}
+		} catch (Exception e) {
+			redir.addFlashAttribute("error", e.getMessage() + ": " + song.toString());
+			e.printStackTrace();
+		}
+		return "redirect:/";
+	}
+	
 
 	@GetMapping(path = "addArtist")
 	public String getAddArtistpage(HttpSession session) {

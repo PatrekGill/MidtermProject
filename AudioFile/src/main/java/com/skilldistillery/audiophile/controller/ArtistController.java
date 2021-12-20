@@ -1,5 +1,6 @@
 package com.skilldistillery.audiophile.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -120,19 +121,56 @@ public class ArtistController {
 			return "profile";
 		}
 		
+		Artist artist;
+		if (artistId != null) {
+			artist = artistDAO.findById(artistId);
+			
+		} else {
+			artist = new Artist();
+			
+		}
 		
-		Artist artist = new Artist();
 		try {
 			artist.setName(name);
 			artist.setDescription(description);
 			artist.setImageUrl(imageURL);
 			
-			for (Integer id : songIds) {
-				artist.addSong(songDAO.findById(id));
+			// if editing artist
+			if (songIds != null) {
+				List<Song> songs = artist.getSongs();
+				if (!songs.isEmpty()) {
+					List<Integer> songIdsList = Arrays.asList(songIds);
+					
+					for (int i = 0; i < songs.size(); i++) {
+						Song song = songs.get(i);
+						if (!songIdsList.contains(song.getId())) {
+							song.removeArtist(artist);
+						}
+					}
+				}
+				for (Integer id : songIds) {
+					artist.addSong(songDAO.findById(id));
+				}
+				
 			}
 			
-			for (Integer id : albumIds) {
-				artist.addAlbum(albumDAO.findAlbumById(id));
+			if (albumIds != null) {
+				List<Album> albums = artist.getAlbums();
+				if (!albums.isEmpty()) {
+					List<Integer> albumIdsList = Arrays.asList(albumIds);
+					
+					for (int i = 0; i < albums.size(); i++) {
+						Album album = albums.get(i);
+						if (!albumIdsList.contains(album.getId())) {
+							album.setArtist(null);
+						}
+					}
+					
+				}
+				for (Integer id : albumIds) {
+					artist.addAlbum(albumDAO.findAlbumById(id));
+				}
+				
 			}
 			
 			
@@ -168,7 +206,7 @@ public class ArtistController {
 			}
 			
 		} catch (Exception e) {
-			redir.addFlashAttribute("error", e.getMessage());
+			redir.addFlashAttribute("error", "A failure happend while editing the song");
 			e.printStackTrace();
 		}
 	

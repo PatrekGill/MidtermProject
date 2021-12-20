@@ -32,7 +32,8 @@
 
                     <c:if test="${not empty Song}">
                         <div class="">
-    						<a href="?albumId=${Song.id}" class="btn btn-primary">
+                            <%-- FIX ME --%>
+    						<a href="getSongId.do?songId=${Song.id}" class="btn btn-primary">
     							<i class="glyphicon glyphicon-circle-arrow-left"></i>
     							<span>Back To Song</span>
     						</a>
@@ -149,20 +150,23 @@
                         ------------------------------------------------ --%>
 						<tr class="editing-table-checkboxes-hover">
 							<td>
-                                <label for="albums">Albums:</label>
+                                <label for="albums">Albums: (Without Artists)</label>
 								<div class="editing-table-checkboxes">
 
                                     <c:forEach items="${albums }" var="album">
                                         <div>
-                                            <c:choose>
-                                                <c:when test="${editing && fncust:contains( song.albums, album)}">
-                                                    <input type="checkbox" checked name="albumIds" value="${album.id}">
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <input type="checkbox" name="albumIds" value="${album.id}">
-                                                </c:otherwise>
-                                            </c:choose>
-                                            <label for="${album}">${album.title}</label>
+                                            <%-- Don't allow people to be assigned to albums that already have artists --%>
+                                            <c:if test="${empty album.artist}">
+                                                <c:choose>
+                                                    <c:when test="${editing && fncust:contains( artist.albums, album)}">
+                                                        <input type="checkbox" checked name="albumIds" value="${album.id}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <input type="checkbox" name="albumIds" value="${album.id}">
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <label for="${album}">${album.title}</label>
+                                            </c:if>
                                         </div>
                                     </c:forEach>
 
