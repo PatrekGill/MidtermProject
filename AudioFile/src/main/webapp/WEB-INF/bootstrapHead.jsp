@@ -130,7 +130,7 @@
 						<div id="collapseTopSongs" class="collapse"
 							aria-labelledby="headingTopSongs" data-parent="#accordion">
 							<c:forEach var="song" items="${topSongsSideBar }">
-								<li><a href="searchBySongName.do?songName=${song.name }">${song.name }</a></li>
+								<li><a href="getSongId.do?songId=${song.id}">${song.name }</a></li>
 							</c:forEach>
 						</div>
 
