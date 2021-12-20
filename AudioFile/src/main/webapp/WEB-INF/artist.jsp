@@ -29,10 +29,12 @@
 		Edit Button
 	------------------------------------------------ --%>
 	<div class="edit-entity-button">
-		<c:if test="${not empty sessionScope.user && artist.user == sessionScope.user}">
+		<c:if
+			test="${not empty sessionScope.user && artist.user == sessionScope.user}">
 			<form action="editArtist" method="GET">
 				<input type="hidden" name="artistId" value="${artist.id}">
-				<button type="submit" class="btn btn-warning table-btn">Edit Artist</button>
+				<button type="submit" class="btn btn-warning table-btn">Edit
+					Artist</button>
 			</form>
 		</c:if>
 	</div>
@@ -46,11 +48,14 @@
 			</div>
 		</div>
 		<table class="music-table table-hover">
-		<c:forEach items="${artist.albums }" var="album">
-		<tr>
-		<td><a href="album.do?albumId=${album.id }">${album.title }</a></td>
-		</tr>
-		</c:forEach>
+			<c:forEach items="${artist.albums }" var="album">
+				<tr>
+					<td><a href="album.do?albumId=${album.id}"><img
+							class="albumImage-sm" src="${album.imageURL }"
+							alt="image of album"></a></td>
+					<td><a href="album.do?albumId=${album.id}">${album.title }</a></td>
+				</tr>
+			</c:forEach>
 		</table>
 	</div>
 </div>
