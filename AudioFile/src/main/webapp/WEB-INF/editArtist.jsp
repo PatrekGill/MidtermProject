@@ -27,6 +27,15 @@
 							</c:otherwise>
 						</c:choose>
 					</div>
+
+                    <c:if test="${not empty artist}">
+                        <div class="">
+    						<a href="artistProfile?id=${artist.id}" class="btn btn-primary">
+    							<i class="glyphicon glyphicon-circle-arrow-left"></i>
+    							<span>Back To Artist</span>
+    						</a>
+    					</div>
+                    </c:if>
 				</div>
 			</div>
 
@@ -118,7 +127,7 @@
                                     <c:forEach items="${songs }" var="song">
                                         <div>
                                             <c:choose>
-                                                <c:when test="${editng && fncust:contains( artist.songs, song)}">
+                                                <c:when test="${editing && fncust:contains( artist.songs, song)}">
                                                     <input class="editing-table-checkbox-song" type="checkbox" checked name="songIds" value="${song.id}">
                                                 </c:when>
                                                 <c:otherwise>

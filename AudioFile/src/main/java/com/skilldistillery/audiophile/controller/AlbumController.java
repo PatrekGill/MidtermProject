@@ -258,32 +258,47 @@ public class AlbumController {
 			return "profile";
 		}
 		
-		
 		if (albumId != null) {
 			Album album = albumDAO.findAlbumById(albumId);
 			if (album != null) {
+				
+				boolean editing = false;
 				if (album.getUser().equals(user)) {
-					model.addAttribute("album", album);				
-					model.addAttribute("editing",true);
+					model.addAttribute("album", album);
+					
+					// can't implicitly convert to proper html format for default value
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+					String date = album.getReleaseDate().format(formatter);
+					model.addAttribute("releaseDate",date);
+					
+					editing = true;
 					
 				} else {
 					redir.addFlashAttribute("warning", "Only the creating user can edit the details of this item");
 					redir.addAttribute("albumId",albumId);
 					return "redirect:album.do";
+					
 				}
+				
+				
+				model.addAttribute("editing",editing);
+				
+				List<Artist> allArtists = artistDAO.sortArtistsAlphabetically();
+				model.addAttribute("artists",allArtists);
+				
+				List<Song> allSongs = songDAO.sortByName(true);
+				model.addAttribute("songs",allSongs);
+				
+				List<Genre> allGenres = genreDAO.sortByName(true);
+				model.addAttribute("genres",allGenres);
+				
+				return "editAlbum";
 			}
+			
 		}
 		
-		List<Artist> allArtists = artistDAO.sortArtistsAlphabetically();
-		model.addAttribute("artists",allArtists);
-		
-		List<Song> allSongs = songDAO.sortByName(true);
-		model.addAttribute("songs",allSongs);
-		
-		List<Genre> allGenres = genreDAO.sortByName(true);
-		model.addAttribute("genres",allGenres);
-		
-		return "editAlbum";
+		redir.addFlashAttribute("error", "Could not locate your album");
+		return "redirect:/";
 	}
 	
 	

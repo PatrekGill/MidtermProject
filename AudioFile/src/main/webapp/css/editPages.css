@@ -41,14 +41,7 @@
 tr.editing-table-checkboxes-hover:hover {
 	background: none !important;
 }
-/* .editing-table-dropdown {
-    width: 100%;
-}
-.editing-table-dropdown select {
-    width: 100%;
-    max-height: 100px;
-}
-.editing-table-dropdown label {
-    color: black;
 
-} */
+.edit-entity-button {
+    margin: 10px;
+}

@@ -20,6 +20,20 @@
 	</div>
 </div>
 
+<div class="container-fluid">
+	<%-- ------------------------------------------------
+		Edit Button
+	------------------------------------------------ --%>
+	<div class="edit-entity-button">
+		<c:if test="${not empty sessionScope.user && Song.user == sessionScope.user}">
+			<form action="editSong" method="GET">
+				<input type="hidden" name="songId" value="${Song.id}">
+				<button type="submit" class="btn btn-warning table-btn">Edit Song</button>
+			</form>
+		</c:if>
+	</div>
+</div>
+
 <div class="table-responsive">
 	<div class="table-wrapper table-body">
 		<div class="table-title">
@@ -115,10 +129,10 @@
 <%-- <h1>Song Information</h1>
 <ul>
 	<c:if test="${! empty Song}">
-		
+
 
 			<p>Name: ${Song.name}</p>
-			
+
 			<p align="justify">Lyrics: ${Song.lyrics}</p>
 			<p>Duration Seconds: ${DurationSeconds}</p>
 			<c:forEach var="artist" items="${Song.artists}">
@@ -131,7 +145,7 @@
 			<p><a href="album.do?albumId=${album.id }">${album.title }</a></p>
 			</c:forEach>
 
-		
+
 	</c:if>
 	<c:if test="${! empty RateDate }">
 		<p align="center">Rating Points: ${Rating}</p>

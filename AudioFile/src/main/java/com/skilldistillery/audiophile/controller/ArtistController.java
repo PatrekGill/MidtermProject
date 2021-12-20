@@ -70,29 +70,35 @@ public class ArtistController {
 			return "profile";
 		}
 		
-		
+		boolean editing = false;
 		if (artistId != null) {
 			Artist artist = artistDAO.findById(artistId);
 			if (artist != null) {
 				if (artist.getUser().equals(user)) {
 					model.addAttribute("artist", artist);				
-					model.addAttribute("editing",true);
+					editing = true;
 					
 				} else {
 					redir.addFlashAttribute("warning", "Only the creating user can edit the details of this item");
 					redir.addAttribute("id",artistId);
 					return "redirect:artistProfile";
+					
 				}
 			}
+			
+			model.addAttribute("editing",editing);
+			
+			List<Album> allAlbums = albumDAO.sortAlbumsByTitle(true);
+			model.addAttribute("albums",allAlbums);
+			
+			List<Song> allSongs = songDAO.sortByName(true);
+			model.addAttribute("songs",allSongs);
+
+			return "editArtist";
 		}
 		
-		List<Album> allAlbums = albumDAO.sortAlbumsByTitle(true);
-		model.addAttribute("albums",allAlbums);
-		
-		List<Song> allSongs = songDAO.sortByName(true);
-		model.addAttribute("songs",allSongs);
-		
-		return "editArtist";
+		redir.addFlashAttribute("error", "Could not locate your artist");
+		return "redirect:/";
 	}
 	
 	

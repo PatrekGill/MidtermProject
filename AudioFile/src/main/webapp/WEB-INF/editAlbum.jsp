@@ -30,6 +30,15 @@
 							</c:otherwise>
 						</c:choose>
 					</div>
+
+                    <c:if test="${not empty album}">
+                        <div class="">
+    						<a href="album.do?albumId=${album.id}" class="btn btn-primary">
+    							<i class="glyphicon glyphicon-circle-arrow-left"></i>
+    							<span>Back To Album</span>
+    						</a>
+    					</div>
+                    </c:if>
 				</div>
 			</div>
 
@@ -153,7 +162,7 @@
 									</span>
                                     <c:choose>
                                         <c:when test="${editing}">
-                                            <input type="date" value="${album.releaseDate}" class="form-control" name="releaseDate" placeholder="MM/DD/YYYY"/>
+                                            <input type="date" value="${releaseDate}" class="form-control" name="releaseDate" placeholder="MM/DD/YYYY"/>
                                         </c:when>
                                         <c:otherwise>
                                             <input type="date" class="form-control" name="releaseDate" placeholder="MM/DD/YYYY"/>
@@ -174,8 +183,8 @@
                                     <c:forEach items="${songs }" var="song">
                                         <div>
                                             <c:choose>
-                                                <c:when test="${editng && fncust:contains( album.songs, song)}">
-                                                    <input class="editing-table-checkbox-song" type="checkbox" checked name="songIds" value="${song.id}">
+                                                <c:when test="${editing && fncust:contains( album.songs, song)}">
+                                                    <input class="editing-table-checkbox-song" type="checkbox" name="songIds" value="${song.id}" checked>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <input class="editing-table-checkbox-song" type="checkbox" name="songIds" value="${song.id}">
