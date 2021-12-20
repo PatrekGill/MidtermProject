@@ -4,6 +4,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <jsp:include page="bootstrapHead.jsp" />
 
+<jsp:include page="musicBetterHeader.jsp" />
+
  <%-- ------------------------------------------------
                 Albums Table
 ------------------------------------------------ --%>

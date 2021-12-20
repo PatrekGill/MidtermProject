@@ -87,19 +87,18 @@ public class ArtistController {
 				}
 			}
 			
-			model.addAttribute("editing",editing);
-			
-			List<Album> allAlbums = albumDAO.sortAlbumsByTitle(true);
-			model.addAttribute("albums",allAlbums);
-			
-			List<Song> allSongs = songDAO.sortByName(true);
-			model.addAttribute("songs",allSongs);
-
-			return "editArtist";
 		}
 		
-		redir.addFlashAttribute("error", "Could not locate your artist");
-		return "redirect:/";
+		model.addAttribute("editing",editing);
+		
+		List<Album> allAlbums = albumDAO.sortAlbumsByTitle(true);
+		model.addAttribute("albums",allAlbums);
+		
+		List<Song> allSongs = songDAO.sortByName(true);
+		model.addAttribute("songs",allSongs);
+		
+		return "editArtist";
+		
 	}
 	
 	

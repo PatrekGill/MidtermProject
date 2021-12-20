@@ -171,10 +171,10 @@ public class SongController {
 		
 		
 		// if editing song (not creating a new one) save and id to identify what artists are currently selected for that song
+		boolean editing = false;
 		if (songId != null) {
 			Song song = songDAO.findById(songId);
 			
-			boolean editing = false;
 			if (song != null) {
 				if (song.getUser().equals(user)) {
 					model.addAttribute(song);
@@ -186,20 +186,19 @@ public class SongController {
 					return "redirect:getSongId.do";
 				}
 				
-				model.addAttribute("editing",editing);
-				
-				List<Artist> allArtists = artistDAO.sortArtistsAlphabetically();
-				model.addAttribute("artists",allArtists);
-				
-				List<Album> allAlbums = albumDAO.sortAlbumsByTitle(true);
-				model.addAttribute("albums",allAlbums);
-				
-				return "editSong";
 			}
+
 		}
 		
-		redir.addFlashAttribute("error", "Could not locate your song");
-		return "redirect:/";
+		model.addAttribute("editing",editing);
+		
+		List<Artist> allArtists = artistDAO.sortArtistsAlphabetically();
+		model.addAttribute("artists",allArtists);
+		
+		List<Album> allAlbums = albumDAO.sortAlbumsByTitle(true);
+		model.addAttribute("albums",allAlbums);
+		
+		return "editSong";
 	}
 
 	

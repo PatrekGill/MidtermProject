@@ -259,11 +259,11 @@ public class AlbumController {
 			return "profile";
 		}
 		
+		boolean editing = false;
 		if (albumId != null) {
 			Album album = albumDAO.findAlbumById(albumId);
 			if (album != null) {
 				
-				boolean editing = false;
 				if (album.getUser().equals(user)) {
 					model.addAttribute("album", album);
 					
@@ -282,24 +282,22 @@ public class AlbumController {
 				}
 				
 				
-				model.addAttribute("editing",editing);
-				
-				List<Artist> allArtists = artistDAO.sortArtistsAlphabetically();
-				model.addAttribute("artists",allArtists);
-				
-				List<Song> allSongs = songDAO.sortByName(true);
-				model.addAttribute("songs",allSongs);
-				
-				List<Genre> allGenres = genreDAO.sortByName(true);
-				model.addAttribute("genres",allGenres);
-				
-				return "editAlbum";
 			}
+
 			
 		}
+		model.addAttribute("editing",editing);
 		
-		redir.addFlashAttribute("error", "Could not locate your album");
-		return "redirect:/";
+		List<Artist> allArtists = artistDAO.sortArtistsAlphabetically();
+		model.addAttribute("artists",allArtists);
+		
+		List<Song> allSongs = songDAO.sortByName(true);
+		model.addAttribute("songs",allSongs);
+		
+		List<Genre> allGenres = genreDAO.sortByName(true);
+		model.addAttribute("genres",allGenres);
+		
+		return "editAlbum";
 	}
 	
 	
