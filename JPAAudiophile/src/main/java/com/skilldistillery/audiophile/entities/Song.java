@@ -358,11 +358,8 @@ public class Song {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Song [id=").append(id).append(", name=").append(name).append(", durationInSeconds=")
-				.append(durationInSeconds).append(", createDate=").append(createDate).append(", user=").append(user)
-				.append(", album=").append(albums).append("]");
-		return builder.toString();
+		return "Song [id=" + id + ", name=" + name + ", lyrics=" + lyrics + ", durationInSeconds=" + durationInSeconds
+				+ ", createDate=" + createDate + ", updatedAt=" + updatedAt + "]";
 	}
 
 }

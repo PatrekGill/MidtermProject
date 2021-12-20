@@ -159,11 +159,11 @@ public class UserController {
 	}
 
 	@GetMapping(path = "friendList")
-	public String getFriendPage(HttpSession session, Album album) {
+	public String getFriendPage(Model model, Album album) {
 		User user = userDAO.findUserById(2);
-		session.setAttribute("user1", user);
+		model.addAttribute("user1", user);
 
-		session.setAttribute("albumsCreated", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
+		model.addAttribute("albumsCreated", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
 		return "friendPage";
 	}
 
