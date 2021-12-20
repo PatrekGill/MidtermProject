@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `last_name` VARCHAR(45) NULL,
   `email` VARCHAR(45) NOT NULL,
   `create_date` DATETIME NULL,
-  `image_url` VARCHAR(2000) NULL,
+  `image_url` VARCHAR(2000) NULL DEFAULT '/logosAndGraphics/monkeyking-WhiteAndBlack-BG.png',
   `enabled` TINYINT NULL,
   `role` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
