@@ -100,7 +100,7 @@
 								    	<i class="glyphicon glyphicon-user"></i>
 								    </span>
 
-									<select class="form-control" name="priamryArtistId">
+									<select class="form-control" name="artistId">
 
 										<c:forEach items="${artists }" var="artist">
 											<c:choose>

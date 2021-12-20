@@ -1,5 +1,8 @@
 package com.skilldistillery.audiophile.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -291,12 +294,12 @@ public class AlbumController {
 	@PostMapping(path="editAlbum")
 	public String editAlbum(
 			Integer albumId, String title, String description,
-			Integer priamryArtistId, String imageURL, String releaseDate,
-			Integer[] songIds, Integer genreIds,
+			Integer artistId, String imageURL, String releaseDate,
+			Integer[] songIds, Integer[] genreIds,
 			HttpSession session,
 			Model model,
 			RedirectAttributes redir
-			) {
+		) {
 		
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
@@ -304,32 +307,62 @@ public class AlbumController {
 		}
 		
 		
-		// if editing song (not creating a new one) save and id to identify what artists are currently selected for that song
-		if (albumId != null) {
-			Album album = albumDAO.findAlbumById(albumId);
-			if (album != null) {
-				if (album.getUser().equals(user)) {
-					model.addAttribute("album", album);				
-					model.addAttribute("editing",true);
-					
-				} else {
-					redir.addFlashAttribute("warning", "Only the creating user can edit the details of this item");
-					redir.addAttribute("albumId",albumId);
-					return "redirect:album.do";
-				}
+		Album album = new Album();
+		try {
+			album.setTitle(title);
+			album.setDescription(description);
+			album.setArtist(artistDAO.findById(artistId));
+			album.setImageURL(imageURL);
+			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate localDate = LocalDate.parse(releaseDate, formatter);
+			LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalDateTime.now().toLocalTime());
+			album.setReleaseDate(localDateTime);
+			
+			for (Integer id : songIds) {
+				album.addSong(songDAO.findById(id));
 			}
+			
+			for (Integer id : genreIds) {
+				album.addGenre(genreDAO.findGenreById(id));
+			}
+			
+			
+			boolean succeeded = false;
+			boolean updatingAlbum = albumId != null;
+			if (updatingAlbum) {
+				succeeded = albumDAO.updateAlbum(albumId, album);
+				
+			} else {
+				succeeded = albumDAO.addAlbum(album) != null;
+				albumId = album.getId();
+				
+			}
+			
+			
+			if (succeeded) {
+				redir.addFlashAttribute("success", "Album successfully created!");
+				redir.addAttribute("albumId", albumId);
+				return "redirect:album.do";
+				
+			} else {
+				String message;
+				if (updatingAlbum) {
+					message = "Failed to update album: " + albumId;
+				} else {
+					message = "Failed to create new album";
+				}
+				
+				throw new Exception(message);
+			}
+			
+		} catch (Exception e) {
+			redir.addFlashAttribute("error", e.getMessage());
+			e.printStackTrace();
 		}
+
 		
-		List<Artist> allArtists = artistDAO.sortArtistsAlphabetically();
-		model.addAttribute("artists",allArtists);
-		
-		List<Song> allSongs = songDAO.sortByName(true);
-		model.addAttribute("songs",allSongs);
-		
-		List<Genre> allGenres = genreDAO.sortByName(true);
-		model.addAttribute("genres",allGenres);
-		
-		return "editAlbum";
+		return "redirect:/";
 	}
 
 	

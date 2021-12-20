@@ -102,12 +102,14 @@ public class SongController {
 				
 			} else {
 				succeeded = songDAO.addNewSong(song) != null;
+				songId = song.getId();
 			}
 			
 
 			if (succeeded) {
 				redir.addFlashAttribute("success", "Song successfully created!");
 				redir.addAttribute("songName",song.getName());
+//				redir.addAttribute("songName",songId);
 				return "redirect:searchBySongName.do";
 				
 			} else {
