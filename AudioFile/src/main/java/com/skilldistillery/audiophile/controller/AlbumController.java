@@ -3,6 +3,7 @@ package com.skilldistillery.audiophile.controller;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -321,7 +322,15 @@ public class AlbumController {
 		}
 		
 		
-		Album album = new Album();
+		Album album;
+		if (albumId != null) {
+			album = albumDAO.findAlbumById(albumId);
+			
+		} else {
+			album = new Album();
+			
+		}
+		
 		try {
 			album.setTitle(title);
 			album.setDescription(description);
@@ -333,12 +342,41 @@ public class AlbumController {
 			LocalDateTime localDateTime = LocalDateTime.of(localDate, LocalDateTime.now().toLocalTime());
 			album.setReleaseDate(localDateTime);
 			
-			for (Integer id : songIds) {
-				album.addSong(songDAO.findById(id));
+			// if editing album
+			if (songIds != null) {
+				List<Song> albumSongs = album.getSongs();
+				if (!albumSongs.isEmpty()) {
+					List<Integer> songIdsList = Arrays.asList(songIds);
+					
+					for (int i = 0; i < albumSongs.size(); i++) {
+						Song song = albumSongs.get(i);
+						if (!songIdsList.contains(song.getId())) {
+							song.removeAlbum(album);
+						}
+					}
+				}
+				for (Integer id : songIds) {
+					album.addSong(songDAO.findById(id));
+				}
+				
 			}
 			
-			for (Integer id : genreIds) {
-				album.addGenre(genreDAO.findGenreById(id));
+			if (genreIds != null) {
+				List<Genre> albumGenres = album.getGenres();
+				if (!albumGenres.isEmpty()) {
+					List<Integer> genreIdsList = Arrays.asList(genreIds);
+					
+					for (int i = 0; i < albumGenres.size(); i++) {
+						Genre genre = albumGenres.get(i);
+						if (!genreIdsList.contains(genre.getId())) {
+							genre.removeAlbum(album);
+						}
+					}
+				}
+				for (Integer id : genreIds) {
+					album.addGenre(genreDAO.findGenreById(id));
+				}
+				
 			}
 			
 			

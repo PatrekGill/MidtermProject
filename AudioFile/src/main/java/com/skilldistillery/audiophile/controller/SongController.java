@@ -1,5 +1,6 @@
 package com.skilldistillery.audiophile.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -22,41 +23,41 @@ import com.skilldistillery.audiophile.entities.Artist;
 import com.skilldistillery.audiophile.entities.Song;
 import com.skilldistillery.audiophile.entities.SongRating;
 import com.skilldistillery.audiophile.entities.User;
+import com.skilldistillery.audiophile.misc.SessionUserChecker;
 
 @Controller
 public class SongController {
 
 	@Autowired
-	private AlbumDAOImpl albumDAO;
-
+	private UserDAOImpl userDAO;
 	@Autowired
 	private SongDAOImpl songDAO;
-
-	@Autowired
-	private ArtistDAOImpl artistDAO;
-	
-	@Autowired
-	private UserDAOImpl userDAO;
-	
 	@Autowired
 	private SongRatingDAOImpl songRatingDAO;
+	@Autowired
+	private AlbumDAOImpl albumDAO;
+	@Autowired
+	private ArtistDAOImpl artistDAO;
+	private SessionUserChecker checker = new SessionUserChecker();
 
 	/*
-	 * --------------------------- get song detail page ---------------------------
+	 * --------------------------- 
+	 * get song detail page
+	 * ---------------------------
 	 */
 
 	@GetMapping(path = "getSongId.do")
-	public String getBySongName(@RequestParam("songId") int songId, Model model) {
+	public String getBySongId(@RequestParam("songId") int songId, Model model) {
 		Song song = null;
 		try {
 			song = songDAO.findById(songId);
-			long durationSeconds = song.getDurationInSeconds();
-			String newDurationSeconds;
-			long MM = durationSeconds / 60;
-			long SS = durationSeconds % 60;
-			newDurationSeconds = String.format("%02d:%02d", MM, SS);
+			 long durationSeconds = song.getDurationInSeconds();
+				String newDurationSeconds;
+				long MM = durationSeconds / 60;
+				long SS = durationSeconds % 60;
+				newDurationSeconds = String.format("%02d:%02d", MM, SS);
 			model.addAttribute("Song", song);
-			model.addAttribute("DurationSeconds", newDurationSeconds);
+			model.addAttribute("DurationSeconds",newDurationSeconds);
 			model.addAttribute("albums", albumDAO.findAlbumsBySongTitle(song.getName()));
 			model.addAttribute("artists", artistDAO.findArtistsBySongName(song.getName()));
 			System.out.println(songRatingDAO.getAverageSongRating(songId));
@@ -70,100 +71,238 @@ public class SongController {
 		return "song/SongDetails";
 	}
 
+	/*
+	 * ----------------------------------------------------------------------------
+	 * songRatings.do (GET)
+	 * ----------------------------------------------------------------------------
+	 */
+	@GetMapping(path = "songRatings.do")
+	public String showRatingsPage(Integer songId, HttpSession session, Model model) {
+		if (songId != null) {
+
+			Song song = songDAO.findById(songId);
+			if (song != null) {
+				model.addAttribute("song", song);
+
+				User user = (User) session.getAttribute("user");
+				boolean userHasRating = false;
+				if (user != null) {
+					SongRating usersRating = songRatingDAO.findSongRatingByUserIdSongId(songId, user.getId());
+					if (usersRating != null) {
+						model.addAttribute("usersRating", usersRating);
+						userHasRating = true;
+					}
+
+				}
+
+				model.addAttribute("userHasRating", userHasRating);
+
+				List<SongRating> ratings = songRatingDAO.sortRatingByCreationDateFindBySongId(songId, false);
+				model.addAttribute("songRatings", ratings);
+				model.addAttribute("averageRating", songRatingDAO.getAverageSongRating(songId));
+			}
+		}
+		return "song/songDetails";
+	}
+
+	/*
+	 * ----------------------------------------------------------------------------
+	 * songRatings.do (POST)
+	 * ----------------------------------------------------------------------------
+	 */
+	@PostMapping(path = "songRatings.do")
+	public String postRating(Integer songId, String ratingText, Integer ratingNumber, HttpSession session,
+			Model model) {
+
+		if (songId != null && ratingNumber != null) {
+
+			Song song = songDAO.findById(songId);
+			if (song != null) {
+				model.addAttribute("song", song);
+
+				User user = checker.getSessionUser(session);
+				if (user != null) {
+					int userId = user.getId();
+					SongRating usersRating = songRatingDAO.findSongRatingByUserIdSongId(userId, songId);
+
+					if (usersRating != null) {
+						// update rating
+						int ratingId = usersRating.getId();
+						songRatingDAO.updateDescription(ratingId, ratingText);
+						songRatingDAO.updateRating(ratingId, ratingNumber);
+
+					} else {
+						// create rating
+						usersRating = new SongRating();
+						usersRating.setSong(song);
+						usersRating.setDescription(ratingText);
+						usersRating.setRating(ratingNumber);
+						usersRating.setUser(userDAO.findUserById(userId));
+						songRatingDAO.createSongRating(usersRating);
+
+					}
+
+					model.addAttribute("usersRating", usersRating);
+					model.addAttribute("userHasRating", true);
+
+				}
+
+				List<SongRating> ratings = songRatingDAO.sortRatingByCreationDateFindBySongId(songId, false);
+				model.addAttribute("songRatings", ratings);
+				model.addAttribute("averageRating", songRatingDAO.getAverageSongRating(songId));
+			}
+		}
+
+		return "song/songRatings";
+	}
+	
+	
 	@GetMapping(path = "editSong")
-	public String getEditSongPage(Integer songId, HttpSession session, Model model, RedirectAttributes redir) {
+	public String getEditSongPage(
+			Integer songId,
+			HttpSession session,
+			Model model,
+			RedirectAttributes redir
+		) {
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
 			return "profile";
 		}
-
-		// if editing song (not creating a new one) save and id to identify what artists
-		// are currently selected for that song
+		
+		
+		// if editing song (not creating a new one) save and id to identify what artists are currently selected for that song
 		if (songId != null) {
 			Song song = songDAO.findById(songId);
-
+			
 			boolean editing = false;
 			if (song != null) {
 				if (song.getUser().equals(user)) {
 					model.addAttribute(song);
 					editing = true;
-
+					
 				} else {
 					redir.addFlashAttribute("warning", "Only the creating user can edit the details of this item");
-					redir.addAttribute("songName", song.getName());
-					return "redirect:searchBySongName.do";
+					redir.addAttribute("songId",songId);
+					return "redirect:getSongId.do";
 				}
-
-				model.addAttribute("editing", editing);
-
+				
+				model.addAttribute("editing",editing);
+				
 				List<Artist> allArtists = artistDAO.sortArtistsAlphabetically();
-				model.addAttribute("artists", allArtists);
-
+				model.addAttribute("artists",allArtists);
+				
 				List<Album> allAlbums = albumDAO.sortAlbumsByTitle(true);
-				model.addAttribute("albums", allAlbums);
-
+				model.addAttribute("albums",allAlbums);
+				
 				return "editSong";
 			}
 		}
-
+		
 		redir.addFlashAttribute("error", "Could not locate your song");
 		return "redirect:/";
 	}
 
+	
+	
 	@PostMapping(path = "editSong")
-	public String editSong(Integer songId, Integer[] artistIds, Integer[] albumIds, String name, String lyrics,
-			int durationInSeconds, RedirectAttributes redir, HttpSession session) {
-
-		Song song = new Song();
+	public String editSong(
+			Integer songId, Integer[] artistIds, Integer[] albumIds, 
+			String name, String lyrics,	int durationInSeconds, 
+			RedirectAttributes redir, HttpSession session
+		) {
+		
 		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			return "profile";
+		}
+		
+		Song song;
+		if (songId != null) {
+			song = songDAO.findById(songId);
+			
+		} else {
+			song = new Song();
+			
+		}
+		
 		try {
 			song.setName(name);
 			song.setLyrics(lyrics);
 			song.setDurationInSeconds(durationInSeconds);
 			song.setUser(user);
-
-			for (Integer artistId : artistIds) {
-				song.addArtist(artistDAO.findById(artistId));
+			
+			// if editing song
+			if (artistIds != null) {
+				List<Artist> artists = song.getArtists();
+				if (!artists.isEmpty()) {
+					List<Integer> artistIdsList = Arrays.asList(artistIds);
+					
+					for (int i = 0; i < artists.size(); i++) {
+						Artist artist = artists.get(i);
+						if (!artistIdsList.contains(artist.getId())) {
+							artist.removeSong(song);
+						}
+					}
+				}
+				for (Integer artistId : artistIds) {
+					song.addArtist(artistDAO.findById(artistId));
+				}
+				
 			}
-
-			for (Integer albumId : albumIds) {
-				song.addAlbum(albumDAO.findAlbumById(albumId));
+			
+			if (albumIds != null) {
+				List<Album> albums = song.getAlbums();
+				if (!albums.isEmpty()) {
+					List<Integer> albumIdsList = Arrays.asList(albumIds);
+					
+					for (int i = 0; i < albums.size(); i++) {
+						Album album = albums.get(i);
+						if (!albumIdsList.contains(album.getId())) {
+							album.removeSong(song);
+						}
+					}
+				}
+				for (Integer albumId : albumIds) {
+					song.addAlbum(albumDAO.findAlbumById(albumId));
+				}
+				
 			}
-
+			
 			boolean succeeded = false;
 			boolean updating = songId != null;
 			String message;
 			if (updating) {
-				succeeded = songDAO.updateSong(songId, song);
+				succeeded = songDAO.updateSong(songId,song);
 				message = "Song successfully updated!";
-
+				
 			} else {
 				succeeded = songDAO.addNewSong(song) != null;
 				message = "Song successfully created!";
 				songId = song.getId();
 			}
+			
 
 			if (succeeded) {
 				redir.addFlashAttribute("success", message);
-				redir.addAttribute("songName", song.getName());
-//				redir.addAttribute("songName",songId);
-				return "redirect:searchBySongName.do";
-
+				redir.addAttribute("songId",songId);
+				return "redirect:getSongId.do";
+				
 			} else {
 				if (updating) {
 					message = "Failed to update song: " + songId;
 				} else {
 					message = "Failed to create new song";
 				}
-
+				
 				throw new Exception(message);
 			}
-
+			
 		} catch (Exception e) {
-			redir.addFlashAttribute("error", e.getMessage() + ": " + song.toString());
+			redir.addFlashAttribute("error", e.getMessage());
 			e.printStackTrace();
 		}
-
+		
+		
 		return "redirect:/";
 
 	}
