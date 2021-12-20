@@ -1,5 +1,6 @@
 package com.skilldistillery.audiophile.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -210,20 +211,61 @@ public class SongController {
 			RedirectAttributes redir, HttpSession session
 		) {
 		
-		Song song = new Song();
 		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			return "profile";
+		}
+		
+		Song song;
+		if (songId != null) {
+			song = songDAO.findById(songId);
+			
+		} else {
+			song = new Song();
+			
+		}
+		
 		try {
 			song.setName(name);
 			song.setLyrics(lyrics);
 			song.setDurationInSeconds(durationInSeconds);
 			song.setUser(user);
 			
-			for (Integer artistId : artistIds) {
-				song.addArtist(artistDAO.findById(artistId));
+			// if editing song
+			if (artistIds != null) {
+				List<Artist> artists = song.getArtists();
+				if (!artists.isEmpty()) {
+					List<Integer> artistIdsList = Arrays.asList(artistIds);
+					
+					for (int i = 0; i < artists.size(); i++) {
+						Artist artist = artists.get(i);
+						if (!artistIdsList.contains(artist.getId())) {
+							artist.removeSong(song);
+						}
+					}
+				}
+				for (Integer artistId : artistIds) {
+					song.addArtist(artistDAO.findById(artistId));
+				}
+				
 			}
 			
-			for (Integer albumId : albumIds) {
-				song.addAlbum(albumDAO.findAlbumById(albumId));
+			if (albumIds != null) {
+				List<Album> albums = song.getAlbums();
+				if (!albums.isEmpty()) {
+					List<Integer> albumIdsList = Arrays.asList(albumIds);
+					
+					for (int i = 0; i < albums.size(); i++) {
+						Album album = albums.get(i);
+						if (!albumIdsList.contains(album.getId())) {
+							album.removeSong(song);
+						}
+					}
+				}
+				for (Integer albumId : albumIds) {
+					song.addAlbum(albumDAO.findAlbumById(albumId));
+				}
+				
 			}
 			
 			boolean succeeded = false;
@@ -256,7 +298,7 @@ public class SongController {
 			}
 			
 		} catch (Exception e) {
-			redir.addFlashAttribute("error", e.getMessage() + ": " + song.toString());
+			redir.addFlashAttribute("error", e.getMessage());
 			e.printStackTrace();
 		}
 		
