@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Bootstrap Example</title>
+<title>AudioFile</title>
 <link rel="shortcut icon" type="image/png"
 	href="logosAndGraphics/monkeyVector.png" />
 <meta charset="utf-8">

@@ -70,8 +70,8 @@
 									<c:if test="${ empty sessionScope.user }">
 										<tr>
 											<h4>
-												<a href="login">To leave a rating please login or create
-													an account</a>
+												<a href="login">To leave a comment please login or
+													create an account</a>
 											</h4>
 										</tr>
 									</c:if>
@@ -140,7 +140,13 @@
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
-									<tr>No Comments...
+									<tr>
+										No Comments...
+										<br>
+										<h4>
+											<a href="login">To leave a comment please login or create
+												an account</a>
+										</h4>
 									</tr>
 								</c:otherwise>
 							</c:choose>
