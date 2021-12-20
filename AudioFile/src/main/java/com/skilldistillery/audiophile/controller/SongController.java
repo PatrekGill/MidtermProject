@@ -96,25 +96,27 @@ public class SongController {
 			}
 			
 			boolean succeeded = false;
-			boolean updatingSong = songId != null;
-			if (updatingSong) {
+			boolean updating = songId != null;
+			String message;
+			if (updating) {
 				succeeded = songDAO.updateSong(songId,song);
+				message = "Song successfully updated!";
 				
 			} else {
 				succeeded = songDAO.addNewSong(song) != null;
+				message = "Song successfully created!";
 				songId = song.getId();
 			}
 			
 
 			if (succeeded) {
-				redir.addFlashAttribute("success", "Song successfully created!");
+				redir.addFlashAttribute("success", message);
 				redir.addAttribute("songName",song.getName());
 //				redir.addAttribute("songName",songId);
 				return "redirect:searchBySongName.do";
 				
 			} else {
-				String message;
-				if (updatingSong) {
+				if (updating) {
 					message = "Failed to update song: " + songId;
 				} else {
 					message = "Failed to create new song";

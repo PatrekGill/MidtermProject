@@ -3,12 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="/WEB-INF/custom-functions.tld" prefix="fncust" %>
 
-
 <jsp:include page="bootstrapHead.jsp" />
 
 <jsp:include page="musicBetterHeader.jsp" />
-
-
 
 <div class="container-fluid">
 	<div class="table-responsive">
@@ -20,12 +17,12 @@
 						<c:choose>
 							<c:when test="${editing}">
 								<h2>
-									Edit <b>Album</b>
+									Edit <b>Artist</b>
 								</h2>
 							</c:when>
 							<c:otherwise>
 								<h2>
-									Add <b>Album</b>
+									Add <b>Artist</b>
 								</h2>
 							</c:otherwise>
 						</c:choose>
@@ -34,30 +31,30 @@
 			</div>
 
 
-			<form action="editAlbum" method="POST">
+			<form action="editArtist" method="POST">
 				<c:if test="${editing}">
-					<input type="hidden" name="albumId" value="${album.id}">
+					<input type="hidden" name="artistId" value="${artist.id}">
 				</c:if>
 
 				<table class="music-table table-hover">
 					<tbody>
 
 						<%-- ------------------------------------------------
-							Album Title
+							Artist Name
 						------------------------------------------------ --%>
 						<tr>
 							<td>
-								<label for="title">Title:</label>
+								<label for="name">Name:</label>
 								<div class="input-group">
 									<span class="input-group-addon">
 										<i class="glyphicon glyphicon-pencil"></i>
 									</span>
                                     <c:choose>
                                         <c:when test="${editing}">
-                                            <input type="text" value="${album.title}" class="form-control" name="title" placeholder="Title" value=""/>
+                                            <input type="text" value="${artist.name}" class="form-control" name="name" placeholder="Name"/>
                                         </c:when>
                                         <c:otherwise>
-                                            <input type="text" class="form-control" name="title" placeholder="Title" value=""/>
+                                            <input type="text" class="form-control" name="name" placeholder="Title"/>
                                         </c:otherwise>
                                     </c:choose>
 
@@ -66,7 +63,7 @@
 						</tr>
 
 						<%-- ------------------------------------------------
-							Album Description
+							Artist Description
 						------------------------------------------------ --%>
 						<tr>
 							<td>
@@ -77,7 +74,7 @@
 									</span>
                                     <c:choose>
                                         <c:when test="${editing}">
-                                            <textarea class="form-control" name="description" placeholder="Description...">${album.description}</textarea>
+                                            <textarea class="form-control" name="description" placeholder="Description...">${artist.description}</textarea>
                                         </c:when>
                                         <c:otherwise>
                                             <textarea class="form-control" name="description" placeholder="Description..."></textarea>
@@ -89,38 +86,7 @@
 						</tr>
 
 						<%-- ------------------------------------------------
-							Album Primary Artist
-						------------------------------------------------ --%>
-						<tr>
-							<td>
-								<label for="artist">Primary Artist:</label>
-
-								<div class="input-group">
-									<span class="input-group-addon">
-								    	<i class="glyphicon glyphicon-user"></i>
-								    </span>
-
-									<select class="form-control" name="artistId">
-
-										<c:forEach items="${artists }" var="artist">
-											<c:choose>
-												<c:when test="${editing && artist.id == album.artist.id}">
-													<option value="${artist.id}" selected>${artist.name}</option>
-												</c:when>
-												<c:otherwise>
-													<option value="${artist.id}">${artist.name}</option>
-												</c:otherwise>
-											</c:choose>
-										</c:forEach>
-
-									</select>
-								</div>
-
-							</td>
-						</tr>
-
-						<%-- ------------------------------------------------
-							Album imageURL
+							Artist imageURL
 						------------------------------------------------ --%>
 						<tr>
 							<td>
@@ -131,7 +97,7 @@
 									</span>
                                     <c:choose>
                                         <c:when test="${editing}">
-                                            <input type="text" value="${album.imageURL}" class="form-control" name="imageURL" placeholder="Link..."/>
+                                            <input type="text" value="${artist.imageUrl}" class="form-control" name="imageURL" placeholder="Link..."/>
                                         </c:when>
                                         <c:otherwise>
                                             <input type="text" class="form-control" name="imageURL" placeholder="Link..."/>
@@ -142,29 +108,7 @@
 						</tr>
 
 						<%-- ------------------------------------------------
-							Album Release Date
-						------------------------------------------------ --%>
-						<tr>
-							<td>
-								<label for="releaseDate">Release Date:</label>
-								<div class="input-group">
-									<span class="input-group-addon">
-										<i class="glyphicon glyphicon-calendar"></i>
-									</span>
-                                    <c:choose>
-                                        <c:when test="${editing}">
-                                            <input type="date" value="${album.releaseDate}" class="form-control" name="releaseDate" placeholder="MM/DD/YYYY"/>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="date" class="form-control" name="releaseDate" placeholder="MM/DD/YYYY"/>
-                                        </c:otherwise>
-                                    </c:choose>
-								</div>
-							</td>
-						</tr>
-
-						<%-- ------------------------------------------------
-							Album Songs List
+							Artist Songs List
 						------------------------------------------------ --%>
 						<tr class="editing-table-checkboxes-hover">
 							<td>
@@ -174,7 +118,7 @@
                                     <c:forEach items="${songs }" var="song">
                                         <div>
                                             <c:choose>
-                                                <c:when test="${editng && fncust:contains( album.songs, song)}">
+                                                <c:when test="${editng && fncust:contains( artist.songs, song)}">
                                                     <input class="editing-table-checkbox-song" type="checkbox" checked name="songIds" value="${song.id}">
                                                 </c:when>
                                                 <c:otherwise>
@@ -186,13 +130,13 @@
 												<c:if test="${not empty song.artists}">
 													<p class="editing-table-songBy-text">
 														By
-														<c:forEach items="${song.artists }" var="artist" varStatus="i">
+														<c:forEach items="${song.artists }" var="_artist" varStatus="i">
 															<c:choose>
 		                                                        <c:when test="${i.index == 0}">
-		                                                            ${artist.name}
+		                                                            ${_artist.name}
 		                                                        </c:when>
 		                                                        <c:otherwise>
-		                                    						, ${artist.name}
+		                                    						, ${_artist.name}
 		                                    					</c:otherwise>
 		                                                    </c:choose>
 														</c:forEach>
@@ -207,25 +151,25 @@
 							</td>
 						</tr>
 
-						<%-- ------------------------------------------------
-							Album Genres List
-						------------------------------------------------ --%>
+                        <%-- ------------------------------------------------
+                            Artist Albums list
+                        ------------------------------------------------ --%>
 						<tr class="editing-table-checkboxes-hover">
 							<td>
-                                <label for="genres">Genres:</label>
+                                <label for="albums">Albums:</label>
 								<div class="editing-table-checkboxes">
 
-                                    <c:forEach items="${genres }" var="genre">
+                                    <c:forEach items="${albums }" var="album">
                                         <div>
                                             <c:choose>
-                                                <c:when test="${editing && fncust:contains( album.genres, genre)}">
-                                                    <input type="checkbox" checked name="genreIds" value="${genre.id}">
+                                                <c:when test="${editing && fncust:contains( song.albums, album)}">
+                                                    <input type="checkbox" checked name="albumIds" value="${album.id}">
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <input type="checkbox" name="genreIds" value="${genre.id}">
+                                                    <input type="checkbox" name="albumIds" value="${album.id}">
                                                 </c:otherwise>
                                             </c:choose>
-                                            <label for="${genre}">${genre.name}</label>
+                                            <label for="${album}">${album.title}</label>
                                         </div>
                                     </c:forEach>
 
@@ -242,10 +186,10 @@
 								<div>
                                     <c:choose>
                                         <c:when test="${editing}">
-                                            <button type="submit" class="btn btn-warning table-btn">Update Album</button>
+                                            <button type="submit" class="btn btn-warning table-btn">Update Artist</button>
                                         </c:when>
                                         <c:otherwise>
-                                            <button type="submit" class="btn btn-warning table-btn">Add Album</button>
+                                            <button type="submit" class="btn btn-warning table-btn">Add Artist</button>
                                         </c:otherwise>
                                     </c:choose>
 								</div>
@@ -259,7 +203,6 @@
 		</div>
 	</div>
 </div>
-
 
 
 <jsp:include page="bootstrapFooter.jsp" />

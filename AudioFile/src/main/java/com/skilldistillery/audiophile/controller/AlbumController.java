@@ -259,7 +259,6 @@ public class AlbumController {
 		}
 		
 		
-		// if editing song (not creating a new one) save and id to identify what artists are currently selected for that song
 		if (albumId != null) {
 			Album album = albumDAO.findAlbumById(albumId);
 			if (album != null) {
@@ -329,25 +328,27 @@ public class AlbumController {
 			
 			
 			boolean succeeded = false;
-			boolean updatingAlbum = albumId != null;
-			if (updatingAlbum) {
+			boolean updating = albumId != null;
+			String message;
+			if (updating) {
 				succeeded = albumDAO.updateAlbum(albumId, album);
+				message = "Album successfully updated!";
 				
 			} else {
 				succeeded = albumDAO.addAlbum(album) != null;
+				message = "Album successfully created!";
 				albumId = album.getId();
 				
 			}
 			
 			
 			if (succeeded) {
-				redir.addFlashAttribute("success", "Album successfully created!");
+				redir.addFlashAttribute("success", message);
 				redir.addAttribute("albumId", albumId);
 				return "redirect:album.do";
 				
 			} else {
-				String message;
-				if (updatingAlbum) {
+				if (updating) {
 					message = "Failed to update album: " + albumId;
 				} else {
 					message = "Failed to create new album";
