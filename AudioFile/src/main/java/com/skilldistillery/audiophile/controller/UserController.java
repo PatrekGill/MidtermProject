@@ -250,27 +250,7 @@ public class UserController {
 		}
 		return "redirect:/";
 	}
-	@PostMapping(path = "updateSong")
-	public String postUpdateSong(User user, HttpSession session, RedirectAttributes redir, Song song) {
-		try {
-			Song songToUpdate = (Song) session.getAttribute("song");
-			if (songDAO.updateSong(songToUpdate.getId(), song)) {
-				session.setAttribute("song", songDAO.findById(songToUpdate.getId()));
-				session.removeAttribute("update");
-				redir.addFlashAttribute("success", "Account updated");
-				return "redirect:profile";
-			} else {
-				throw new Exception("cannot delete film.");
-			}
-
-		} catch (Exception e) {
-			redir.addFlashAttribute("error", e.getMessage());
-			e.printStackTrace();
-		}
-		return "redirect:profile";
-	}
 	
-
 	@GetMapping(path = "addArtist")
 	public String getAddArtistpage(HttpSession session) {
 		User user = (User) session.getAttribute("user");
@@ -293,53 +273,6 @@ public class UserController {
 			}
 		} catch (Exception e) {
 			redir.addFlashAttribute("error", e.getMessage() + ": " + artist.toString());
-			e.printStackTrace();
-		}
-		return "redirect:/";
-	}
-	@GetMapping(path = "updateArtist")
-	public String getUpdateArtist(HttpSession session) {
-		try {
-			Artist artistToUpdate = (Artist) session.getAttribute("artist");
-			session.setAttribute("update", artistToUpdate);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return "addArtist";
-	}
-	
-	@PostMapping(path = "updateArtist")
-	public String postUpdateArtist(HttpSession session, RedirectAttributes redir, Artist artist) {
-		try {
-			Artist artistToUpdate = (Artist) session.getAttribute("artist");
-			if (artistDAO.updateArtist(artistToUpdate.getId(), artist)) {
-				session.setAttribute("artist", artistDAO.findById(artistToUpdate.getId()));
-//				session.removeAttribute("update");
-				redir.addFlashAttribute("success", "Artist updated");
-				return "redirect:profile";
-			} else {
-				throw new Exception("cannot update Artist.");
-			}
-
-		} catch (Exception e) {
-			redir.addFlashAttribute("error", e.getMessage());
-			e.printStackTrace();
-		}
-		return "redirect:trending";
-	}
-	@PostMapping(path = "deleteArtist")
-	public String deleteArtist(RedirectAttributes redir, HttpSession session,Artist artist) {
-		try {
-			Artist artistTodelete = (Artist) session.getAttribute("artist");
-			if (artistDAO.deleteArtist(artistTodelete.getId())) {
-				session.removeAttribute("artist");
-				redir.addFlashAttribute("success", "Artist deleted");
-				return "redirect:/";
-			} else {
-				throw new Exception("cannot delete film.");
-			}
-		} catch (Exception e) {
-			redir.addFlashAttribute("error", e.getMessage());
 			e.printStackTrace();
 		}
 		return "redirect:/";
