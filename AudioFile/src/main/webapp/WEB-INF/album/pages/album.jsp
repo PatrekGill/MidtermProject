@@ -41,7 +41,7 @@
                                     <c:forEach items="${album.songs}" var="song" varStatus="i">
                                         <tr>
                                             <td>${i.count}</td>
-                                            <td> <a href="searchBySongName.do?songName=${song.name}">${song.name}</a> </td>
+                                            <td> <a href="getSongId.do?songId=${song.id}">${song.name}</a> </td>
                                             <td>
                                                 <c:forEach items="${song.artists}" var="artist" varStatus="j">
                                                     <c:choose>
