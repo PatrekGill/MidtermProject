@@ -96,6 +96,9 @@ public class AlbumDAOImpl implements AlbumDAO {
 			albumToBeUpdated.setDescription(album.getDescription());
 			albumToBeUpdated.setReleaseDate(album.getReleaseDate());
 			albumToBeUpdated.setImageURL(album.getImageURL());
+			albumToBeUpdated.setSongs(album.getSongs());
+			albumToBeUpdated.setArtist(album.getArtist());
+			albumToBeUpdated.setGenres(album.getGenres());
 			updateSuccess = true;
 		}
 
@@ -152,6 +155,26 @@ public class AlbumDAOImpl implements AlbumDAO {
 		if (albums == null) {
 			albums = new ArrayList<>();
 		}
+		return albums;
+	}
+	
+	@Override
+	public List<Album> sortAlbumsByTitle(boolean ascendingOrder) {
+		String jpql = "SELECT a FROM Album a ORDER BY a.title";
+		
+		if (ascendingOrder) {
+			jpql += " ASC";
+			
+		} else {
+			jpql += " DESC";
+			
+		}
+		
+		List<Album> albums = em.createQuery(jpql, Album.class).getResultList();
+		if (albums == null) {
+			albums = new ArrayList<>();
+		}
+		
 		return albums;
 	}
 

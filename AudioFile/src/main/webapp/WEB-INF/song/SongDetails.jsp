@@ -34,6 +34,20 @@
 	</div>
 </div>
 
+<div class="container-fluid">
+	<%-- ------------------------------------------------
+		Edit Button
+	------------------------------------------------ --%>
+	<div class="edit-entity-button">
+		<c:if test="${not empty sessionScope.user && Song.user == sessionScope.user}">
+			<form action="editSong" method="GET">
+				<input type="hidden" name="songId" value="${Song.id}">
+				<button type="submit" class="btn btn-warning table-btn">Edit Song</button>
+			</form>
+		</c:if>
+	</div>
+</div>
+
 <div class="table-responsive">
 	<div class="table-wrapper table-body">
 		<div class="table-title">
@@ -177,19 +191,6 @@
 					</c:otherwise>
 				</c:choose>
 			</tbody>
-
-		</table>
-		<c:if test="${not empty songRatings}">
-
-			<form class="" action="songRatings.do" method="GET">
-				<input type="hidden" name="songId" value="${Song.id}">
-				<button type="submit" class="btn btn-warning table-btn">Show
-					All Ratings</button>
-			</form>
-
-		</c:if>
-	</div>
-</div>
 
 
 <jsp:include page="../scripts/tooltipScript.jsp" />

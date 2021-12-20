@@ -1,5 +1,7 @@
 @import "album.css";
 @import "table.css";
+@import "editPages.css";
+@import "checkboxmenu.css";
 /* Remove the navbar's default margin-bottom and rounded borders */
 .col {
 	position: fixed;
@@ -7,9 +9,6 @@
 	bottom: 36px;
 }
 
-input{
-	color: #ff0000;
-}
 .mainContent {
 	position: relative;
 }
@@ -71,10 +70,11 @@ input{
 }
 
 label {
-	color: white;
-	text-align: right;
+	color: black;
+	text-align: left;
 	display: inline-block;
 }
+.music
 
 .account-design {
 	/* 	position: absolute;

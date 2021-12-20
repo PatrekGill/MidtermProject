@@ -17,8 +17,22 @@
             <jsp:include page="../includes/albumHeader.jsp"/>
 
             <%-- ------------------------------------------------
+                Edit Button
+            ------------------------------------------------ --%>
+            <div class="edit-entity-button">
+                <c:if test="${not empty sessionScope.user && album.user == sessionScope.user}">
+                    <form action="editAlbum" method="GET">
+                        <input type="hidden" name="albumId" value="${album.id}">
+                        <button type="submit" class="btn btn-warning table-btn">Edit Album</button>
+                    </form>
+                </c:if>
+            </div>
+
+
+            <%-- ------------------------------------------------
                 Songs Table
             ------------------------------------------------ --%>
+
             <div class="table-responsive">
                 <div class="table-wrapper table-body">
                     <div class="table-title">
@@ -49,7 +63,7 @@
                                                             <a class="albumTable-artistText" href="artistProfile?id=${artist.id}">${artist.name}</a>
                                                         </c:when>
                                                         <c:otherwise>
-                                    						<a class="albumTable-artistText" href="artistProfile?id=${artist.id}">,${artist.name}</a>
+                                    						<a class="albumTable-artistText" href="artistProfile?id=${artist.id}">, ${artist.name}</a>
                                     					</c:otherwise>
                                                     </c:choose>
                                                 </c:forEach>

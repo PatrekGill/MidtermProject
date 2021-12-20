@@ -81,6 +81,10 @@ table.music-table td a:hover {
 	font-weight: bold;
 }
 
+.music-table label {
+    color: white;
+}
+
 table.music-table {
 	width: 100%;
 }

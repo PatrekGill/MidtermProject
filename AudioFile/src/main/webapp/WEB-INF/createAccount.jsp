@@ -18,32 +18,32 @@
 						<tr>
 							<td>Username:</td>
 							<td><input type="text" id="username" name="username"
-								required></td>
+								required style="color:black"></td>
 						</tr>
 						<tr>
 							<td>Password:</td>
 							<td><input type="text" id="password" name="password"
-								required></td>
+								required style="color:black"></td>
 						</tr>
 						<tr>
 							<td>Re-enter Password:</td>
 							<td><input type="text" id="password-repeat"
-								name="password-repeat" required></td>
+								name="password-repeat" required style="color:black"></td>
 						</tr>
 						<tr>
 							<td>First name:</td>
-							<td><input type="text" id="firstName" name="firstName"></td>
+							<td><input type="text" id="firstName" name="firstName" style="color:black"></td>
 						</tr>
 						<tr>
 							<td>Last name:</td>
-							<td><input type="text" id="lastName" name="lastName"></td>
+							<td><input type="text" id="lastName" name="lastName" style="color:black"></td>
 						</tr>
 						<tr>
 							<td>Email:</td>
-							<td><input type="text" id="email" name="email"></td>
+							<td><input type="text" id="email" name="email" style="color:black"></td>
 						</tr>
 						<tr>
-							<td><input type="submit" type="Create Account" /></td>
+							<td><input type="submit" type="Create Account" style="color:black"/></td>
 						</tr>
 					</form>
 				</tbody>

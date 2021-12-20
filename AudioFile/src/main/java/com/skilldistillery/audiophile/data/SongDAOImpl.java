@@ -263,5 +263,25 @@ public class SongDAOImpl implements SongDAO {
 		
 		return songs;
 	}
+	
+	
+	/*-----------------------------
+	 * Sort  Songs By name
+	 * ----------------------------
+	 */
+	@Override
+	public List<Song> sortByName(boolean ascendingOrder) {
+		String jpql = "SELECT sng FROM Song sng ORDER BY sng.name";
+		
+		if (ascendingOrder) {
+			jpql += " ASC";
 
+		} else {
+			jpql += " DESC";
+
+		}
+		
+		return em.createQuery(jpql, Song.class)
+				.getResultList();
+	}
 }

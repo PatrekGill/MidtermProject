@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
@@ -46,9 +47,9 @@
 										<div class="dropdown-menu"
 											aria-labelledby="dropdownMenuButton">
 											<ul>
-												<li><a class="dropdown-item" href="addAlbum">Add an Album</a></li>
-												<li><a class="dropdown-item" href="addArtist">Add an Artist</a></li>
-												<li><a class="dropdown-item" href="addSong">Add a Song</a></li>
+												<li><a class="dropdown-item" href="editAlbum">Add an Album</a></li>
+												<li><a class="dropdown-item" href="editArtist">Add an Artist</a></li>
+												<li><a class="dropdown-item" href="editSong">Add a Song</a></li>
 											</ul>
 										</div>
 									</div>

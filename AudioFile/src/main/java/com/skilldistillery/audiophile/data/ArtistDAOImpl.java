@@ -187,6 +187,8 @@ public class ArtistDAOImpl implements ArtistDAO {
 			updateArtistName(id, artist.getName());
 			updateArtistImage(id, artist.getImageUrl());
 			updateArtistDescription(id, artist.getDescription());
+			updateArtist.setAlbums(artist.getAlbums());
+			updateArtist.setSongs(artist.getSongs());
 
 			updated = true;
 		}
