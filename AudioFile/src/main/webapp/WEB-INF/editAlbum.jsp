@@ -35,6 +35,10 @@
 
 
 			<form action="editAlbum" method="POST">
+				<c:if test="${editing}">
+					<input type="hidden" name="albumId" value="${album.id}">
+				</c:if>
+
 				<table class="music-table table-hover">
 					<tbody>
 

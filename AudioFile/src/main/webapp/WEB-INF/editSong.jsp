@@ -33,6 +33,10 @@
 			</div>
 
 			<form action="editSong" method="POST">
+                <c:if test="${editing}">
+                    <input type="hidden" name="songId" value="${song.id}">
+                </c:if>
+
 				<table class="music-table table-hover">
 					<tbody>
 
