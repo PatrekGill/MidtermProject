@@ -238,17 +238,66 @@ public class AlbumController {
 		return "redirect:/";
 	}
 	
-
+	
+	
 	/* ----------------------------------------------------------------------------
-		editAlbum.do (GET)
+		editAlbum (GET)
 	---------------------------------------------------------------------------- */
-	@GetMapping(path="editAlbum.do")
+	@GetMapping(path="editAlbum")
 	public String getEditAlbumPage(
 			Integer albumId,
 			HttpSession session,
 			Model model,
 			RedirectAttributes redir
 		) {
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+			return "profile";
+		}
+		
+		
+		// if editing song (not creating a new one) save and id to identify what artists are currently selected for that song
+		if (albumId != null) {
+			Album album = albumDAO.findAlbumById(albumId);
+			if (album != null) {
+				if (album.getUser().equals(user)) {
+					model.addAttribute("album", album);				
+					model.addAttribute("editing",true);
+					
+				} else {
+					redir.addFlashAttribute("warning", "Only the creating user can edit the details of this item");
+					redir.addAttribute("albumId",albumId);
+					return "redirect:album.do";
+				}
+			}
+		}
+		
+		List<Artist> allArtists = artistDAO.sortArtistsAlphabetically();
+		model.addAttribute("artists",allArtists);
+		
+		List<Song> allSongs = songDAO.sortByName(true);
+		model.addAttribute("songs",allSongs);
+		
+		List<Genre> allGenres = genreDAO.sortByName(true);
+		model.addAttribute("genres",allGenres);
+		
+		return "editAlbum";
+	}
+	
+	
+	/* ----------------------------------------------------------------------------
+		editAlbum (POST)
+	---------------------------------------------------------------------------- */
+	@PostMapping(path="editAlbum")
+	public String editAlbum(
+			Integer albumId, String title, String description,
+			Integer priamryArtistId, String imageURL, String releaseDate,
+			Integer[] songIds, Integer genreIds,
+			HttpSession session,
+			Model model,
+			RedirectAttributes redir
+			) {
+		
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
 			return "profile";
