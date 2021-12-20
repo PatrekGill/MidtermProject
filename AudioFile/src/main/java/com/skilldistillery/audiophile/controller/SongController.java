@@ -225,6 +225,7 @@ public class SongController {
 		}
 		
 		try {
+			song.setUser(user);
 			song.setName(name);
 			song.setLyrics(lyrics);
 			song.setDurationInSeconds(durationInSeconds);
