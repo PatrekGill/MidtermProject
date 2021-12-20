@@ -130,6 +130,7 @@ public class ArtistController {
 		}
 		
 		try {
+			artist.setUser(user);
 			artist.setName(name);
 			artist.setDescription(description);
 			artist.setImageUrl(imageURL);

@@ -330,6 +330,7 @@ public class AlbumController {
 		}
 		
 		try {
+			album.setUser(user);
 			album.setTitle(title);
 			album.setDescription(description);
 			album.setArtist(artistDAO.findById(artistId));
