@@ -1,0 +1,297 @@
+.table-responsive {
+	margin: 30px, 30px;
+	padding-top: 30px;
+    overflow-x: auto;
+}
+
+.table-wrapper {
+	min-width: 500px;
+	background: #fff;
+	padding: 20px 25px;
+	border-radius: 3px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.table-title {
+	padding-bottom: 5px;
+	background: rgba(0, 0, 0, 1);
+	color: #fff;
+	padding: 10px 30px;
+	margin: -20px -25px 10px;
+	border-radius: 3px 3px 0 0;
+	text-align: left;
+}
+
+.table-body {
+    background: rgba(0, 0, 0, .75);
+}
+
+.table-hover tbody tr:hover {
+	background: #B8860B;
+}
+
+.table-title h2 {
+	margin: 5px 0 0;
+	font-size: 24px;
+}
+
+/*
+.table-title .btn-group {
+	float: right;
+}
+
+.table-title .btn {
+	color: #fff;
+	float: right;
+	font-size: 13px;
+	border: none;
+	min-width: 50px;
+	border-radius: 2px;
+	border: none;
+	outline: none !important;
+	margin-left: 10px;
+}
+
+.table-title .btn i {
+	float: left;
+	font-size: 21px;
+	margin-right: 5px;
+}
+
+.table-title .btn span {
+	float: left;
+	margin-top: 2px;
+} */
+
+/* ----------------------------------------------------------------------------
+	music-table
+---------------------------------------------------------------------------- */
+table.music-table tr th, table.music-table tr td {
+    text-align: left;
+	border-color: #e9e9e9;
+    color: white;
+	padding: 12px 15px;
+    font-size: 20px;
+	vertical-align: middle;
+}
+
+table.music-table td a:hover {
+    color: black;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.music-table label {
+    color: white;
+}
+
+table.music-table {
+	width: 100%;
+}
+
+/* ----------------------------------------------------------------------------
+	songResults-table
+---------------------------------------------------------------------------- */
+/* table.results-table tr:first-child  {
+
+} */
+th.songResults-table-albumImage {
+	width: 10%;
+}
+th.songResults-table-albums {
+	width: 20%;
+}
+th.songResults-table-artists {
+	width: 20%;
+}
+th.songResults-table-songName {
+	width: 50%;
+}
+
+/* ----------------------------------------------------------------------------
+	albumResults-table
+---------------------------------------------------------------------------- */
+th.albumResults-table-albumImage {
+	width: 25%;
+}
+th.albumResults-table-albumName {
+	width: 20%;
+}
+th.albumResults-table-artist {
+	width: 20%;
+}
+th.albumResults-table-genres {
+	width: 35%;
+}
+
+/* ----------------------------------------------------------------------------
+	artistResults-table
+---------------------------------------------------------------------------- */
+th.artistResults-table-artistImage {
+	width: 30%;
+}
+th.artistResults-table-artistName {
+	width: 70%;
+}
+
+.artistImage-md {
+	border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 300px;
+    height: 300px;
+}
+
+
+/* ----------------------------------------------------------------------------
+	ratingTable
+---------------------------------------------------------------------------- */
+th.ratingTable-userImage {
+	width: 5%;
+}
+th.ratingTable-score {
+	width: 10%;
+}
+th.ratingTable-description {
+	width: 85%;
+}
+td.ratingTable-score-text {
+	text-align: center !important;
+}
+
+
+/* ----------------------------------------------------------------------------
+	commentTable
+---------------------------------------------------------------------------- */
+th.commentTable-userImage {
+	width: 5%;
+}
+th.commentTable-comment {
+	width: 95%;
+}
+th.commentTable-icons {
+	width: 5%;
+}
+
+td.commentTable-commentText {
+	font-size: 18px !important;
+	font-weight: 600;
+	/* vertical-align: middle !important; */
+}
+p.commentTable-dateText {
+	font-size: 12px !important;
+}
+a.commentTable-dateText {
+	font-size: 12px !important;
+}
+
+.album-comment-box {
+	width: 100%;
+}
+.album-comment-box textarea {
+	resize: vertical;
+}
+
+.table-btn {
+	width: 100%;
+	height: 45px;
+	font-size: medium;
+	font-weight: bold;
+	font-family: Arial;
+	color: black;
+}
+.table-btn-major {
+	height: 45px;
+	font-size: medium;
+	font-weight: bold;
+	font-family: Arial;
+	color: black;
+	width: 85%;
+}
+.table-btn-minor {
+	height: 45px;
+	font-size: medium;
+	font-weight: bold;
+	font-family: Arial;
+	color: black;
+	width: 15%;
+	float: right;
+}
+
+.comment-icon-button {
+	font-size: 21px !important;
+	color: black;
+	border-radius: 20%;
+}
+.comment-icon-button:hover {
+	background-color: white;
+	border-color: white;
+	color: black;
+}
+
+/* ----------------------------------------------------------------------------
+	albumTable
+---------------------------------------------------------------------------- */
+.albumTable-artistText {
+	font-size: 15px;
+	font-weight: 700;
+}
+
+th.albumTable-songNumber {
+    width: 5%;
+}
+th.albumTable-songName {
+    width: 45%;
+}
+th.albumTable-artists {
+    width: 45%;
+}
+th.albumTable-duration {
+    width: 5%;
+}
+
+
+
+/* table.table th i {
+	font-size: 13px;
+	margin: 0 5px;
+	cursor: pointer;
+}
+
+table.table td:last-child i {
+	opacity: 0.9;
+	font-size: 22px;
+	margin: 0 5px;
+} */
+
+/* table.table td a {
+	font-weight: bold;
+	color: #566787;
+	display: inline-block;
+	text-decoration: none;
+	outline: none !important;
+}
+
+table.table td a:hover {
+	color: #2196F3;
+}
+
+table.table td a.edit {
+	color: #FFC107;
+}
+
+table.table td a.delete {
+	color: #F44336;
+}
+
+table.table td i {
+	font-size: 19px;
+}
+
+table.table .avatar {
+	border-radius: 50%;
+	vertical-align: middle;
+	margin-right: 10px;
+} */

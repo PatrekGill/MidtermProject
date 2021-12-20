@@ -13,17 +13,35 @@
 					<h1>Login or create Account</h1>
 					<div class="account-design">
 						<form action="login" method="post">
-							<label for="username">Username: </label>&nbsp;<input class="login-textbox"
-								name="username"/><label for="password">&nbsp;Password: </label>&nbsp;<input
-								class="password-textbox" name="password" /><br><br> <input
-								type="submit" value="Log In">
+							<label for="username" style="color:white">Username: </label>&nbsp;<input
+								class="login-textbox" name="username" style="color:black"/><label for="password" style="color:white">&nbsp;Password:
+							</label>&nbsp;<input class="password-textbox" name="password" style="color:black" /><br>
+							<br> <input type="submit" value="Log In" style="color:black">
 						</form>
 						<form action="createAccount" method="get">
 							<div class="spacer">
-								<input type="submit" value="Create Account">
+								<input type="submit" value="Create Account" style="color:black">
 							</div>
 						</form>
 					</div>
+				</c:when>
+				<c:when test="${not empty otherUsersProfile }">
+					<div class="">
+						<h2>${otherUsersProfile.username }'s Profile</h2>
+						<p>First name: ${otherUsersProfile.firstName}</p>
+						<p>Account created on: ${otherUsersProfile.creationDateTime }</p>
+						<c:if test="${not empty albumsCreatedByOtherUser }">
+							<div class="albums-created">
+								<h2>Albums Created by ${otherUsersProfile.username }</h2>
+								<c:forEach items="${albumsCreatedByOtherUser }" var="album">
+									<p>
+										<a href="album.do?albumId=${album.id }">${album.title }</a>
+									</p>
+								</c:forEach>
+							</div>
+						</c:if>
+					</div>
+
 				</c:when>
 				<c:when test="${user != null }">
 
@@ -37,16 +55,32 @@
 							<p>Username: ${user.username }</p>
 							<div class="account-design">
 								<form action="deleteAccount" method="post">
-									<input type="submit" value="Delete Account">
+									<input type="submit" value="Delete Account" style="color:black">
 								</form>
 								<div class="spacer">
 									<form action="updateAccount" method="get">
-										<input type="submit" value="Update Account">
+										<input type="submit" value="Update Account" style="color:black">
 									</form>
 								</div>
+									<form action="friendList" method="get">
+										<input type="submit" value="Friend List" style="color:black"	>
+									</form>
 							</div>
 						</div>
+						<div class="">
+							<c:if test="${not empty albumsCreated}">
+								<div class="albums-created">
+									<h2>Your Albums:</h2>
+									<c:forEach items="${albumsCreated}" var="album">
+										<p>
+											<a href="album.do?albumId=${album.id }">${album.title }</a>
+										</p>
+
+									</c:forEach>
+								</div>
+							</c:if>
 					</c:if>
+
 					<c:if test="${not empty update }">
 						<div>
 							<h2>Change Account Details</h2>
@@ -65,22 +99,10 @@
 							</form>
 						</div>
 					</c:if>
+
 				</c:when>
 
 			</c:choose>
-			<div class="">
-				<c:if test="${not empty albumsCreated}">
-					<div class="albums-by-you">
-						<h2>Your Albums:</h2>
-						<c:forEach items="${albumsCreated}" var="album">
-							<p>
-								<a href="album">${album.title }</a>
-							</p>
-
-						</c:forEach>
-					</div>
-				</c:if>
-			</div>
 		</div>
 	</div>
 </div>

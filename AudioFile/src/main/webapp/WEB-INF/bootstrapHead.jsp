@@ -2,12 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Bootstrap Example</title>
-<link rel="shortcut icon" type="image/png" href="logosAndGraphics/monkeyVector.png"/>
+<title>AudioFile</title>
+<link rel="shortcut icon" type="image/png"
+	href="logosAndGraphics/monkeyVector.png" />
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
@@ -32,21 +34,23 @@
 					<div class="collapse navbar-collapse" id="myNavbar">
 						<ul class="nav navbar-nav">
 							<li class="active"><a href="#">Home</a></li>
-							<li><a href="profile">Profile</a></li>
-							<li><a href="#">Trending</a></li>
+							<li><a href="myProfile">Profile</a></li>
+							<li><a href="trending">Trending</a></li>
 
 							<li><div class="dropdown-padder"></div>
 								<div class="dropdown">
 									<div class="dropdown-padder">
-										<button  type="button" data-toggle="dropdown"aria-haspopup="true" aria-expanded="false">
-										Create
-										</button>
+
+
+										<button class="btn btn-link"
+											id="dropdownMenuButton" data-toggle="dropdown"
+											aria-haspopup="true" aria-expanded="false">Create</button>
 										<div class="dropdown-menu"
 											aria-labelledby="dropdownMenuButton">
 											<ul>
-											<li><a class="dropdown-item" href="#">Add an Album</a></li>
-											<li><a class="dropdown-item" href="#">Add an Artist</a></li>
-											<li><a class="dropdown-item" href="#">Add a Song</a></li>
+												<li><a class="dropdown-item" href="editAlbum">Add an Album</a></li>
+												<li><a class="dropdown-item" href="editArtist">Add an Artist</a></li>
+												<li><a class="dropdown-item" href="editSong">Add a Song</a></li>
 											</ul>
 										</div>
 									</div>
@@ -59,13 +63,13 @@
 									<div class="search-design">
 										<input class="form-control mr-sm-2" type="search"
 											placeholder="search" aria-label="search" name="keyword">
-										<button class="btn btn-outline-success my-2 my-sm-0"
+										<button class="btn btn-link"
 											type="submit">Search</button>
 									</div></li>
 							<li>
 								<div class="select-padder">
 									<select class="form-select form-select-sm"
-										aria-label=".form-select-sm example" name="searchAll">
+										aria-label=".form-select-sm example" name="searchType">
 										<option selected value="All">Search by</option>
 								</div>
 								<option value="All">All</option>
@@ -103,11 +107,9 @@
 						</div>
 						<div id="collapseTopAlbums" class="collapse"
 							aria-labelledby="headingTopAlbums" data-parent="#accordion">
-							<%--  <c:forEach var="album" items="${topAlbums }"> --%>
-								<li><a href="#">Album 1</a></li>
-								<li><a href="#">Album 2</a></li>
-								<li><a href="#">Album 3</a></li>
-							<%--  </c:forEach> --%>
+							<c:forEach var="album" items="${topAlbumsSideBar }">
+								<li><a href="album.do?albumId=${album.id }">${album.title }</a></li>
+							</c:forEach>
 
 
 						</div>
@@ -118,11 +120,9 @@
 						</p>
 						<div id="collapseTopArtists" class="collapse"
 							aria-labelledby="headingTopArtists" data-parent="#accordion">
-							<%-- <c:forEach var="artist" items="${topArtist }"> --%>
-								<li><a href="#">Artist 1</a></li>
-								<li><a href="#">Artist 2</a></li>
-								<li><a href="#">Artist 3</a></li>
-							<%--  </c:forEach> --%>
+							<c:forEach var="artist" items="${topArtistsSideBar }">
+								<li><a href="artistProfile?id=${artist.id }">${artist.name }</a></li>
+							</c:forEach>
 						</div>
 						<p>
 							<button class="btn btn-link" data-toggle="collapse"
@@ -131,11 +131,9 @@
 						</p>
 						<div id="collapseTopSongs" class="collapse"
 							aria-labelledby="headingTopSongs" data-parent="#accordion">
-							<%--  <c:forEach var="song" items="${topSongs }"> --%>
-							<li><a href="#">Song 1</a></li>
-							<li><a href="#">Song 2</a></li>
-							<li><a href="#">Song 3</a></li>
-							<%-- </c:forEach> --%>
+							<c:forEach var="song" items="${topSongsSideBar }">
+								<li><a href="getSongId.do?songId=${song.id}">${song.name }</a></li>
+							</c:forEach>
 						</div>
 
 					</div>

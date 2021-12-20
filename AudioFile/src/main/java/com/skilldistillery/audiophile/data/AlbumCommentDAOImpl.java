@@ -20,7 +20,11 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 
 	@PersistenceContext
 	private EntityManager em;
+	
 
+	/* ----------------------------------------------------------------------------
+		findByUsername
+	---------------------------------------------------------------------------- */
 	@Override
 	public List<AlbumComment> findByUsername(String username) {
 		String jpql = "SELECT ac FROM AlbumComment ac WHERE ac.user.username LIKE :n";
@@ -29,7 +33,24 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 				.setParameter("n", "%" + username + "%")
 				.getResultList();
 	}
+	
+	
+	/* ----------------------------------------------------------------------------
+		findCommentReplys
+	---------------------------------------------------------------------------- */
+	@Override
+	public List<AlbumComment> findCommentReplys(int originalCommentId) {
+		String jpql = "SELECT ac FROM AlbumComment ac WHERE ac.inReplyTo = :n ORDER BY ac.commentDate DESC";
+		
+		return em.createQuery(jpql, AlbumComment.class)
+				.setParameter("n",originalCommentId)
+				.getResultList();
+	}
+	
 
+	/* ----------------------------------------------------------------------------
+		findAlbumCommentByUserId
+	---------------------------------------------------------------------------- */
 	@Override
 	public AlbumComment findAlbumCommentByUserId(int id) {
 		String jpql = "SELECT ac FROM AlbumComment ac WHERE ac.user.id =:n";
@@ -43,7 +64,11 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 			return null;
 		}
 	}
+	
 
+	/* ----------------------------------------------------------------------------
+		findByComment
+	---------------------------------------------------------------------------- */
 	@Override
 	public List<AlbumComment> findByComment(String comment) {
 		String jpql = "SELECT ac FROM AlbumComment ac WHERE ac.comment LIKE :n";
@@ -53,20 +78,33 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 				.getResultList();
 	}
 
+	
+	/* ----------------------------------------------------------------------------
+		findAlbumCommentById
+	---------------------------------------------------------------------------- */
 	@Override
 	public AlbumComment findAlbumCommentById(int id) {
 		return em.find(AlbumComment.class, id);
 	}
+	
 
+	/* ----------------------------------------------------------------------------
+		findByAlbumId
+	---------------------------------------------------------------------------- */
 	@Override
 	public List <AlbumComment> findByAlbumId(int id) {
 		String jpql = "SELECT ac FROM AlbumComment ac WHERE ac.album.id =:n";
 
 		return em.createQuery(jpql, AlbumComment.class).setParameter("n", id).getResultList();
 	}
-
+	
+	
+	
+	/* ----------------------------------------------------------------------------
+		sortAlbumCommentsByCommentDate
+	---------------------------------------------------------------------------- */
 	@Override
-	public List<AlbumComment> sortAlbumCommentByCommentDate(boolean ascendingOrder, int numberOfCommentsToShow) {
+	public List<AlbumComment> sortAlbumCommentsByCommentDate(boolean ascendingOrder, int numberOfCommentsToShow) {
 		String jpql = "SELECT ac FROM AlbumComment ac ORDER BY ac.commentDate";
 
 		if (ascendingOrder) {
@@ -94,9 +132,41 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 
 		return albumComments;
 	}
+	@Override
+	public List<AlbumComment> sortAlbumCommentsByCommentDate(int albumId, boolean ascendingOrder, int numberOfEntries) {
+		String jpql = "SELECT ac FROM AlbumComment ac WHERE ac.album.id = :id ORDER BY ac.commentDate";
+		
+		if (ascendingOrder) {
+			jpql += " ASC";
+			
+		} else {
+			jpql += " DESC";
+			
+		}
+		
+		List<AlbumComment> albumComments = em.createQuery(jpql, AlbumComment.class)
+				.setParameter("id", albumId)
+				.getResultList();
+		if (albumComments != null && numberOfEntries > 0) {
+			if (!albumComments.isEmpty()) {
+				if (numberOfEntries > albumComments.size()) {
+					numberOfEntries = albumComments.size();
+				}
+				
+				albumComments = albumComments.subList(0, numberOfEntries);
+			}
+			
+		} else {
+			albumComments = new ArrayList<>();
+			
+		}
+		
+		return albumComments;
+	}
+	
 	
 	@Override
-	public List<AlbumComment> sortAlbumCommentByCommentDate(boolean ascendingOrder) {
+	public List<AlbumComment> sortAlbumCommentsByCommentDate(boolean ascendingOrder) {
 		String jpql = "SELECT ac FROM AlbumComment ac ORDER BY ac.commentDate";
 
 		if (ascendingOrder) {
@@ -114,7 +184,33 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 
 		return albumComments;
 	}
+	@Override
+	public List<AlbumComment> sortAlbumCommentsByCommentDate(int albumId, boolean ascendingOrder) {
+		String jpql = "SELECT ac FROM AlbumComment ac WHERE ac.album.id = :id ORDER BY ac.commentDate";
+		
+		if (ascendingOrder) {
+			jpql += " ASC";
+			
+		} else {
+			jpql += " DESC";
+			
+		}
+		
+		List<AlbumComment> albumComments = em.createQuery(jpql, AlbumComment.class)
+				.setParameter("id", albumId)
+				.getResultList();
+		if (albumComments == null) {
+			albumComments = new ArrayList<>();
+		}
+		
+		return albumComments;
+	}
 	
+	
+
+	/* ----------------------------------------------------------------------------
+		findByUsername
+	---------------------------------------------------------------------------- */
 	@Override
 	public boolean updateComment(int id, String newComment) {
 		boolean updated = false;
@@ -128,7 +224,10 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 		return updated;
 	}
 	
-	
+
+	/* ----------------------------------------------------------------------------
+		findByUsername
+	---------------------------------------------------------------------------- */
 	@Override
 	public AlbumComment createAlbumComment(AlbumComment albumComment) {
 		em.persist(albumComment);
@@ -136,7 +235,11 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 		
 		return albumComment;
 	}
+
 	
+	/* ----------------------------------------------------------------------------
+		findByUsername
+	---------------------------------------------------------------------------- */
 	@Override
 	public boolean deleteAlbumComment(int id) {
 		AlbumComment managedAlbumComment = em.find(AlbumComment.class,id);

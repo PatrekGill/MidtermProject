@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.skilldistillery.audiophile.entities.Artist;
 
 @SpringBootTest
-class ArtistDAPOImplTest {
+class ArtistDAOImplTest {
 
 	@Autowired
 	ArtistDAOImpl DAOImp;
@@ -22,13 +22,13 @@ class ArtistDAPOImplTest {
 	@Test
 	void test_findById() {
 		assertNotNull(DAOImp.findById(1));
-		assertEquals("jimmy buffett",DAOImp.findById(1).getName());
+		assertEquals("Jimmy Buffett",DAOImp.findById(1).getName());
 	}
 
 	@Test
 	void test_findByArtistsName() {
-		assertNotNull(DAOImp.findByArtistsName("jimmy buffett"));
-		assertEquals(DAOImp.findByArtistsName("jimmy buffett").get(0).getName(), "jimmy buffett");
+		assertNotNull(DAOImp.findByArtistsName("Jimmy Buffett"));
+		assertEquals(DAOImp.findByArtistsName("Jimmy Buffett").get(0).getName(), "Jimmy Buffett");
 	}
 
 	@Test
@@ -41,6 +41,16 @@ class ArtistDAPOImplTest {
 	void test_sort_by_Update_date() {
 		assertNotNull(DAOImp.sortByUpdateTime());
 		assertFalse(DAOImp.sortByUpdateTime().isEmpty());
+	}
+	@Test
+	void test_sortArtistByTheirAlbumRatingAvg() {
+		List<Artist> a = DAOImp.sortArtistByTheirAlbumRatingAvg(false);
+		assertNotNull(a);
+		assertTrue(a.size()>0);
+		assertEquals("Miles Davis",a.get(0).getName());
+		assertEquals("Mac DeMarco",a.get(1).getName());
+		assertEquals("Adele",a.get(2).getName());
+		assertEquals("Jimmy Buffett",a.get(3).getName());
 	}
 
 	@Test
@@ -58,8 +68,14 @@ class ArtistDAPOImplTest {
 	@Test
 	void test_findPrimaryArtistByAlbumName() {
 		assertNotNull(DAOImp.findPrimaryArtistByAlbumName("A1A"));
-		assertEquals(DAOImp.findPrimaryArtistByAlbumName("A1A").getName(), "jimmy buffett");
+		assertEquals(DAOImp.findPrimaryArtistByAlbumName("A1A").getName(), "Jimmy Buffett");
 	}
 	
+	@Test
+	void test_sortArtistsAlphabetically() {
+		List<Artist> a = DAOImp.sortArtistsAlphabetically();
+		assertNotNull(a);
+		assertTrue(a.size() > 0);
+	}
 
 }

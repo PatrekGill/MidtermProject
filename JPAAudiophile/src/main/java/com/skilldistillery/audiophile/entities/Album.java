@@ -46,7 +46,7 @@ public class Album {
 	@JoinColumn(name = "user_id")
 	private User user;
 
-	@OneToMany(mappedBy = "album")
+	@ManyToMany(mappedBy = "albums")
 	private List<Song> songs;
 
 	@OneToMany(mappedBy = "album")
@@ -106,28 +106,70 @@ public class Album {
 
 	/*
 	 * ----------------------------------------------------------------------------
-	 * get/set Songs
+	 * Song List Methods
 	 * ----------------------------------------------------------------------------
 	 */
 	public List<Song> getSongs() {
+		if (songs == null) {
+			songs = new ArrayList<>();
+		}
+		
 		return songs;
 	}
-
 	public void setSongs(List<Song> songs) {
 		this.songs = songs;
 	}
+	
+	
+	public boolean addSong(Song song) {
+		if (songs == null) {
+			songs = new ArrayList<>();
+		}
+		
+		boolean addedToList = false;
+		if (song != null) {
+			if (!songs.contains(song)) {
+				addedToList = songs.add(song);
+			}
 
+			if (!song.getAlbums().contains(this)) {
+				song.getAlbums().add(this);
+			}
+		}
+		
+		return addedToList;
+	}
+	public boolean removeSong(Song song) {
+		boolean removed = false;
+		if (songs != null && songs.contains(song)) {
+			removed = songs.remove(song);
+		}
+		
+		if (song.getAlbums().contains(this)) {
+			song.removeAlbum(this);
+		}
+		
+		return removed;
+	}
+	
+	
+	
 	/*
 	 * ----------------------------------------------------------------------------
-	 * Genre list setting
+	 * Genre list methods
 	 * ----------------------------------------------------------------------------
 	 */
 	public List<Genre> getGenres() {
+		if (genres == null) {
+			genres = new ArrayList<>();
+		}
+		
 		return genres;
 	}
 	public void setGenres(List<Genre> genres) {
 		this.genres = genres;
 	}
+	
 	
 	public boolean addGenre(Genre genre) {
 		if (genres == null) {

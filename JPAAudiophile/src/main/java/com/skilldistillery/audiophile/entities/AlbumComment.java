@@ -1,6 +1,7 @@
 package com.skilldistillery.audiophile.entities;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -10,8 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
@@ -37,13 +40,17 @@ public class AlbumComment {
 	private String comment;
 
 	@Column(name = "comment_date")
+	@CreationTimestamp
 	private LocalDateTime commentDate;
 
 	@Column(name = "in_reply_to")
 	private Integer inReplyTo;
 	
-	
-	
+	@OneToMany
+	@JoinColumn(name="in_reply_to")
+	private List<AlbumComment> replies;
+
+
 	public AlbumComment() {
 		super();
 	}
@@ -82,6 +89,14 @@ public class AlbumComment {
 		return comment;
 	}
 
+	
+	public List<AlbumComment> getReplies() {
+		return replies;
+	}
+	public void setReplies(List<AlbumComment> replies) {
+		this.replies = replies;
+	}
+	
 
 	public void setComment(String comment) {
 		this.comment = comment;

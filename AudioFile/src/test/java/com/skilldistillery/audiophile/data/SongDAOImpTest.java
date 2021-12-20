@@ -54,8 +54,7 @@ class SongDAOImpTest {
 	}
 	void test_findByArtistName() {
 		assertNotNull(DaoImp.findByArtistName("jimmy buffett"));
-
-		assertNotNull(DaoImp.findByArtistName("jimmy buffett").get(1).getAlbum());
+		assertTrue(DaoImp.findByArtistName("jimmy buffett").size() > 0);
 
 	}
 
@@ -74,8 +73,9 @@ class SongDAOImpTest {
 
 	@Test
 	void test_sortBySongRating() {
-		assertNotNull(DaoImp.sortBySongRating());
-		assertFalse(DaoImp.sortBySongRating().isEmpty());
+		List<Song> s = DaoImp.sortBySongRatingAndReturnLimitedNumber(false, 3);
+		assertNotNull(s);
+		assertTrue(DaoImp.sortBySongRatingAndReturnLimitedNumber(false, 3).size() > 0);
 	}
 
 	@Test
@@ -83,6 +83,21 @@ class SongDAOImpTest {
 		assertNotNull(DaoImp.findByLyricsKeyword("you"));
 		assertFalse(DaoImp.findByLyricsKeyword("you").isEmpty());
 
+	}
+	
+	@Test
+	void test_sortSongsByRating() {
+		List<Song> s = DaoImp.sortSongsByRating(false);
+		assertNotNull(s);
+		assertTrue(s.size() > 0);
+	}
+	
+	@Test
+	void test_sortByName() {
+		List<Song> songs = DaoImp.sortByName(true);
+		assertNotNull(songs);
+		assertTrue(songs.size() > 0);
+//		assertEquals(songs.get(0).getName(),"A Pirate Looks at Forty");
 	}
 	
 

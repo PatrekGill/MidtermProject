@@ -50,11 +50,12 @@ public class Song {
 	@ManyToMany(mappedBy = "songs")
 	private List<Artist> artists;
 
-	@ManyToOne
+	@ManyToMany
 	@JoinTable(name = "album_song", 
-	         joinColumns = { @JoinColumn(name = "song_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "album_id") })
-	private Album album;
+	         joinColumns =@JoinColumn(name ="song_id") , 
+	         inverseJoinColumns =@JoinColumn(name ="album_id")
+	)
+	private List<Album> albums;
 	
 	@OneToMany(mappedBy="song")
 	private List<SongRating> songRatings;
@@ -188,14 +189,51 @@ public class Song {
 	
 	
 	/* ----------------------------------------------------------------------------
-		get/set Album
+		Album List Methods
 	---------------------------------------------------------------------------- */
-	public Album getAlbum() {
-		return album;
+	public List<Album> getAlbums() {
+		if (albums == null) {
+			albums = new ArrayList<Album>();
+		}
+		
+		return albums;
 	}
-	public void setAlbum(Album album) {
-		this.album = album;
+	public void setAlbums(List<Album> albums) {
+		this.albums = albums;
 	}
+	
+	public boolean addAlbum(Album album) {
+		if (albums == null) {
+			albums = new ArrayList<>();
+		}
+		
+		boolean addedToList = false;
+		if (album != null) {
+			if (!albums.contains(album)) {
+				addedToList = albums.add(album);
+			}
+
+			if (!album.getSongs().contains(this)) {
+				album.getSongs().add(this);
+			}
+		}
+		
+		return addedToList;
+	}
+	public boolean removeAlbum(Album album) {
+		boolean removed = false;
+		if (albums != null && albums.contains(album)) {
+			removed = albums.remove(album);
+		}
+		
+		if (album.getSongs().contains(this)) {
+			album.removeSong(this);
+		}
+		
+		return removed;
+	}
+
+
 	
 	
 	/* ----------------------------------------------------------------------------
@@ -320,11 +358,8 @@ public class Song {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Song [id=").append(id).append(", name=").append(name).append(", durationInSeconds=")
-				.append(durationInSeconds).append(", createDate=").append(createDate).append(", user=").append(user)
-				.append(", album=").append(album).append("]");
-		return builder.toString();
+		return "Song [id=" + id + ", name=" + name + ", lyrics=" + lyrics + ", durationInSeconds=" + durationInSeconds
+				+ ", createDate=" + createDate + ", updatedAt=" + updatedAt + "]";
 	}
 
 }

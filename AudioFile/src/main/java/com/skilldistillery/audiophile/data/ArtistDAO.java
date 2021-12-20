@@ -20,6 +20,8 @@ public interface ArtistDAO {
 
 	public List<Artist> sortByUpdateTime();
 	
+	public List<Artist> sortArtistByTheirAlbumRatingAvg(boolean ascendingOder);
+	
 	public Artist addNewArtist(Artist artist);
 
 	public boolean updateArtistName(int id, String newName);
@@ -31,4 +33,6 @@ public interface ArtistDAO {
 	public boolean updateArtist(int id, Artist artist);
 
 	public boolean deleteArtist(int id);
+	
+	public List<Artist> sortArtistsAlphabetically();
 }
