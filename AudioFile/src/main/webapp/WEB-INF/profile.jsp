@@ -13,8 +13,8 @@
 					<h1>Login or create Account</h1>
 					<div class="account-design">
 						<form action="login" method="post">
-							<label for="username">Username: </label>&nbsp;<input
-								class="login-textbox" name="username" style="color:black"/><label for="password">&nbsp;Password:
+							<label for="username" style="color:white">Username: </label>&nbsp;<input
+								class="login-textbox" name="username" style="color:black"/><label for="password" style="color:white">&nbsp;Password:
 							</label>&nbsp;<input class="password-textbox" name="password" style="color:black" /><br>
 							<br> <input type="submit" value="Log In" style="color:black">
 						</form>
