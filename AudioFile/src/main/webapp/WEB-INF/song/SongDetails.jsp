@@ -42,8 +42,7 @@
 			test="${not empty sessionScope.user && Song.user == sessionScope.user}">
 			<form action="editSong" method="GET">
 				<input type="hidden" name="songId" value="${Song.id}">
-				<button type="submit" class="btn btn-warning table-btn">Edit
-					Song</button>
+				<button type="submit" class="btn btn-warning table-btn">Edit Song</button>
 			</form>
 		</c:if>
 	</div>
@@ -202,7 +201,7 @@
 					All Ratings</button>
 			</form>
 			</c:if>
-	
+
 
 	</div>
 </div>
