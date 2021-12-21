@@ -36,7 +36,7 @@ Our application is primarily a musical database centered around artists, songs, 
 - Comments on albums and replies to comments
 
 ## Technologies
-Java 1.8, JUnit 5, SpringMVC, Spring Boot, Spring Tool Suite, Tomcat Server, Apache Web Server, JSP, JSTL, HTML, CSS, MAMP, SQL (MySQL), Git terminal, MAC OS, Bootstrap 3, Google (a lot), Github, Java Persistence API & Hibernate, JPQL, JDBC, MySQL Workbench, Gradle, Trello, Amazon Web Services, Chrome Developer Tools
+Java 1.8, JUnit 5, SpringMVC, Spring Boot, Spring Tool Suite, Apache Tomcat Server, JSP, JSTL, HTML, CSS, MAMP, SQL (MySQL), Git terminal, MAC OS, Bootstrap 3, Google (a lot), Github, Java Persistence API & Hibernate, JPQL, JDBC, MySQL Workbench, Gradle, Trello, Amazon Web Services, Chrome Developer Tools
 
 ## Lessons Learned
 - **CSS and the pitfalls of templates**
