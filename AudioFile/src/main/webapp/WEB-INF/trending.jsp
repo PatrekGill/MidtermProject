@@ -149,7 +149,7 @@
                                             <a class="albumTable-artistText" href="album.do?albumId=${album.id}">${album.title}</a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a class="albumTable-artistText" href="album.do?albumId=${album.id}">,${album.title}</a>
+                                            <a class="albumTable-artistText" href="album.do?albumId=${album.id}">, ${album.title}</a>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>

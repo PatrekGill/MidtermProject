@@ -57,7 +57,7 @@
                                             <a class="albumTable-artistText" href="search?keyword=${genre.name}&searchType=Genre">${genre.name}</a>
                                         </c:when>
                                         <c:otherwise>
-                                            ,<a class="albumTable-artistText" href="search?keyword=${genre.name}&searchType=Genre">${genre.name}</a>
+                                            , <a class="albumTable-artistText" href="search?keyword=${genre.name}&searchType=Genre">${genre.name}</a>
                                         </c:otherwise>
                                     </c:choose>
                                 </c:forEach>
