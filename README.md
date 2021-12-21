@@ -65,7 +65,7 @@ The most significant step in our education with this project was a larger team e
 <br>
 [Kyle Palasti](https://github.com/KPalasti)
 <br>
-Wwangchengni
+[Wangcheng Ni](https://github.com/wangchengni)
 <br>
 [Patrek Gill](https://github.com/PatrekGill)
 
