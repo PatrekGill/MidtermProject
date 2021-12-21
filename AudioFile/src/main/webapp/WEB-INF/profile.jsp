@@ -4,9 +4,9 @@
 
 
 <jsp:include page="bootstrapHead.jsp" />
-<div class="col-sm-8 text-left">
-	<div class="container-boy">
-		<div>
+<div class="container-fluid">
+	<div class="table-responsive">
+		<div class="table-wrapper table-body editing-table">
 			<c:choose>
 				<c:when test="${ empty user}">
 
