@@ -157,7 +157,7 @@
                                         <div>
 
                                             <c:choose>
-                                                <c:when test="${editing && fncust:contains( artist.albums, album)}">
+                                                <c:when test="${editing && fncust:contains( song.albums, album)}">
                                                     <input type="checkbox" checked name="albumIds" value="${album.id}">
                                                 </c:when>
                                                 <c:otherwise>
