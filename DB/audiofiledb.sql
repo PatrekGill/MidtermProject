@@ -380,8 +380,8 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `audiofiledb`;
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `create_date`, `image_url`, `enabled`, `role`) VALUES (1, 'admin', 'admin', 'Kings', 'Jam', 'admin@gmail.com', '2021-09-21', '/logosAndGraphics/monkeyking-WhiteAndBlack-BG.png', 1, NULL);
-INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `create_date`, `image_url`, `enabled`, `role`) VALUES (2, 'king', 'king2021', 'king', 'jinx', 'king2021@gmail.com', '2021-12-14', '/logosAndGraphics/monkeyking-WhiteAndBlack-BG.png', 1, NULL);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `create_date`, `image_url`, `enabled`, `role`) VALUES (1, 'admin', 'admin', 'Kings', 'Jam', 'admin@gmail.com', '2021-09-21', 'logosAndGraphics/monkeyking-WhiteAndBlack-BG.png', 1, NULL);
+INSERT INTO `user` (`id`, `username`, `password`, `first_name`, `last_name`, `email`, `create_date`, `image_url`, `enabled`, `role`) VALUES (2, 'king', 'king2021', 'king', 'jinx', 'king2021@gmail.com', '2021-12-14', 'logosAndGraphics/monkeyking-WhiteAndBlack-BG.png', 1, NULL);
 
 COMMIT;
 
