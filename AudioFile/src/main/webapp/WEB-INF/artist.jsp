@@ -11,7 +11,7 @@
 		<c:if test="${not empty artist.imageUrl}">
 			<div class="col-xs-6 col-sm-7 col-md-6 col-lg-5 albumImage-div">
 
-				<img class="albumImage-md" src="${artist.imageUrl}"
+				<img class="artistImage-md" src="${artist.imageUrl}"
 					alt="image of artist">
 			</div>
 		</c:if>
@@ -56,6 +56,61 @@
 					<td><a href="album.do?albumId=${album.id}">${album.title }</a></td>
 				</tr>
 			</c:forEach>
+		</table>
+	</div>
+</div>
+
+<div class="table-responsive">
+	<div class="table-wrapper table-body">
+		<div class="table-title">
+			<div class="row">
+				<h2>Songs</h2>
+			</div>
+		</div>
+		<table class="music-table table-hover">
+			<c:choose>
+				<c:when test="${not empty artist.songs}">
+					<thead>
+						<tr>
+							<th class="albumTable-songNumber">#</th>
+							<th class="albumTable-songName">SONG</th>
+							<th class="albumTable-artists">ARTIST(s)</th>
+							<th class="albumTable-duration">LENGTH (seconds)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${artist.songs}" var="song" varStatus="i">
+							<tr>
+								<td>${i.count}</td>
+								<td><a href="getSongId.do?songId=${song.id}">${song.name}</a>
+								</td>
+								<td><c:forEach items="${song.artists}" var="artist"
+										varStatus="j">
+										<c:choose>
+											<c:when test="${j.index == 0}">
+												<a class="albumTable-artistText"
+													href="artistProfile?id=${artist.id}">${artist.name}</a>
+											</c:when>
+											<c:otherwise>
+												<a class="albumTable-artistText"
+													href="artistProfile?id=${artist.id}">,
+													${artist.name}</a>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach></td>
+								<td>${song.durationInSeconds}</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</c:when>
+				<c:otherwise>
+					<tbody>
+						<tr>
+							<td>No songs...</td>
+						</tr>
+					</tbody>
+				</c:otherwise>
+			</c:choose>
 		</table>
 	</div>
 </div>

@@ -87,7 +87,7 @@ public class SongController {
 				User user = (User) session.getAttribute("user");
 				boolean userHasRating = false;
 				if (user != null) {
-					SongRating usersRating = songRatingDAO.findSongRatingByUserIdSongId(songId, user.getId());
+					SongRating usersRating = songRatingDAO.findSongRatingByUserIdSongId(user.getId(), songId);
 					if (usersRating != null) {
 						model.addAttribute("usersRating", usersRating);
 						userHasRating = true;
