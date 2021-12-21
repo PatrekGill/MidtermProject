@@ -128,6 +128,7 @@
 
                                     <c:forEach items="${artists }" var="artist">
                                         <div>
+                                            <label>
                                             <c:choose>
                                                 <c:when test="${editing && fncust:contains( song.artists, artist)}">
                                                     <input type="checkbox" checked name="artistIds" value="${artist.id}">
@@ -136,7 +137,7 @@
                                                     <input type="checkbox" name="artistIds" value="${artist.id}">
                                                 </c:otherwise>
                                             </c:choose>
-                                            <label for="${artist}">${artist.name}</label>
+                                            ${artist.name}</label>
                                         </div>
                                     </c:forEach>
 
@@ -155,7 +156,7 @@
 
                                     <c:forEach items="${albums }" var="album">
                                         <div>
-
+                                            <label>
                                             <c:choose>
                                                 <c:when test="${editing && fncust:contains( song.albums, album)}">
                                                     <input type="checkbox" checked name="albumIds" value="${album.id}">
@@ -164,7 +165,7 @@
                                                     <input type="checkbox" name="albumIds" value="${album.id}">
                                                 </c:otherwise>
                                             </c:choose>
-                                            <label for="${album}">${album.title}</label>
+                                            ${album.title}</label>
 
                                         </div>
                                     </c:forEach>

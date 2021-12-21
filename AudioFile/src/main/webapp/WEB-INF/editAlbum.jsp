@@ -182,6 +182,7 @@
 
                                     <c:forEach items="${songs }" var="song">
                                         <div>
+                                            <label>
                                             <c:choose>
                                                 <c:when test="${editing && fncust:contains( album.songs, song)}">
                                                     <input class="editing-table-checkbox-song" type="checkbox" name="songIds" value="${song.id}" checked>
@@ -190,7 +191,7 @@
                                                     <input class="editing-table-checkbox-song" type="checkbox" name="songIds" value="${song.id}">
                                                 </c:otherwise>
                                             </c:choose>
-                                            <label for="${song}">
+
 												${song.name}
 												<c:if test="${not empty song.artists}">
 													<p class="editing-table-songBy-text">
@@ -226,6 +227,7 @@
 
                                     <c:forEach items="${genres }" var="genre">
                                         <div>
+                                            <label>
                                             <c:choose>
                                                 <c:when test="${editing && fncust:contains( album.genres, genre)}">
                                                     <input type="checkbox" checked name="genreIds" value="${genre.id}">
@@ -234,7 +236,7 @@
                                                     <input type="checkbox" name="genreIds" value="${genre.id}">
                                                 </c:otherwise>
                                             </c:choose>
-                                            <label for="${genre}">${genre.name}</label>
+                                            ${genre.name}</label>
                                         </div>
                                     </c:forEach>
 

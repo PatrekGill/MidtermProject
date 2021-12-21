@@ -126,6 +126,7 @@
 
                                     <c:forEach items="${songs }" var="song">
                                         <div>
+                                            <label>
                                             <c:choose>
                                                 <c:when test="${editing && fncust:contains( artist.songs, song)}">
                                                     <input class="editing-table-checkbox-song" type="checkbox" checked name="songIds" value="${song.id}">
@@ -134,7 +135,6 @@
                                                     <input class="editing-table-checkbox-song" type="checkbox" name="songIds" value="${song.id}">
                                                 </c:otherwise>
                                             </c:choose>
-                                            <label for="${song}">
 												${song.name}
 												<c:if test="${not empty song.artists}">
 													<p class="editing-table-songBy-text">
