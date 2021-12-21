@@ -83,10 +83,10 @@
 									</span>
                                     <c:choose>
                                         <c:when test="${editing}">
-                                            <textarea class="form-control" name="description" placeholder="Description...">${artist.description}</textarea>
+                                            <textarea class="form-control" name="description" rows="7" placeholder="Description...">${artist.description}</textarea>
                                         </c:when>
                                         <c:otherwise>
-                                            <textarea class="form-control" name="description" placeholder="Description..."></textarea>
+                                            <textarea class="form-control" name="description" rows="7" placeholder="Description..."></textarea>
                                         </c:otherwise>
                                     </c:choose>
 
