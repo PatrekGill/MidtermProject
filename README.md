@@ -44,6 +44,7 @@ Java 1.8, JUnit 5, SpringMVC, Spring Boot, Spring Tool Suite, Apache Tomcat Serv
 Templates are great for beginners, however, it quickly became apparent after moving on to the front-end that the template we had used for the navbar, sidebar, and footer created significant headaches with CSS inheritance while working with other pages. In hindsight, after seeing the amount of generic styling used in it, the template should've been cleaned up for use on other pages. This was our first real dive into CSS, however, so this could be expected. Another point to this is to in the future achieve a mutual understanding of page layout and design of things such as buttons, links, interaction.
 <br>
 <br>
+
 - **Chrome Developer Tools Are Your Friend**
 <br>
 A bit more to the point of CSS. The Chrome Developer tools greatly helped in troubleshooting issues and were extremely useful with their capability to live edit CSS/HTML
