@@ -221,8 +221,7 @@
 
 						<form class="" action="albumComments.do" method="GET">
 							<input type="hidden" name="albumId" value="${album.id}">
-							<button type="submit" class="btn btn-warning table-btn">Show
-								All Comments</button>
+							<button type="submit" class="btn btn-warning table-btn">Show All Comments</button>
 						</form>
 
 					</c:if>

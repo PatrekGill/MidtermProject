@@ -28,6 +28,12 @@
                                     <h2>Original Comment</h2>
                                 </c:otherwise>
                             </c:choose>
+                            <div class="">
+        						<a href="albumComments.do?albumId=${originalComment.album.id}" class="btn btn-primary">
+        							<i class="glyphicon glyphicon-circle-arrow-left"></i>
+        							<span>Back To All Comments</span>
+        						</a>
+        					</div>
                         </div>
                     </div>
                     <c:choose>

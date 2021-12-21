@@ -105,6 +105,12 @@
 					<div class="table-title">
 						<div class="row">
 							<h2>Latest Ratings</h2>
+							<div class="">
+        						<a href="album.do?albumId=${album.id}" class="btn btn-primary">
+        							<i class="glyphicon glyphicon-circle-arrow-left"></i>
+        							<span>Back To Album</span>
+        						</a>
+        					</div>
 						</div>
 					</div>
 					<table class="music-table table-hover">
