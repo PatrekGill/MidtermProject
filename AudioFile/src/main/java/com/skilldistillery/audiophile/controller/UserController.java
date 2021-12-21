@@ -71,15 +71,7 @@ public class UserController {
 		return "redirect:/";
 
 	}
-//
-//	@GetMapping(path = "otherUsersProfile")
-//	public String getOtherUsersPage(@RequestParam("id") int id, Model model) {
-//		User user = userDAO.findUserById(id);
-//		model.addAttribute("otherUsersProfile", user);
-//		model.addAttribute("albumsCreatedByOtherUser", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
-//		return "profile";
-//	}
-	
+
 	@GetMapping(path = "profile")
 	public String getAccountPage(Integer id, HttpSession session, Model model, RedirectAttributes redir) {	
 		

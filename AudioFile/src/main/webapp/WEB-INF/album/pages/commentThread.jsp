@@ -51,8 +51,8 @@
                             <%-- ------------------------------------------------
                                 Delete, update, or post button
                             ------------------------------------------------ --%>
-                            <form action="deleteRating.do" id="deleteRatingForm" method="POST">
-                                <input type="hidden" name="albumId" value="${album.id }">
+                            <form action="deleteComment.do" id="deleteCommentForm" method="POST">
+                                <input type="hidden" name="commentId" value="${originalComment.id }">
                             </form>
                             <%-- seperated this button so the two delete and update can be side by side --%>
                             <button type="submit" form="commentEditForm" class="btn btn-warning table-btn-major">Update Comment</button>

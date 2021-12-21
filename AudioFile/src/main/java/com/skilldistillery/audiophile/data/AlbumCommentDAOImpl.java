@@ -246,6 +246,14 @@ public class AlbumCommentDAOImpl implements AlbumCommentDAO {
 		boolean deleted = false;
 		
 		if (managedAlbumComment != null) {
+			List<AlbumComment> commentsInReply = findCommentReplys(id);
+			for (int i = 0; i < commentsInReply.size(); i++) {
+				AlbumComment comment = commentsInReply.get(i);
+				if(comment != null) {
+					deleteAlbumComment(comment.getId());
+				}
+			}
+			
 			em.remove(managedAlbumComment);
 			
 			managedAlbumComment = em.find(AlbumComment.class,id);

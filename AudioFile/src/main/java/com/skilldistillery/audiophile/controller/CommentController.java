@@ -219,4 +219,40 @@ public class CommentController {
 		return "redirect:/";
 		
 	}
+	
+	/* ----------------------------------------------------------------------------
+		deleteComment.do (POST)
+	---------------------------------------------------------------------------- */	
+	@PostMapping(
+		path="deleteComment.do"
+	)
+	public String deleteComment(
+			Integer commentId, 
+			HttpSession session, 
+			Model model, 
+			RedirectAttributes redir
+		) {
+		
+		User user = checker.getSessionUser(session);
+		if (commentId != null && (user != null)) {
+			AlbumComment comment = albumCommentDAO.findAlbumCommentById(commentId);
+			if (comment != null) {
+				try {
+					redir.addAttribute("albumId",comment.getAlbum().getId());
+					albumCommentDAO.deleteAlbumComment(commentId);
+					redir.addFlashAttribute("success","Your comment and its thread have been deleted");
+					return "redirect:albumComments.do";
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+			
+		}
+		
+		redir.addFlashAttribute("error","Could not delete that comment");
+		return "redirect:albumComments.do";
+	}
+
 }
