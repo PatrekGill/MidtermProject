@@ -39,7 +39,7 @@ public class UserController {
 	@Autowired
 	private ArtistDAO artistDAO;
 
-	@GetMapping(path = {"login", "/profile"})
+	@GetMapping(path = "login")
 	public String getLogin(HttpSession session) {
 		return "profile";
 	}
@@ -71,20 +71,48 @@ public class UserController {
 		return "redirect:/";
 
 	}
-
-	@GetMapping(path = "myProfile")
-	public String getAccountPage(HttpSession session, Album album) {
-
-		User user = null;
-		user = (User) session.getAttribute("user");
-		if (user != null) {
-			if (session.getAttribute("update") != null) {
-				session.removeAttribute("update");
+//
+//	@GetMapping(path = "otherUsersProfile")
+//	public String getOtherUsersPage(@RequestParam("id") int id, Model model) {
+//		User user = userDAO.findUserById(id);
+//		model.addAttribute("otherUsersProfile", user);
+//		model.addAttribute("albumsCreatedByOtherUser", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
+//		return "profile";
+//	}
+	
+	@GetMapping(path = "profile")
+	public String getAccountPage(Integer id, HttpSession session, Model model, RedirectAttributes redir) {	
+		
+		User sessionUser = (User) session.getAttribute("user");
+		if (sessionUser != null) {
+			User userToView;
+			if (id == null) {
+				redir.addFlashAttribute("error", "Could not find a user with that id");
+				return "redirect:/";
+				
+			} else {
+				userToView = userDAO.findUserById(id);
+				if (userToView == null) {
+					redir.addFlashAttribute("error", "Could not find a user with that id");
+					return "redirect:/";
+				}
+				
 			}
-			session.setAttribute("albumsCreated", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
-			return "profile";
+
+			if (sessionUser.equals(userToView)) {
+				if (session.getAttribute("update") != null) {
+					session.removeAttribute("update");
+				}
+				session.setAttribute("albumsCreated", albumDAO.findAlbumsByCreatedUsername(sessionUser.getUsername()));
+				
+			} else {
+				model.addAttribute("otherUsersProfile", userToView);
+				model.addAttribute("albumsCreatedByOtherUser", albumDAO.findAlbumsByCreatedUsername(userToView.getUsername()));
+			}
+			
 		}
-		return "profile";
+		
+		return "profile";		
 	}
 
 	@GetMapping(path = "createAccount")
@@ -279,13 +307,7 @@ public class UserController {
 		return "redirect:/";
 	}
 	
-	@GetMapping(path = "otherUsersProfile")
-	public String getOtherUsersPage(@RequestParam("id") int id, Model model, Album album) {
-		User user = userDAO.findUserById(id);
-		model.addAttribute("otherUsersProfile", user);
-		model.addAttribute("albumsCreatedByOtherUser", albumDAO.findAlbumsByCreatedUsername(user.getUsername()));
-		return "profile";
-	}
+	
 
 }
 	

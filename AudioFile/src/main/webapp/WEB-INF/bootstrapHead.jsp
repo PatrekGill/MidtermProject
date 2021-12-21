@@ -34,7 +34,7 @@
 					<div class="collapse navbar-collapse" id="myNavbar">
 						<ul class="nav navbar-nav">
 							<li class="active"><a href="#">Home</a></li>
-							<li><a href="myProfile">Profile</a></li>
+							<li><a href="profile?id=${sessionScope.user.id}">Profile</a></li>
 							<li><a href="trending">Trending</a></li>
 
 							<li><div class="dropdown-padder"></div>
