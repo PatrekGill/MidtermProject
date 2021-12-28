@@ -1,3 +1,6 @@
+# Deployed Site
+You can see a live version deployed to an AWS server ![here](http://3.142.158.128:8080/AudioFile/home).
+
 # Midterm Project (Audiofile)
 ![Album Page](https://drive.google.com/uc?export=view&id=1vyVArZDWAd9We46cfYoZShZpNfvaS_sw)
 ![Album Comment Page](https://drive.google.com/uc?export=view&id=16AcTJqHZSmqX05cG6bIaG1Xv4-UCFg3W)
@@ -11,10 +14,15 @@ Our application is primarily a musical database centered around artists, songs, 
 
 ### File Structure
 [Entites](https://github.com/KPalasti/MidtermProject/tree/main/JPAAudiophile/src/main/java/com/skilldistillery/audiophile/entities)
+<br>
 [DAOs](https://github.com/KPalasti/MidtermProject/tree/main/AudioFile/src/main/java/com/skilldistillery/audiophile/data)
+<br>
 [Database Files](https://github.com/KPalasti/MidtermProject/tree/main/DB)
+<br>
 [Controllers](https://github.com/KPalasti/MidtermProject/tree/main/AudioFile/src/main/java/com/skilldistillery/audiophile/controller)
+<br>
 [Stylesheets](https://github.com/KPalasti/MidtermProject/tree/main/AudioFile/src/main/webapp/css)
+<br>
 [Webpages (JSPs)](https://github.com/KPalasti/MidtermProject/tree/main/AudioFile/src/main/webapp/WEB-INF)
 
 ## Practices Used
