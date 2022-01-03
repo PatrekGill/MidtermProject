@@ -1,5 +1,5 @@
 # Deployed Site
-You can see a live version deployed to an AWS server ![here](http://3.142.158.128:8080/AudioFile/home).
+You can see a live version deployed to an AWS server [here](http://3.142.158.128:8080/AudioFile/home).
 
 # Midterm Project (Audiofile)
 ![Album Page](https://drive.google.com/uc?export=view&id=1vyVArZDWAd9We46cfYoZShZpNfvaS_sw)
